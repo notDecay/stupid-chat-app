@@ -1,0 +1,59 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.login::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: center center no-repeat url(https://media.discordapp.net/attachments/1008223626983653378/1136870227708219403/doodle-space-wallpaper.png?width=806&height=453);
+  background-size: cover;
+  position: absolute;
+  opacity: 0.35;
+}
+
+.login-warpper {
+  /* display: flex; */
+  background: var(--app-sidebar-color);
+  padding: 20px 3rem;
+  border-radius: 10px;
+  /* height: 50%; */
+  gap: 15px;
+  z-index: 1;
+}
+
+.login-section {
+  margin-bottom: 2rem;
+}
+
+.login-section label {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.login-section input {
+  background: #18171d;
+  width: 100%;
+  padding: 10px 7px;
+}
+
+.login-section .hint {
+  font-size: small;
+  color: #e0e0e0;
+}
+
+.login-button-warpper {
+  margin-top: 5rem;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.login-button-warpper button {
+  margin-left: auto;
+  padding: 9px 24px;
+}

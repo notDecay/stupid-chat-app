@@ -1,0 +1,81 @@
+.chat-page {
+  height: 100%;
+  padding: var(--app-space) 0 0 var(--app-space) ;
+  display: grid;
+  /* grid-template-rows: 2.5rem 5fr 3.75rem; */
+  grid-template-rows: auto 3.75rem;
+}
+
+.chat-title-warpper {
+  /* height: 3rem; */
+}
+
+.chat-content {
+  overflow-y: scroll;
+}
+
+.chat-content::-webkit-scrollbar {
+  /* width: 10px; */
+  background: #23232c;
+  border-radius: 5px;
+  width: 13px;
+}
+
+.chat-content::-webkit-scrollbar-thumb {
+  width: 5px;
+  background: var(--app-sidebar-color);
+}
+
+.chat-msg-input-warpper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #18171d;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.chat-msg-input-warpper textarea {
+  color: white;
+  width: 100%;
+  padding: 0;
+  resize: none;
+  background: transparent !important;
+}
+
+.chat-msg-input-warpper .upload {
+  padding: 5px;
+}
+
+.chat-msg-input-warpper .upload .icon-plus {
+  /*  */
+}
+
+.message {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 1.25rem;
+  margin-right: 10px;
+}
+
+.message .message-author.icon {
+  --icon-bound: 3rem;
+  --icon-url: url(https://media.discordapp.net/attachments/1089483298327253075/1136672971717607495/image.jpeg);
+  border-radius: 50%;
+}
+
+.message .author-name {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+.message .content {
+  user-select: text;
+  line-break: anywhere;
+}
+
+.message .content > * {
+  margin-bottom: 3px;
+}
