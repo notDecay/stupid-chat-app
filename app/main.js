@@ -1,8 +1,9 @@
 // export const socket = io('ws://localhost:3000')
 import logdown from './utils/logdown.js'
+import User from './api/user.js'
 
 async function main() {
-  logdown.start(`Starting this app... (v1.0.0 dev-build 2)
+  logdown.start(`Starting this app... (v1.0.0 dev-build 3)
   .         ／＞　 フ
            | 　_　_| 
         ／\` ミ__^ノ 
@@ -20,13 +21,15 @@ async function main() {
   switch(currentPage) {
     case '':
     case 'index':
+    case 'this_app':
       (await import('./components/home.js')).default()
       break;
     case 'login':
       (await import('./components/login.js')).default()
       break;
   }
-  
+  sessionStorage.setItem('user_id', User.generateUserId())
+  console.log('user id:', sessionStorage.getItem('user_id'))
   logdown.info(`you\'re currently on "${currentPage}" page`);
 }
 

@@ -1,6 +1,6 @@
 import { render } from "../utils/utils.js"
-import chatItem from "./chat/chatItem.js"
-import chatPage from "./chat/chatPage.js"
+import chatItem from "./sidebar/chatItem.js"
+import ChatPage from "./page/ChatPage.js"
 /**
  * @type {FunctionalComponent<{}, void>} 
  */
@@ -16,18 +16,18 @@ export default function() {
     ]
   })
 
-  render('<div>', /*html*/`
-    <link rel="stylesheet" href="./res/style/home.css">
-    <aside class="app-sidebar">
-      ${channelList}
-      ${settingWarpper()}
-    </aside>
-    <main class="app-main"></main>
-  `, {
-    class: 'app-container screen'
-  }).to('.app-mount')
+  render(/*html*/`
+    <div class="app-container screen">
+      <link rel="stylesheet" href="./res/style/home.css">
+      <aside class="app-sidebar">
+        ${channelList}
+        ${settingWarpper()}
+      </aside>
+      <main class="app-main"></main>
+    </div>
+  `).to('.app-mount')
 
-  chatPage().create()
+  ChatPage.create()
 } 
 
 /**

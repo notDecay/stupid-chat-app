@@ -1,38 +1,38 @@
-import { render } from "../utils/utils.js"
+import { render } from "../../utils/utils.js"
 
 /**
  * @type {FunctionalComponent<{}, ComponentCreatable>} 
  */
 export default function() {
   const noUsernamePlaceholder = "nothing in here :)"
-  render('<div>', /*html*/`
-    <link rel="stylesheet" href="./res/style/join-page.css">
-    <div class="create-user-warpper">
-      <h1>hey there! let's set thing up :)</h1>
-      <div>
-        <div class="user-avatar-warpper">
-          <div class="user-avatar-color-bg"></div>
-          <div class="user-avatar showcase icon">
-            <div class="icon icon-add">
+  render(/*html*/`
+    <div class="join-page screen">
+      <link rel="stylesheet" href="./res/style/join-page.css">
+      <div class="create-user-warpper">
+        <h1>hey there! let's set thing up :)</h1>
+        <div>
+          <div class="user-avatar-warpper">
+            <div class="user-avatar-color-bg"></div>
+            <div class="user-avatar showcase icon">
+              <div class="icon icon-add">
+              </div>
+              <span>change avatar</span>
             </div>
-            <span>change avatar</span>
           </div>
+          <section class="user-name-edit-area">
+            <div>
+              <label for="user-name">Username</label>
+              <input type="text" class="no-outline no-bg" value="${noUsernamePlaceholder}" disabled>
+            </div>
+            <button class="no-outline no-bg edit-username">Edit</button>
+          </section>
         </div>
-        <section class="user-name-edit-area">
-          <div>
-            <label for="user-name">Username</label>
-            <input type="text" class="no-outline no-bg" value="${noUsernamePlaceholder}" disabled>
-          </div>
-          <button class="no-outline no-bg edit-username">Edit</button>
-        </section>
-      </div>
-      <div class="join-button-warpper">
-        <button class="no-outline no-bg">Go absolutely crazy</button>
+        <div class="join-button-warpper">
+          <button class="no-outline no-bg">Go absolutely crazy</button>
+        </div>
       </div>
     </div>
-  `, {
-    class: 'join-page screen'
-  }).to('.app-mount')
+  `).to('.app-mount')
   return {
     create(homePage) {
       const $joinPage = u('.join-page')

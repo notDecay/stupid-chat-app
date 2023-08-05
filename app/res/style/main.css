@@ -9,8 +9,8 @@
   --app-button-hover-color: #23232c8e;
   --app-space: 15px;
   --app-sidebar-border-radius: 15px;
+  --app-link-color: #38bbff;
 }
-
 
 @font-face {
   font-family: ChocoChoky;
@@ -62,6 +62,16 @@ a.white-text {
 a.white-text:hover {
   text-decoration: underline;
 }
+
+a:visited,
+a {
+  color: var(--app-link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
 /* #endregion */
 
 
@@ -89,8 +99,9 @@ a.white-text:hover {
 .icon.right { rotate: 360deg  }
 .icon.left  { rotate: 90deg  }
 .icon-arrow { --icon-url: url('../icon/arrow.svg'); }
-.icon-gear { --icon-url: url('../icon/gear.svg'); }
-.icon-plus { --icon-url: url('../icon/plus.svg') }
+.icon-gear  { --icon-url: url('../icon/gear.svg'); }
+.icon-plus  { --icon-url: url('../icon/plus.svg') }
+.icon-reply { --icon-url: url('../icon/reply.svg') }
 
 .no-bg {
   background: transparent;

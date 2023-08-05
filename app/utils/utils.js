@@ -1,21 +1,27 @@
 /**
- * @param {`<${HTMLElementName}>`} elemName
  * @param {string} html 
- * @param {object} attrs
  * @returns 
  */
-export function render(elemName, html, attrs = {}) {
-  const element = u(elemName).attr(attrs).html(html)
+export function render(html) {
+  const dom = new DOMParser().parseFromString(html, 'text/html').body
+  console.log('root element count:', dom.children.length);
+  if (dom.children.length > 1) {
+    throw new Error(`HTML tree should has 1 root element, recieved ${dom.children.length} root element`)
+  }
+  const rootElement = dom.children[0]
+  const attr = {}
+  for (let i = 0, atts = rootElement.attributes, totalAttribute = atts.length; i < totalAttribute; i++){
+    // attr
+    attr[atts[i].nodeName] = atts[i].nodeValue
+  }
+
+  const element = u(`<${rootElement.tagName}>`).attr(attr).html(rootElement.innerHTML)
   return {
     /**@param {string | Element} selector */
     to (selector) {
       u(selector).append(element)
     }
   }
-}
-
-export function panic(someMessage = '') {
-  throw new Error(someMessage)
 }
 
 export function makeid(length = 5) {
@@ -29,6 +35,11 @@ export function makeid(length = 5) {
   return result
 }
 
+/**
+ * 
+ * @param {string} str 
+ * @returns 
+ */
 export function convertNewLinesToBreakSpaces(str) {
   return str.replaceAll('\n', '<br>')
 }

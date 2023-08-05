@@ -1,7 +1,7 @@
 import logdown from "../utils/logdown.js"
 import { render } from "../utils/utils.js"
-import createAltForm from "./login/createAltForm.js"
-import loginForm from "./login/loginForm.js"
+import createAltForm from "./page/login/createAltForm.js"
+import loginForm from "./page/login/loginForm.js"
 /**
  * @type {FunctionalComponent<{}, void>} 
  */

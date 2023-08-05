@@ -14,10 +14,12 @@ type ComponentCreatable<TCreateFunction extends Function = Function> = {
   create: TCreateFunction
 }
 
-type FunctionalComponent<TProps extends Object = {}, TReturnType = unknown> = (this: TReturnType, props: TProps) => TReturnType
+type FunctionalComponent<TProps extends Object = {}, TReturnType = unknown> = (props: TProps) => TReturnType
 
 interface Window {
   __app__: {
     mode: 'test' | 'production'
   }
 }
+
+type Events<T> = T extends { [eventName: string]: any[] } ? T : unknown
