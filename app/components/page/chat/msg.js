@@ -1,5 +1,4 @@
 import { getMessageFromId } from "../../../api/chat/message.js"
-import logdown from "../../../utils/logdown.js"
 import { render } from "../../../utils/utils.js"
 import ChatPage from "../ChatPage.js"
 
@@ -26,7 +25,7 @@ function message({ author, content, messageId, replyTo }) {
         <div class="message-content-warpper">
           <div class="author-name">${author.name}</div>
           <div class="content">
-            <span>${content}</span>
+            <p>${content}</p>
           </div>
         </div>
       </div>
@@ -45,23 +44,12 @@ function followUp({ author, content, messageId }) {
   render(/*html*/`
     <div class="message follow-up last-message" message-id="${messageId}" user-id="${author.id}">
       <div class="content">
-        <span>${content}</span>
+        <p>${content}</p>
       </div>
     </div>
   `).to('.chat-content')
 
   editMessageArea({ messageId }).create()
-}
-
-/**
- * @type {FunctionalComponent<IMessageAnchorProps, string>} 
- */
-function anchorLink({ link }) {
-  return /*html*/`
-    <a class="" target="_blank" href="${link}">
-      <div>${link}</div>
-    </a>
-  `
 }
 
 /**
@@ -100,9 +88,6 @@ function editMessageArea({ messageId }) {
   }
 }
 
-/**### Property `Message`
- * Containing some message component and stuff
- */
-const Message = { message, followUp, anchorLink }
+const Message = { message, followUp }
 
 export default Message

@@ -8,6 +8,11 @@
  * I added it just because I'm too lazy to go to that ^
  */
 
+/**
+ * @typedef {keyof HTMLElementTagNameMap} ElementTagName
+ * @typedef {u | string | Element | Element[]} UmbrellaSelector
+ */
+
 /**Find nodes from the HTML with a CSS selector
  * ```js
  * u('ul#demo li')
@@ -18,8 +23,7 @@
  * u('<a>')
  * u('li', context)
  * ```
- * @typedef {keyof HTMLElementTagNameMap} ElementTagName
- * @typedef {u | string | Element | Element[]} UmbrellaSelector
+ * @template {Element} T
  * @param {UmbrellaSelector} parameter The first parameter can be:
  * - A text CSS selector
  * - A single HTML Node. This is specially useful in events where you can just pass this
@@ -86,7 +90,7 @@ u.prototype = {
     }
     console.warn('".disabled" setter only work on input or textarea element');
   },
-  /**@type {Element[]} */
+  /**@type {T[]} */
   nodes: [],
   /**Add html class(es) to all of the matched elements.
    * ```js

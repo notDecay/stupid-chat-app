@@ -72,6 +72,10 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+code {
+  font-family: consolas;
+}
 /* #endregion */
 
 

@@ -60,13 +60,18 @@ class _ChatPage extends Component {
 
   create() {
     this.render()
-    const $textInput = u('.chat-message-input')
+    const $textInput = /**@type {u<HTMLTextAreaElement>} */(u('.chat-message-input'))
     const $chatContent = u('.chat-content')
 
-    $textInput.on('keypress', (keyboardEvent) => {
-      if (keyboardEvent.shiftKey && keyboardEvent.key == 'Enter') return console.log('user make a new lines')
-      if (keyboardEvent.key !== 'Enter') return 
-      keyboardEvent.preventDefault()
+    $textInput.on('input', () => {
+      this.textInput($textInput).resizeTextInput()
+    })
+    
+    $textInput.on('keypress', (keyboardEv) => {
+      if (keyboardEv.shiftKey && keyboardEv.key === 'Enter') return
+      if (keyboardEv.key !== 'Enter') return 
+      keyboardEv.preventDefault()
+
       const messageContent = /**@type {string}*/($textInput.text()).trim()
       if (messageContent == '') return logdown.warn('message is empty')
       $textInput.text('')
@@ -90,11 +95,12 @@ class _ChatPage extends Component {
       $chatContent.nodes[0].scrollTop = $chatContent.nodes[0].scrollHeight + messageContent.length
       $textInput.focus()
       this.emit('reply_user:hide')
+      this.textInput($textInput).resetTextInput()
       console.log('done')
     })
 
-    $textInput.on('keyup', (keyboardEvent) => {
-      if (keyboardEvent.key === 'Escape' && this.#isReplyUserShowing) {
+    $textInput.on('keyup', (keyboardEv) => {
+      if (keyboardEv.key === 'Escape' && this.#isReplyUserShowing) {
         this.emit('reply_user:hide')
       }
     })
@@ -120,6 +126,26 @@ class _ChatPage extends Component {
     })
   }
 
+  /**@param {u<HTMLTextAreaElement>} $textInput */
+  textInput($textInput) {
+    const thisTextInput = $textInput.nodes[0]
+    return {
+      MAXINUM_TEXT_INPUT_ROWS: 20,
+      resizeTextInput() {
+        if ($textInput.scrollHeight >= this.MAXINUM_TEXT_INPUT_ROWS * 15) {
+          return logdown.warn('maxinum rows exceeded')
+        }
+
+        thisTextInput.style.height = '';
+        thisTextInput.style.height = $textInput.scrollHeight + 'px';
+      },
+  
+      resetTextInput() {
+        thisTextInput.style.height = ''
+      }
+    }
+  }
+
   /**@param {IMessageProps} message */
   sendMessage(message) {
     if (window.__app__.mode === "test") {
@@ -128,7 +154,6 @@ class _ChatPage extends Component {
     else {
       socket.emit('message', message)
     }
-    console.log('message created')
   }
 }
 
