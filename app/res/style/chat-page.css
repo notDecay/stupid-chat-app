@@ -125,7 +125,8 @@
   font-size: var(--reply-message-font-size);
   padding: 5px 7px;
   margin: 3px 0;
-  background: #1b1d22;
+  background: #1d1e249d;
+  color: #d3d3d3;
   border-radius: 7px;
 }
 
@@ -135,6 +136,10 @@
 
 .message-reply .author-name {
   font-size: var(--reply-message-font-size);
+}
+
+.message-reply .content {
+  opacity: 0.95;
 }
 /* #endregion */
 
