@@ -1,8 +1,5 @@
-import Message from "../../components/page/chat/msg.js"
-import { makeAnchorLink } from "../../components/page/chat/msgMarkdown.js"
-
 import logdown from "../../utils/logdown.js"
-import { convertNewLinesToBreakSpaces } from "../../utils/utils.js"
+import MessageFactory from "../../components/page/message/message.js"
 import MarkdownParser from "./MarkdownParser.js"
 /**@type {Map<string, IMessageProps>} */
 const messageCache = new Map()
@@ -11,18 +8,16 @@ const markdownParser = new MarkdownParser()
  * @param {IMessageProps} message
  */
 export function createNewMessage(message) {
-  console.log('calling Message.message()...')
-
   message.content = processMessage(message)
 
   const lastMessage = Array.from(messageCache.values()).pop()
   console.log('last message in cache:', lastMessage, ', message data', message)
   
   if (lastMessage?.author.id == message.author.id && !message.replyTo) {
-    Message.followUp(message)
+    MessageFactory.followUpMessage(message).create()
   }
   else {
-    Message.message(message)
+    MessageFactory.message(message).create()
   }
   messageCache.set(message.messageId, message)
 }
@@ -33,7 +28,9 @@ export function createNewMessage(message) {
 function processMessage(message) {
   let msgContent = message.content
   const isHasLink = /(http|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/gm
-  msgContent = msgContent.replace(isHasLink, (link) => makeAnchorLink({ link }))
+  msgContent = msgContent.replace(isHasLink, (link) => /*html*/`
+    <a href="${link}" target="_blank">${link}</a>
+  `)
   return markdownParser.parse(msgContent)
 }
 

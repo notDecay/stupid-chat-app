@@ -14,6 +14,10 @@ type ComponentCreatable<TCreateFunction extends Function = Function> = {
   create: TCreateFunction
 }
 
+type ComponentDisposable<TCreateFunction extends Function = Function> = {
+  create: TCreateFunction
+}
+
 type FunctionalComponent<TProps extends Object = {}, TReturnType = unknown> = (props: TProps) => TReturnType
 
 interface Window {

@@ -4,7 +4,7 @@
  * This is a smaller version of nodejs [`EventEmitter`](https://nodejs.org/api/events.html)
  * @template {{ [eventName: string]: any[] }} Event
  */
-export default class {
+ export default class {
   #listeners = /**@type {Event} */ ({})
 
   /**

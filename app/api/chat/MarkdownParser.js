@@ -1,18 +1,19 @@
-import {
-  makeTextBold,
-  makeTextItalic
-} from "../../components/page/chat/msgMarkdown.js"
-
 export default class {
+  /**
+   * @param {string} text
+   */
   parse(text) {
     text = text
     .replace(/\*\*(.*)\*\*/gim, (content) => {
-      console.log(content);
-      return makeTextBold(content)
+      return /*html*/`<b>${content}</b>`
     })
-    .replace(/\*(.*)\*|_(.*)_/gim, (content) => makeTextItalic(content))
-    .replace(/^```(?:js|javascript|)\n([\s\S]*?)```$/gm, /*html*/`<pre>$1</pre>`)
-    .replace(/^`(.*)`$/g, /*html*/`<pre>$1</pre>`)
+    .replace(/\*(.*)\*|_(.*)_/gim, (content) => /*html*/`<i>${content}</i>`)
+    // code block
+    .replace(/^```([\s\S]*?)```$/gm, /*html*/`<pre class="code-block">$1</pre>`)
+    .replace(/^```(?:js|javascript|)\n([\s\S]*?)```$/gm, /*html*/`<pre class="code-block">$1</pre>`)
+    // inline code block
+    .replace(/`(.*)`/g, /*html*/`<pre class="inline-code">$1</pre>`)
+
     .replace(/^\>(.+)/gm, /*html*/'<blockquote>$1</blockquote>')
     // headings
     .replace(/^([\#]{6}) (.+)/gm, /*html*/`<h6>$2</h6>`)
