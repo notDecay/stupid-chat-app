@@ -4,17 +4,19 @@ export default class {
    */
   parse(text) {
     text = text
+    .replace(/__(.*)__/gim, /*html*/`<b>$1</b>`)
     .replace(/\*\*(.*)\*\*/gim, (content) => {
       return /*html*/`<b>${content}</b>`
     })
     .replace(/\*(.*)\*|_(.*)_/gim, (content) => /*html*/`<i>${content}</i>`)
+    .replace(/~~(.*)~~/gim, /*html*/`<s>$1</s>`)
     // code block
     .replace(/^```([\s\S]*?)```$/gm, /*html*/`<pre class="code-block">$1</pre>`)
     .replace(/^```(?:js|javascript|)\n([\s\S]*?)```$/gm, /*html*/`<pre class="code-block">$1</pre>`)
     // inline code block
     .replace(/`(.*)`/g, /*html*/`<pre class="inline-code">$1</pre>`)
 
-    .replace(/^\>(.+)/gm, /*html*/'<blockquote>$1</blockquote>')
+    .replace(/^>(?:(.+)| )$/gm, /*html*/'<blockquote>$1</blockquote>')
     // headings
     .replace(/^([\#]{6}) (.+)/gm, /*html*/`<h6>$2</h6>`)
     .replace(/^([\#]{5}) (.+)/gm, /*html*/`<h5>$2</h5>`)

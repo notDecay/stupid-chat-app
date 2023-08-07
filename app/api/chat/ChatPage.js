@@ -43,7 +43,6 @@ class _ChatPage extends Component {
     chatTextInput.create()
     
     $textInput.on('keyup', (keyboardEv) => {
-      console.log(keyboardEv.key);
       if (keyboardEv.key === 'Escape' && this.#isReplyUserShowing) {
         this.emit('reply_user:hide')
       }

@@ -47,8 +47,12 @@ export default class extends Component {
     if (keyboardEv.key !== 'Enter') return 
     keyboardEv.preventDefault()
 
-    const messageContent = /**@type {string}*/(this.$textInput.text()).trim()
-    if (messageContent == '') return logdown.warn('message is empty')
+    const messageInTextInput = this.$textInput.text()
+    const messageContent = /**@type {string}*/(messageInTextInput).trim()
+    if (
+      messageContent == '' ||
+      messageInTextInput == '> ' 
+    ) return logdown.warn('message is empty')
     this.$textInput.text('')
     this.$textInput.focus()
     this.emit('sending_message', messageContent)
