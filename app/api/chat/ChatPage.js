@@ -33,19 +33,18 @@ class _ChatPage extends Component {
     const $chatContent = u('.chat-content')
 
     chatTextInput.on('sending_message', (messageContent) => {
-      console.log('message is about to send');
       this.sendMessage({ messageContent, replyMessage: this.#repliedMessage })
       $chatContent.nodes[0].scrollTop = $chatContent.nodes[0].scrollHeight + messageContent.length
+      if (this.#isReplyUserShowing) {
+        this.emit('reply_user:hide')
+      }
     })
 
     chatTextInput.create()
     
     $textInput.on('keyup', (keyboardEv) => {
+      console.log(keyboardEv.key);
       if (keyboardEv.key === 'Escape' && this.#isReplyUserShowing) {
-        this.emit('reply_user:hide')
-      }
-
-      if (this.#isReplyUserShowing) {
         this.emit('reply_user:hide')
       }
     })
@@ -84,6 +83,7 @@ class _ChatPage extends Component {
     $replyUserWarpper.children('div').remove()
     $replyUserWarpper.removeClass('show')
     this.#repliedMessage = null
+    this.#lastMessageId = ''
     this.#isReplyUserShowing = false
   }
 
