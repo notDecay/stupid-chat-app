@@ -19,7 +19,7 @@ const currentPage = location.pathname.split('/').pop().replace('.html', '')
 sessionStorage.setItem('user_id', `user-${makeid(10)}`)
 const app = new App({
 	target: document.querySelector('.app-mount'),
-});
+})
 
 console.log('user id:', sessionStorage.getItem('user_id'))
 logdown.info(`you\'re currently on "${currentPage}" page`)

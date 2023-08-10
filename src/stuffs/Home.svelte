@@ -1,6 +1,6 @@
 <script>
   import ChatPage from "../page/ChatPage.svelte";
-import SideBar from "./sidebar/SideBar.svelte"
+  import SideBar from "./sidebar/SideBar.svelte"
   import UserInfo from "./sidebar/UserInfo.svelte"
 </script>
 

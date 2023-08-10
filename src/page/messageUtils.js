@@ -35,13 +35,14 @@ export function createNewMessage(message) {
 }
 
 function sanitizeMessage(messageContent = '') {
-  return messageContent.replace(/<|>/gm, (it) => {
+  return messageContent.replaceAll('&', '<span>&amp;</span>')
+  .replace(/<|>/gm, (it) => {
     if (!it) return ''
     const theThing = it
       .replaceAll('>', '&gt;')
       .replaceAll('<', '&lt;')
     return `<span>${theThing}</span>`
-  }).replaceAll('&', '<span>&amp;</span>')
+  })
 }
 
 /**
