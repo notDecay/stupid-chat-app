@@ -7,7 +7,7 @@
 
   function sendingMessage(messageContent) {
     if (window.__app__.mode == 'production') {
-      return socket.emit('message', message)
+      return socket.emit('message', messageContent)
     }
 
     createNewMessage({
@@ -64,10 +64,6 @@
     max-height: 82.5vh;
     padding-top: 1rem;
     overflow-y: scroll;
-  }
-
-  .chat-content.reply-user-shown {
-    padding-bottom: 1.5rem;
   }
 
   ::-webkit-scrollbar {
