@@ -8,7 +8,6 @@
   let messageContent
   onMount(() => {
     messageContent.innerHTML = message.content
-    console.log(messageContent, message.content);
   })
 </script>
 

@@ -6,14 +6,24 @@
   // let showReplyAuthor = false
 
   function sendingMessage(messageContent) {
+    if (window.__app__.mode == 'production') {
+      return socket.emit('message', message)
+    }
+
     createNewMessage({
       author: {
         iconUrl: '',
-        id: `user-${sessionStorage.getItem('user_id')}`,
-        name: 'Duck'
+        id: sessionStorage.getItem('user_id'),
+        name: 'Anonymous'
       },
       content: messageContent.detail,
-      messageId: null
+      messageId: makeid(20)
+    })
+  }
+
+  if (window.__app__.mode == 'production') {
+    socket.on('message', (messageContent) => {
+      createNewMessage(messageContent)
     })
   }
 </script>
