@@ -23,7 +23,15 @@
 
   if (window.__app__.mode == 'production') {
     socket.on('message', (messageContent) => {
-      createNewMessage(messageContent)
+      createNewMessage({
+        author: {
+          iconUrl: '',
+          id: sessionStorage.getItem('user_id'),
+          name: 'Anonymous'
+        },
+        content: messageContent,
+        messageId: makeid(20)
+      })
     })
   }
 </script>
