@@ -1,37 +1,34 @@
-import logdown from "../../src/utils/logdown.js"
+import logdown from "../../../utils/logdown.js"
+import EventEmitter from "../../../utils/EventEmitter.js"
 import MarkdownParser from "./MarkdownParser.js"
 import Message from "./Message.svelte"
-import MessageFollowUp from "./MessageFollowUp.svelte"
-/**@type {Map<string, IMessageProps>} */
+/**@type {Map<string, IMessageCache>} */
 const messageCache = new Map()
 const markdownParser = new MarkdownParser()
 /**
  * @param {IMessageProps} message
  */
 export function createNewMessage(message) {
-  let renderedMessage = sanitizeMessage(message.content)
-  renderedMessage = processMessage(renderedMessage)
-
-  console.log('render message content is:', renderedMessage);
-
+  console.time('making toast')
+  let renderedMessage = processMessage(sanitizeMessage(message.content))
   const lastMessage = Array.from(messageCache.values()).pop()
   const mountingPoint = u('.chat-content').nodes[0]
-  console.log('last message in cache:', lastMessage, ', message data', message)
-  
-  if (lastMessage?.author.id == message.author.id && !message.replyTo) {
-    new MessageFollowUp({
-      target: mountingPoint,
-      props: { message: { ...message, content: renderedMessage } }
-    })
-  }
-  else {
-    new Message({
-      target: mountingPoint,
-      props: { message: { ...message, content: renderedMessage } }
-    })
-  }
 
-  messageCache.set(message.messageId, message)
+  const isUserSentTheSameMessage = lastMessage?.author.id == message.author.id && !message.replyTo
+  console.log(isUserSentTheSameMessage);
+  new Message({
+    target: mountingPoint,
+    props: { 
+      message: { ...message, content: renderedMessage },
+      isFollowUpMessage: !isUserSentTheSameMessage
+    }
+  })
+
+  messageCache.set(message.messageId, {
+    ...message,
+    renderedMessage
+  })
+  console.timeEnd('making toast')
 }
 
 function sanitizeMessage(messageContent = '') {
@@ -62,10 +59,20 @@ function newLinesToBreakSpaces(messageContent = '') {
 
 /**
  * @param {string} messageId
- * @returns {IMessageProps}
+ * @returns {IMessageCache}
  */
 export function getMessageFromId(messageId) {
   const message = messageCache.get(messageId)
   if (!message) logdown.warn(`message "${messageId}" does not exist`)
   return message
 }
+
+/**
+ * @typedef {{
+ *   'show_replying_to': [repliedMessage: IMessageCache],
+ *   'hide_replying_to': [],
+ *   'send_message': [messageContent: string, repliedMessage?: IMessageProps]
+ * }} ChatPageEvents
+ * @type {EventEmitter<ChatPageEvents>}
+ */
+export const chatPageEvent = new EventEmitter() 

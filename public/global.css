@@ -1,15 +1,8 @@
+@import url('./theme/theme.css');
+
 :root {
-  --app-bg-color: #131418;
-  --app-sidebar-color: #1c1c24;
-  --app-text-color: white;
-  --app-notification-color: #ff5555;
-  --app-icon-selected-color: #ffffff23;
-  --app-user-status-color: #d3d3d3;
-  --app-button-color: #23232c;
-  --app-button-hover-color: #23232c8e;
   --app-space: 15px;
   --app-sidebar-border-radius: 15px;
-  --app-link-color: #38bbff;
 }
 
 @font-face {
@@ -25,7 +18,7 @@ html, body {
 }
 
 ::placeholder {
-  color: #cfcfcf
+  color: var(--placeholder-color)
 }
 
 textarea, input, button {
@@ -104,6 +97,10 @@ code {
 .icon-gear  { --icon-url: url('./icon/gear.svg'); }
 .icon-plus  { --icon-url: url('./icon/plus.svg') }
 .icon-reply { --icon-url: url('./icon/reply.svg') }
+.icon-x { 
+  --icon-url: url('./icon/plus.svg') ;
+  rotate: 45deg;
+}
 
 .no-bg {
   background: transparent;
@@ -144,4 +141,14 @@ code {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }

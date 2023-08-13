@@ -1,36 +1,44 @@
+<script>
+  import Setting from "../screen/Setting.svelte";
+
+  export let username
+
+  function showSetting() {
+    new Setting({
+      target: document.querySelector('.app-mount')
+    })
+  }
+</script>
+
 <div class="setting-warpper">
   <div class="icon user-avatar"></div>
-  <div class="user-name-warpper">
-    <div class="user-name">Amongious</div>
-    <div class="user-status">something</div>
-  </div>
-  <div class="setting">
+  <!-- <div class="user-name-warpper">
+    <div class="user-name">{username}</div>
+  </div> -->
+  <div class="setting" on:click={showSetting}>
     <div class="icon icon-gear"></div>
   </div>
 </div>
 
 <style>
   .setting-warpper {
-    --bottom-padding: 1rem;
+    /* --bottom-padding: 1rem; */
+    padding: var(--app-space);
     display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 1rem var(--bottom-padding) 1rem;
-    width: -webkit-fill-available;
-    position: absolute;
-    bottom: 0;
-    background-color: #23232c;
-    border-radius: 0 0 var(--app-sidebar-border-radius) var(--app-sidebar-border-radius);
+    justify-content: space-between;
+    margin-top: auto;
+    height: 100%;
+    flex-flow: column;
   }
 
-  .user-name {
-    font-weight: bold;
+  .setting-warpper > * {
+    flex: none;
   }
 
-  .user-status {
+  /* .user-status {
     font-size: 14px;
     color: var(--app-user-status-color);
-  }
+  } */
 
   .setting-warpper .user-avatar {
     --icon-bound: 2rem;

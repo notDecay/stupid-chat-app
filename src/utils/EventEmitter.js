@@ -4,8 +4,10 @@
  * This is a smaller version of nodejs [`EventEmitter`](https://nodejs.org/api/events.html)
  * @template {{ [eventName: string]: any[] }} Event
  */
- export default class {
-  #listeners = /**@type {Event} */ ({})
+export default class {
+  constructor() {
+    this.listeners = /**@type {Event} */ ({})
+  }
 
   /**
    * @typedef {keyof Event} EventName
@@ -29,8 +31,8 @@
    * @param {EventCallbackFn} fn  callback
    */
   on(eventName, fn) {
-    this.#listeners[eventName] = this.#listeners[eventName] || /**@type {EventCallbackFnArgs} */ ([]);
-    this.#listeners[eventName].push(fn);
+    this.listeners[eventName] = this.listeners[eventName] || /**@type {EventCallbackFnArgs} */ ([]);
+    this.listeners[eventName].push(fn);
     return this;
   }
 
@@ -51,12 +53,12 @@
    * @param {(...args: EventCallbackFnArgs | []) => any} fn 
    */
   once(eventName, fn) {
-    this.#listeners[eventName] = this.#listeners[eventName] || /**@type {EventCallbackFnArgs} */ ([]);
+    this.listeners[eventName] = this.listeners[eventName] || /**@type {EventCallbackFnArgs} */ ([]);
     const onceWrapper = () => {
       fn();
       this.off(eventName, onceWrapper);
     }
-    this.#listeners[eventName].push(onceWrapper);
+    this.listeners[eventName].push(onceWrapper);
     return this;
   }
 
@@ -76,7 +78,7 @@
    * @param {EventCallbackFn} fn 
    */
   off(eventName, fn) {
-    let listener = this.#listeners[eventName]
+    let listener = this.listeners[eventName]
     if (!listener) return this
     for(let i = listener.length; i > 0; i--) {
       if (listener[i] === fn) {
@@ -118,7 +120,7 @@
    * @param {Event[EventName]} args
    */
   emit(eventName, ...args) {
-    let fns = this.#listeners[eventName];
+    let fns = this.listeners[eventName];
     if (!fns) return false;
     fns.forEach((f) => {
       f(...args);
@@ -133,7 +135,7 @@
    * @param {EventName} eventName 
    */
   getlistenerCount(eventName) {
-    let fns = this.#listeners[eventName] || [];
+    let fns = this.listeners[eventName] || [];
     return fns.length;
   }
 
@@ -143,6 +145,6 @@
    * @param {EventName} eventName 
    */
   getRawListeners(eventName) {
-    return this.#listeners[eventName];
+    return this.listeners[eventName];
   }
 }

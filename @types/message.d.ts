@@ -14,3 +14,7 @@ interface IReplyMessage {
 interface IMessageAnchorProps {
   link: string
 }
+
+interface IMessageCache extends IMessageProps {
+  renderedMessage: string
+}
