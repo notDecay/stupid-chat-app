@@ -1,0 +1,148 @@
+.message {
+  --author-icon-bound: 2.7rem;
+  --message-content-gap: 15px;
+  --left-right-margin: 5px;
+  padding: 1px var(--left-right-margin);
+  border: 1px dashed transparent;
+  position: relative;
+}
+
+.message-content-container {
+  display: flex;
+  gap: var(--message-content-gap);
+}
+
+.message:hover {
+  border-color: var(--chat-message-selected-color);
+}
+
+.message .warpper {
+  width: 100%;
+}
+
+.message .author.icon {
+  --icon-bound: var(--author-icon-bound);
+  --icon-url: url(https://cdn.discordapp.com/attachments/1089483298327253075/1136664201453109268/image.jpeg);
+  border-radius: 50%;
+}
+
+.message .author-name {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.message .content {
+  user-select: text;
+  line-break: anywhere;
+  width: 100%;
+}
+
+.message:last-child {
+  margin-bottom: 1.25rem;
+}
+
+.message.follow-up {
+  padding-left: calc(
+    var(--author-icon-bound) + 
+    var(--message-content-gap) + 
+    var(--left-right-margin)
+  );
+}
+
+.message .edit-message-icons {
+  display: none;
+}
+
+.message:hover .edit-message-icons {
+  display: flex;
+}
+
+/* ====================================================================================== */
+
+.message-reply {
+  --reply-message-font-size: 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: var(--reply-message-font-size);
+  padding: 5px 7px;
+  margin: 3px 0;
+  background: #21232aa6;
+  color: var(--app-text-color);
+  border-radius: 7px;
+}
+
+.light-theme .message-reply {
+  background: #e9e9e9a6;
+}
+
+.message-reply .author.icon {
+  --icon-bound: 25px;
+}
+
+.message-reply .author-name {
+  font-size: var(--reply-message-font-size);
+}
+
+.message-reply .content {
+  opacity: 0.95;
+}
+
+.chat-content.reply-user-shown {
+  padding-bottom: 1.5rem;
+}
+
+/* ====================================================================================== */
+
+pre {
+  margin: 0;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  background: black;
+  white-space: normal;
+}
+
+.light-theme pre {
+  background: #efefef;
+}
+
+.message-reply pre {
+  margin-bottom: 0;
+}
+
+.inline-code {
+  display: inline;
+  padding: 2px 5px;
+}
+
+.code-block {
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid #3a3a3a;
+}
+
+.reply-user-warpper .code-block,
+.message-reply .code-block {
+  padding: 5px;
+  white-space: nowrap;
+}
+
+blockquote {
+  margin: 0;
+  padding-left: 2rem;
+  border-left: 3px solid white;
+}
+
+p {
+  margin: 0;
+  /* white-space: pre-wrap; */
+  /* display: flex; */
+}
+
+
+/* ====================================================================================== */
+
+
+/* ====================================================================================== */
+

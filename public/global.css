@@ -1,0 +1,154 @@
+@import url('./theme/theme.css');
+
+:root {
+  --app-space: 15px;
+  --app-sidebar-border-radius: 15px;
+}
+
+@font-face {
+  font-family: ChocoChoky;
+  src: url('./font/Choco\ cooky\ Regular.ttf');
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  user-select: none;
+}
+
+::placeholder {
+  color: var(--placeholder-color)
+}
+
+textarea, input, button {
+  color: var(--app-text-color);
+  border-radius: 10px;
+  background-color: var(--app-button-color) !important;
+}
+
+button:hover {
+  background-color: var(--app-button-hover-color) !important;
+}
+
+button {
+  cursor: pointer;
+  transition: background-color 0.15s ease-out;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: ChocoChoky, cursive;
+}
+
+a.white-text:visited,
+a.white-text {
+  color: var(--app-text-color);
+  text-decoration: none;
+}
+
+a.white-text:hover {
+  text-decoration: underline;
+}
+
+a:visited,
+a {
+  color: var(--app-link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+code {
+  font-family: consolas;
+}
+
+
+.screen, .app-mount {
+  width: 100%;
+  height: 100%;
+}
+
+.app-mount {
+  position: relative;
+  color: var(--app-text-color);
+  background: var(--app-bg-color);
+}
+
+.icon {
+  --icon-bound: 20px;
+  width: var(--icon-bound);
+  height: var(--icon-bound);
+  background: center center no-repeat var(--icon-url);
+  background-size: cover;
+}
+
+.icon.up    { rotate: -90deg }
+.icon.down  { rotate: 90deg  }
+.icon.right { rotate: 360deg  }
+.icon.left  { rotate: 90deg  }
+.icon-arrow { --icon-url: url('./icon/arrow.svg'); }
+.icon-gear  { --icon-url: url('./icon/gear.svg'); }
+.icon-plus  { --icon-url: url('./icon/plus.svg') }
+.icon-reply { --icon-url: url('./icon/reply.svg') }
+.icon-x { 
+  --icon-url: url('./icon/plus.svg') ;
+  rotate: 45deg;
+}
+
+.no-bg {
+  background: transparent;
+}
+
+.no-outline {
+  border: none;
+  outline: none;
+}
+
+[hover-text]:hover:after {
+  opacity: 1;
+  transition: all 0.1s ease 0.5s;
+  visibility: visible;
+}
+[hover-text]:after {
+  content: attr(hover-text);
+  background-color: black;
+  color: var(--app-text-color);
+  position: absolute;
+  padding: 7px 10px;
+  border-radius: 10px;
+  /* bottom: -1.8em; */
+  bottom: 150%;
+
+  left: 0;
+  white-space: nowrap;
+  box-shadow: 1px 1px 3px #222222;
+  opacity: 0;
+  z-index: 100;
+  visibility: hidden;
+}
+[hover-text] {
+  position: relative;
+}
+
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
