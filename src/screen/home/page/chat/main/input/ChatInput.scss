@@ -1,0 +1,20 @@
+
+.message-input {
+  width: 100%;  
+  .input-wrapper {
+    padding: 9px 10px;
+    background-color: var(--hope-colors-neutral3);
+  }
+
+  .more-options {
+    transition: background-color 0.1s ease-in-out;
+    &:hover {
+      background-color: var(--hope-colors-neutral3);
+      // 
+    }
+  }
+
+  .more-options > * {
+    margin: 5px;
+  }
+}
