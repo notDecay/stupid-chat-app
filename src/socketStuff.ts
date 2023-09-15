@@ -2,8 +2,6 @@ import logdown from "@utils/logdown";
 import { appConfig, runOnlyInMode } from "index";
 import { io } from 'socket.io-client'
 
-const socket = io(window.location.href)
-
 runOnlyInMode("prod", async() => {
   try {
     const info = await fetch(appConfig.apiEndpoints.HELLO)
@@ -12,6 +10,8 @@ runOnlyInMode("prod", async() => {
     logdown.fatal('[HELLO] failed to say hello :(')
   }
 })
+
+const socket = io(window.location.href)
 
 runOnlyInMode("prod", () => {
   setInterval(() => {

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" this-is="duck">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,11 +11,25 @@
       img-src * 'self' data: https:"
     />
     <link rel="shortcut icon" type="image/ico" href="/src/assets/favicon.ico" />
-    <title>Solid App</title>
+    <meta property="og:title" content="Amigos Chat">
+    <meta property="og:description" content="Random chat app made by someone but with some feature">
+    <meta property="og:image" content="">
+    <meta name="description" content="Just some stupid chat app that I'm trying to do :>">
+    <meta name="author" content="Duck >-<">
+    <title>Amigos Chat</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="app-mount"></div>
+    <div id="app-mount" this-is="duck"></div>
+    <div id="super" class="secret thing in here">
+      <span hidden>
+        grr... nothing to see here, my friend
+        ₍ᐢ.  ̯.ᐢ₎
+      </span>
+      <noscript>
+        You need to enable JavaScript to run this app.
+      </noscript>
+    </div>
+    <script src="/secret/secret.ts" type="module" async prefetch></script>
     <script src="/src/index.tsx" type="module"></script>
   </body>
 </html>

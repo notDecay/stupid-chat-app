@@ -30,7 +30,9 @@ const SplashContent = () => {
       <FullView class="splash-wrapper">
         <AnotherSplashWrapperAAAA />
       </FullView>
-      <FullView padding='1rem' class="log-ui">
+      <FullView class="log-ui" style={{
+        padding: '1rem'
+      }}>
         {/* <div>Build 1.0.0 alpha-1, api v1.0.0 alpha-1</div> */}
         <div class="logs" style={{
           "font-size": '13px',
@@ -43,13 +45,13 @@ const SplashContent = () => {
 const AnotherSplashWrapperAAAA: Component = () => {
   return (
     <>
-      <FullView as={Center}>
+      <Center as={FullView}>
         <Cube />
-      </FullView>
+      </Center>
       <FlexCenter centerOn="x" as={FullView}>
-        <Box marginTop='auto' marginBottom='1.5rem'>
+        {/* <Box marginTop='auto' marginBottom='1.5rem'>
           <Heading size="2xl">{randomTexts[Math.floor(Math.random() * randomTexts.length)]}</Heading>
-        </Box>
+        </Box> */}
       </FlexCenter>
       <FullView class="hide-it">
         <FullView class="the-darkness">

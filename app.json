@@ -1,5 +1,5 @@
 {
-  "APP_MODE": "prod",
+  "APP_MODE": "test",
   "APP_VERSION": "1.0.0 alpha-1",
   "apiEndpoints": {
     "VERSION": "1.0.0 alpha-1",

@@ -4,12 +4,14 @@ import appConfig from '../app.json' assert { type: 'json' }
 import './index.scss'
 
 // import { lazy, type Component, createSignal, onMount, Setter } from 'solid-js'
-import { lazy, type Component } from 'solid-js'
+import { lazy, type Component, /* createSignal, onMount, Setter */ } from 'solid-js'
 import { HopeProvider, type HopeThemeConfig } from '@hope-ui/solid'
 
 import logdown from '@utils/logdown'
 import { makeRandomSmallString } from '@utils/randomizer'
 import { Router } from '@solidjs/router'
+// import { sleep } from '@utils/utils'
+// import { SplashLog } from '@screen/splash/SplashLog'
 // import Splash from '@screen/splash'
 // import { sleep } from '@utils/utils'
 // import { SplashLog } from '@screen/splash/SplashLog'
@@ -57,9 +59,12 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 //   }
 // })
 
+// get the user somehow
 sessionStorage.setItem('user', makeRandomSmallString('user-'))
 
-const Home = lazy(() => import('@screen/home'))
+const HomeView = lazy(() => import('@screen/home'))
+const MaintenanceView = lazy(() => import('@screen/maintenance'))
+const SplashView = lazy(() => import('@screen/splash'))
 const App: Component = () => {
   const config: HopeThemeConfig = {
     initialColorMode: 'dark'
@@ -75,9 +80,11 @@ const App: Component = () => {
   return (
     <HopeProvider config={config}>
       <Router>
-        {/* <Splash ref={thisSpash!} /> */}
-        {/* {showHome() && <Home />} */}
-        <Home />
+        {/* <SplashView ref={thisSpash!} /> */}
+        {/* showHome() && <HomeView /> */}
+        {/* <Home /> */}
+        <HomeView />
+        {/* <MaintenanceView /> */}
       </Router>
     </HopeProvider>
   )
