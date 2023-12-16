@@ -1,1 +1,0 @@
-import{a as r}from"./index-74d9a961.js";import{a as e,H as n,C as t}from"./index-58aeaa16.js";const o=()=>e(t,{as:r,get children(){return e(n,{size:"2xl",children:"Nothing in here :)"})}});export{o as default};
