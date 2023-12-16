@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "strict": true,
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
@@ -12,18 +11,6 @@
     "noEmit": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-
-    "paths": {
-      "@lib/*": ["./src/lib/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@screen/*": ["./src/screen/*"],
-      "@api/*": ["./src/api/*"],
-      "@components/*": ["./src/components/*"],
-      "@styles/*": ["./src/styles/*"],
-      "index": ["./src/index"],
-      // 
-      "types/*": ["./types/*"],
-      "@assets/*": ["./src/assets"],
-    }
+    "strictNullChecks": true,
   }
 }

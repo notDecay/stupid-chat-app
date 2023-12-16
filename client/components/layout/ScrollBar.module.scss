@@ -1,0 +1,6 @@
+.scroll-bar {
+  overflow-y: scroll;
+  &::-webkit-scrollbar-track {
+    width: 10px;
+  }
+}

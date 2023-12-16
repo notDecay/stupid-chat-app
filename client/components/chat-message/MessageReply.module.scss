@@ -1,0 +1,17 @@
+.message-reply {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    border-radius: 8px;
+    background-color: var(--hope-colors-neutral3);
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
+  }
+
+  .content{
+    padding: 2px 7px;
+  }
+}

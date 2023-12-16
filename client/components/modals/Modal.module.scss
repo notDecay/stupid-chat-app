@@ -1,0 +1,20 @@
+// override the hope-ui's default close modal button style.
+// make the button displayed on the top left of the modal
+.modal-dialog {
+  position: static; // reset
+}
+
+.modal-close-button {
+  position: absolute;
+  // box-shadow: none !important;
+  border-radius: 50%;
+  border: 2px solid var(--hope-colors-neutral8);
+  background-color: transparent;
+}
+
+.modal-label {
+  margin-bottom: 25px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

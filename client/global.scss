@@ -1,0 +1,40 @@
+:root {
+  --links-color: var(--hope-colors-primary9);
+}
+
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/font/Choco\ cooky\ Regular.ttf');
+}
+
+body {
+  position: relative;
+  font-family: Lexend, ui-sans-serif, system-ui;
+  font-size: 1.125rem;
+}
+
+#duck {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  & > * {
+    position: fixed;
+  }
+}
+
+input, textarea, ::-webkit-scrollbar {
+  will-change: transition;
+}
+
+a:not([link]) {
+  color: var(--links-color)
+}
+
+.app, .transition-screen {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
