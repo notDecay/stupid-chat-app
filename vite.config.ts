@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { optimizeCssModules } from 'vite-plugin-optimize-css-modules'
 import solidPlugin from 'vite-plugin-solid'
 
 const HASH_NAME = "[hash:20]"
@@ -11,6 +12,7 @@ export default defineConfig({
     */
     // devtools(),
     solidPlugin(),
+    optimizeCssModules()
   ],
   server: {
     port: 3000,
