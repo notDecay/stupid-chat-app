@@ -29,10 +29,10 @@ export type ProcessedMessageData = {
 }
 
 /**Do some message processing stuff.
- * @param options options to process message
- * @returns       the processed message
- * @see {@link ProcessMessageOptions}
- * @see {@link ProcessedMessageData}
+ * @param options options to process message, see {@link ProcessMessageOptions}
+ *                for the usage of each options.
+ * @returns       the processed message, see {@link ProcessedMessageData} to see
+ *                what it will return.
  */
 export async function processMessage({
   lastMessageInCache,
@@ -42,7 +42,7 @@ export async function processMessage({
     async: true
   })
 
-  const messageId = makeUUIDv4()
+  const messageId = `message-${makeUUIDv4()}`
   const messageToSendData: Message.IUserMessage = {
     content: markdownMessage,
     id: messageId,

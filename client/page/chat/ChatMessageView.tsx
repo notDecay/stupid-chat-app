@@ -5,6 +5,7 @@ import {
   ChatNavBar, 
   ChatMessages, 
   ChatMessagesProvider,
+  FullView,
 } from "../../components"
 
 import style from "./ChatMessage.module.scss"
@@ -13,12 +14,12 @@ import ChatMessageContent from "./ChatMessageContent"
 export default function ChatMessageView() {
   return (
     <ChatMessagesProvider>
-      <Flex class={style["chat-message"]} boxSize="100%">
+      <FullView class={style["chat-message"]} as={Flex}>
         <ChatNavBar />
         <ChatMessages>
           <ChatMessageContent />
         </ChatMessages>
-      </Flex>
+      </FullView>
     </ChatMessagesProvider>
   )
 }

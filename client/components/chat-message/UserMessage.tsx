@@ -1,74 +1,119 @@
 import { Show } from "solid-js"
-import { Avatar, Flex } from "@hope-ui/solid"
-import { Message } from "../../utils"
-
-import MessageUsername from "./MessageUsername"
-import MessageContent from "./MessageContent"
-import MessageOptions from "./MessageOptions"
-import MessageReply from "./MessageReply"
-
-import style from "./UserMessage.module.scss"
+import {
+  Message, 
+  mergeClassNames 
+} from "../../utils"
+import { 
+  Avatar, 
+  Box, 
+  Flex, 
+  Heading, 
+  Tag 
+} from "@hope-ui/solid"
 import MessageWrapUp from "./MessageWrapUp"
-import { ChatMessageEvents, useChatMessages } from "../provider/ChatMessagesProvider"
+import MessageOptions from "./MessageOptions"
+import { 
+  ChatMessageEvents, 
+  useChatMessages 
+} from "../provider/ChatMessagesProvider"
+import { MESSAGE_FOLLOW_UP_KEY } from "."
 
-export interface IUserMessageProps extends Omit<Message.IUserMessage, "replyTo"> {
-  isFollowUp?: boolean
-  // override
-  replyTo?: this
-}
+import "./UserMessage.scss"
 
-export default function UserMessage(props: IUserMessageProps) {
-  const { event } = useChatMessages()
-
-  let shouldFollowUp = props.isFollowUp
-  if (props.replyTo) {
-    shouldFollowUp = false
+namespace UserMessage {
+  export interface IUserMessageProps extends Omit<Message.IUserMessage, "replyTo"> {
+    isFollowUp?: boolean
+    // override
+    replyTo?: this
   }
 
-  return (
-    <MessageWrapUp id={props.id}>
-      <Show when={props.replyTo}>
-        {/* @ts-ignore */}
-        <MessageReply repliedTo={props.replyTo!} />
-      </Show>
-      <Flex alignItems="center" gap={15} class={style["user-message"]}>
-        <Show when={shouldFollowUp} fallback={<NormalMessage {...props} />}>
-          <FollowUpMessage {...props} />
+  
+  export function Message(props: IUserMessageProps) {
+    const { event } = useChatMessages()
+  
+    let shouldFollowUp = props.isFollowUp
+    if (props.replyTo) {
+      shouldFollowUp = false
+    }
+
+    const optionClickedHandler = (
+      action: import("./MessageOptions").MessageOptions
+    ) => {
+      event.emit(ChatMessageEvents.messageOptionClicked, action, props.id)
+    }
+  
+    return (
+      <MessageWrapUp 
+        id={props.id} 
+        class={mergeClassNames("user-message", shouldFollowUp ? MESSAGE_FOLLOW_UP_KEY : '')}
+      >
+        <Show when={props.replyTo}>
+          <Reply repliedTo={props.replyTo!} />
         </Show>
-        <MessageOptions onOptionClicked={(action) => {
-          switch (action) {
-            case "reply":
-              event.emit(ChatMessageEvents.replyButtonSelected, props.id)
-              break
-            case "delete":
-              event.emit(ChatMessageEvents.deleteButtonSelected, props.id)
-              break
-            default:
-              console.log(action, "hasn't been defined yet :(")
-              break
-          }
-        }} />
-      </Flex>
-    </MessageWrapUp>
-  )
-}
+        <Flex alignItems="center" gap={15}>
+          <Avatar class="avatar" />
+          <MessageContent {...props} />
+          <MessageOptions onOptionClicked={optionClickedHandler} />
+        </Flex>
+      </MessageWrapUp>
+    )
+  }
 
-function NormalMessage(props: IUserMessageProps) {
-  return (
-    <>
-      <Avatar class={style.avatar} />
-      <div>
-        <MessageUsername {...props} />
-        <MessageContent {...props} />
+  function MessageContent(props: IUserMessageProps) {
+    const formatedDate = new Intl.DateTimeFormat("default", {
+      hour: "numeric",
+      minute: "numeric",
+      dayPeriod: "short"
+    }).format(props.sendTime)
+
+    const formatedDateButShorter = new Intl.DateTimeFormat("default", {
+      hour: "numeric",
+      minute: "numeric",
+    }).format(props.sendTime)
+    
+    return (
+      <div class="message-content">
+        <Box class="date" color="$neutral11">
+          {formatedDateButShorter}
+        </Box>
+        <Flex fontSize="$xs" gap={15} alignItems="center" marginBottom={5} class="username">
+          <Heading size="sm">
+            {props.user.name}
+          </Heading>
+          <Tag size="sm">
+            {formatedDate}
+          </Tag>
+        </Flex>
+        <Box 
+          backgroundColor="$neutral4" 
+          px="8px" 
+          class="content"
+          innerHTML={props.content}
+        />
       </div>
-    </>
-  )
+    )
+  }
+
+  interface IMessageReplyProps {
+    repliedTo: IUserMessageProps
+  }
+
+  function Reply(props: IMessageReplyProps) {
+    return (
+      <div class="message-reply">
+        <Flex 
+          alignItems="center" 
+          gap={15} 
+          fontSize={16} 
+          class="content"
+          color="$neutral11"
+        >
+          <Avatar boxSize={25} />
+          <span innerHTML={props.repliedTo.content} />
+        </Flex>
+      </div>
+    )
+  }
 }
 
-function FollowUpMessage(props: IUserMessageProps) {
-  return (
-    <div class={style["follow-up-message"]}>
-      <MessageContent {...props} />
-    </div>
-  )
-}
+export default UserMessage

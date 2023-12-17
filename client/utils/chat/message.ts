@@ -24,10 +24,11 @@ export namespace Message {
     channelId, 
     messageId 
   }: IMessageFetchOptions) {
-    logdown.start(`fetching message ${messageId} in channel ${channelId}...`)
+    logdown.start(`fetching message ${messageId} in channel ${channelId} from cache...`)
     const cache = MessageCache.getMessageCacheStore(channelId)
     const messageInCache = cache?.get(messageId)
     if (messageInCache) {
+      logdown.success("|  okey :)")
       return messageInCache
     }
 
@@ -39,8 +40,8 @@ export namespace Message {
       })
 
       message = await message.json()
-      logdown.info("|  okey :)")
-      return message
+      logdown.success("|  okey :)")
+      return message as unknown as ChatMessage
     } catch (e) {
       logdown.err(e)
       return null

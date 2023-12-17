@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import solidPlugin from 'vite-plugin-solid'
-// import devtools from 'solid-devtools/vite';
 
 const HASH_NAME = "[hash:20]"
 
@@ -16,6 +15,7 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  cacheDir: './build/cache',
   build: {
     target: 'esnext',
     outDir: './build/dist/client',
@@ -24,7 +24,7 @@ export default defineConfig({
         assetFileNames: `${HASH_NAME}.[ext]`,
         chunkFileNames: `${HASH_NAME}.js`,
         entryFileNames: `${HASH_NAME}.js`,
-      }
-    }
+      },
+    },
   },
-});
+})

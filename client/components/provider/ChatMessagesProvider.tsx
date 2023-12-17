@@ -1,14 +1,25 @@
-import { type ParentProps, createContext, useContext } from "solid-js"
-import { event } from "../../utils"
+import {
+  type ParentProps, 
+  createContext, 
+  useContext 
+} from "solid-js"
+import { 
+  event 
+} from "../../utils"
+import type { 
+  MessageOptions 
+} from "../chat-message/MessageOptions"
 
 export const enum ChatMessageEvents {
-  replyButtonSelected,
-  deleteButtonSelected
+  /**Whenever the message option has been clicked
+   * 
+   * @see {@link MessageOptions} for all of the message options
+   */
+  messageOptionClicked,
 }
 
 type ChatMessageEvent = event<{
-  [ChatMessageEvents.replyButtonSelected]: [messageId: string]
-  [ChatMessageEvents.deleteButtonSelected]: [messageId: string]
+  [ChatMessageEvents.messageOptionClicked]: [type: MessageOptions, messageId: string]
 }>
 
 interface IChatMessagesContext {

@@ -7,21 +7,10 @@ import {
   BsTrashFill 
 } from "solid-icons/bs"
 
-type MessageOption = "reply" | "delete"
-interface IMessageOptionProps {
-  /**Fired whenever a option has been clicked. 
-   * @param action Currently these option are `"reply"`, `"delete"`  
-   * @returns      *nothing*
-   */
-  onOptionClicked: (action: MessageOption) => any
-}
+export type MessageOptions = "reply" | "delete"
 
-interface IMessageItemProps {
-  action: MessageOption
-}
-
-const MessageOption = {
-  Option(props: ParentProps<{
+namespace MessageOption {
+  export function Option(props: ParentProps<{
     onClick: JSX.EventHandler<HTMLDivElement, MouseEvent>
   }>) {
     return (
@@ -31,15 +20,27 @@ const MessageOption = {
         </Flex>
       </div>
     )
-  },
+  }
 
-  Item(props: ParentProps<IMessageItemProps>) {
+  interface IMessageItemProps {
+    action: MessageOptions
+  }
+
+  export function Item(props: ParentProps<IMessageItemProps>) {
     return (
       <Center class={style["item"]} boxSize={30} data-action={props.action}>
         {props.children}
       </Center>
     )
   }
+}
+
+interface IMessageOptionProps {
+  /**Fired whenever a option has been clicked. 
+   * @param action Currently these option are `"reply"`, `"delete"`  
+   * @returns      *nothing*
+   */
+  onOptionClicked: (action: MessageOptions) => any
 }
 
 export default function MessageOptions(props: IMessageOptionProps) {

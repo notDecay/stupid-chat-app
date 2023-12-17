@@ -1,13 +1,17 @@
-import { JSX, ParentProps } from "solid-js"
-
-import style from "./MessageWrapUp.module.scss"
+import type { JSX } from "solid-js"
 import { mergeClassNames } from "../../utils"
 
-export default function MessageWrapUp(props: JSX.HTMLAttributes<HTMLDivElement>) {
+import "./MessageWrapUp.scss"
+
+interface IMessageWrapUpProps extends JSX.HTMLAttributes<HTMLDivElement> {
+  // ...
+}
+
+export default function MessageWrapUp(props: IMessageWrapUpProps) {
   return (
     <div 
       {...props} 
-      class={mergeClassNames(style["message-wrap-up"], props.class)}
+      class={mergeClassNames("message-wrap-up", props.class)}
       data-label="message"
     >
       {props.children}
