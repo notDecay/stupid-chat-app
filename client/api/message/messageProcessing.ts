@@ -1,11 +1,9 @@
 import { 
-  type ChatMessage,
-  MessageCache, // use for documentation only
-  Message, 
   escapeHtml, 
   makeUUIDv4, 
   marked 
-} from ".."
+} from "../../utils"
+import { ChatMessage, Message } from "./message"
 
 export type ProcessMessageOptions = {
   /**The message content to be processed */

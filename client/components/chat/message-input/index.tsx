@@ -1,8 +1,17 @@
-import { Avatar, Button, Center, CloseButton, Divider, Flex, Spacer, textareaStyles } from "@hope-ui/solid"
+import { 
+  Avatar, 
+  Button, 
+  Center, 
+  CloseButton, 
+  Divider, 
+  Flex, 
+  Spacer, 
+  textareaStyles 
+} from "@hope-ui/solid"
 import TextareaAutosize from "solid-textarea-autosize"
 import type { ParentProps } from "solid-js"
 import { BsPlus } from "solid-icons/bs"
-import { Message } from "../../utils"
+import type { Message } from "../../../api/message/message"
 
 import style from "./index.module.scss"
 namespace ChatMessageInput {
@@ -20,9 +29,7 @@ namespace ChatMessageInput {
     onSendingMessage: (messageContent: string) => any
   }
 
-  /**Maximum message rows before it does not resize anymore */
   const MESSAGE_ROW_LIMIT = 25
-  /**The placeholder text of the message input */
   const TEXTAREA_PLACEHOLDER = "Type something..."
 
   /**Creates the message input

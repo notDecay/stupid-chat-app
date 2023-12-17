@@ -11,11 +11,8 @@ export { default as AppInfoModal } from "./modals/app-info"
 export { default as AppInfo } from "./modals/app-info/AppInfo"
 export { default as Modal } from "./modals/Modal"
 // ...
-export { default as SearchBox } from "./chat/layout/SearchBox"
-export { default as ChatNavBar } from "./chat/layout/ChatNavBar"
-export { default as ChatMessages } from "./chat/layout/ChatMessages"
-// ...
-export { default as Channel } from "./chat-channel"
+export { default as SearchBox } from "./chat/sidebar/SearchBox"
+export { default as ChatNavBar } from "./chat/navbar"
 // ...
 export { default as AcknowledgementLoadingScreen } from "./acknowledgement/LoadingScreen"
 export { default as AcknowledgementLibaryInfo } from "./acknowledgement/LibaryInfo"
@@ -24,5 +21,5 @@ export * from "./provider/ChatMessagesProvider"
 // ...
 export { default as SplashScreen } from "./splash"
 
-export { default as ChatMessageInput } from "./chat-message-input"
-export * from "./chat-message"
+export { default as ChatMessageInput } from "./chat/message-input"
+export * from "./chat/message"

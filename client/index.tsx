@@ -26,8 +26,8 @@ function App() {
 }
 
 const ChatPage = lazy(() => import("./page/chat/ChatPage"))
-const ChatGettingStarted = lazy(() => import("./page/chat/ChatGettingStarted"))
-const ChatMessageView = lazy(() => import("./page/chat/ChatMessageView"))
+const ChatGettingStarted = lazy(() => import("./components/chat/main-content/ChatGettingStarted"))
+const ChatMessageList = lazy(() => import("./components/chat/main-content/ChatMessageList"))
 
 const AcknowledgementPage = lazy(() => import("./page/acknowledgement"))
 
@@ -38,7 +38,7 @@ function AppRoutes() {
         <Route path="/" component={ChatGettingStarted} />
         <Route path="/channel">
           <Route path="/" component={ChatGettingStarted} />
-          <Route path="/:id" component={ChatMessageView} />
+          <Route path="/:id" component={ChatMessageList} />
         </Route>
       </Route>
       <Route path="/acknowledgement" component={AcknowledgementPage} />

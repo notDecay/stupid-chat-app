@@ -1,4 +1,4 @@
-import logdown from "../duck/logdown"
+import logdown from "../../utils/duck/logdown"
 import type { ChatMessage } from "./message"
 
 export type MessageCacheStore = Map<string, ChatMessage>

@@ -1,7 +1,7 @@
 import { Avatar, Flex, Spacer } from "@hope-ui/solid"
 import { NameAndDescription, MoreOptionsButton } from "../.."
 
-import style from "./ChatNavBar.module.scss"
+import style from "./index.module.scss"
 
 export default function ChatNavBar() {
   return (

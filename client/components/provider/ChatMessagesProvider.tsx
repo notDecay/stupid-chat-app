@@ -8,7 +8,7 @@ import {
 } from "../../utils"
 import type { 
   MessageOptions 
-} from "../chat-message/MessageOptions"
+} from "../chat/message/MessageOptions"
 
 export const enum ChatMessageEvents {
   /**Whenever the message option has been clicked

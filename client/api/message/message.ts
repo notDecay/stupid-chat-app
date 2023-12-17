@@ -1,4 +1,4 @@
-import logdown from "../duck/logdown"
+import logdown from "../../utils/duck/logdown"
 import { MessageCache } from "./cache"
 
 const fetchMessage = fetch

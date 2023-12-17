@@ -1,5 +1,5 @@
 import type { JSX } from "solid-js"
-import { mergeClassNames } from "../../utils"
+import { mergeClassNames } from "../../../utils"
 
 import "./MessageWrapUp.scss"
 

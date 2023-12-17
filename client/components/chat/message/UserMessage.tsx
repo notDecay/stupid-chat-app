@@ -1,8 +1,7 @@
 import { Show } from "solid-js"
 import {
-  Message, 
   mergeClassNames 
-} from "../../utils"
+} from "../../../utils"
 import { 
   Avatar, 
   Box, 
@@ -15,19 +14,20 @@ import MessageOptions from "./MessageOptions"
 import { 
   ChatMessageEvents, 
   useChatMessages 
-} from "../provider/ChatMessagesProvider"
+} from "../../provider/ChatMessagesProvider"
 import { MESSAGE_FOLLOW_UP_KEY } from "."
 
 import "./UserMessage.scss"
+import { Message } from "../../../api/message/message"
 
 namespace UserMessage {
-  export interface IUserMessageProps extends Omit<Message.IUserMessage, "replyTo"> {
+  export interface IUserMessageProps 
+    extends Omit<Message.IUserMessage, "replyTo"> {
     isFollowUp?: boolean
     // override
     replyTo?: this
   }
 
-  
   export function Message(props: IUserMessageProps) {
     const { event } = useChatMessages()
   

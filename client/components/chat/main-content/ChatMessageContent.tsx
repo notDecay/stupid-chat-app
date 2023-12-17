@@ -1,28 +1,14 @@
-import { 
-  ScrollBar, 
-  useChatMessages, 
-  ChatMessageInput,
-  ChatMessageEvents,
-  FullView,
-  UserMessage,
-  MESSAGE_FOLLOW_UP_KEY
-} from "../../components"
-import { 
-  Message,
-  MessageCache, 
-  logdown, 
-  processMessage, 
-  scrollDown 
-} from "../../utils"
-import { 
-  For, 
-  Match, 
-  Switch, 
-  createSignal 
-} from "solid-js"
-import type { 
-  MessageOptions 
-} from "../../components/chat-message/MessageOptions"
+import { For, Match, Switch, createSignal } from "solid-js"
+import { MessageCache } from "../../../api/message/cache"
+import { ChatMessageEvents, useChatMessages } from "../../provider/ChatMessagesProvider"
+import { Message } from "../../../api/message/message"
+import { MessageOptions } from "../message/MessageOptions"
+import { MESSAGE_FOLLOW_UP_KEY, UserMessage } from "../message"
+import { processMessage } from "../../../api/message/messageProcessing"
+import { logdown, scrollDown } from "../../../utils"
+import FullView from "../../layout/FullView"
+import ScrollBar from "../../layout/ScrollBar"
+import ChatMessageInput from "../message-input"
 
 const messageCacheStore = MessageCache.createIfItsNotExist("root")
 
@@ -69,7 +55,9 @@ export default function ChatMessageContent() {
   event.on(ChatMessageEvents.messageOptionClicked, async (type, messageId) => {
     switch (type) {
       case "delete": {
-        if (replyToMessage()) hideReplyTo()
+        if (replyToMessage()?.id === messageId) {
+          hideReplyTo()
+        }
         removeAndUpdateMessage(messageId)
       } break
 

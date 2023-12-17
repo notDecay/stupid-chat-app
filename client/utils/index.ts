@@ -1,7 +1,6 @@
 export { default as event } from "./duck/event"
 export { default as logdown } from "./duck/logdown"
 export * as marked from "../lib/marked"
-export * from "./chat"
 
 /**Merging one or more class name together
  * @param first            the first class name

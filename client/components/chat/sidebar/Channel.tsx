@@ -1,9 +1,9 @@
 import { Avatar, Box, Center, Flex } from "@hope-ui/solid"
 import type { IChannel } from "../../../api/channel"
 import { Link } from "@solidjs/router"
-import { NameAndDescription, ScrollBar } from ".."
+import { NameAndDescription, ScrollBar } from "../.."
 
-import style from "./index.module.scss"
+import style from "./Channel.module.scss"
 import { For, JSX, Show } from "solid-js"
 
 namespace Channel {
