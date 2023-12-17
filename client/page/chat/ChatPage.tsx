@@ -15,7 +15,7 @@ export default function ChatPage() {
       {/* <SplashScreen show={true} /> */}
       <Grid as={AppWrapper} templateColumns="350px 1fr" class={style.app}>
         <aside>
-          <ChatSidebar />
+          <ChatSidebar.Sidebar />
         </aside>
         <main>
           <Outlet />
