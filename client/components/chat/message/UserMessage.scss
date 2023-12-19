@@ -7,13 +7,16 @@ $avatar-bound: 35px;
     height: $avatar-bound;
   }
 
-  .username {
-    // nothing
-  }
-
   .date {
     display: none;
     font-size: 11px;
+  }
+
+  .date-time {
+    background: center center no-repeat var(--icon-url);
+    &.date-moon {
+      --icon-url: url("../../../assets/images/moon.svg");
+    }
   }
 
   .content {
@@ -42,9 +45,7 @@ $avatar-bound: 35px;
 
   .message-content {
     font-size: 16px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 14px;
+    display: flex;
   }
 }
 

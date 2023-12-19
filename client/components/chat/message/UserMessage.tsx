@@ -16,9 +16,9 @@ import {
   useChatMessages 
 } from "../../provider/ChatMessagesProvider"
 import { MESSAGE_FOLLOW_UP_KEY } from "."
+import { Message } from "../../../api/message/message"
 
 import "./UserMessage.scss"
-import { Message } from "../../../api/message/message"
 
 namespace UserMessage {
   export interface IUserMessageProps 
@@ -48,7 +48,7 @@ namespace UserMessage {
         class={mergeClassNames("user-message", shouldFollowUp ? MESSAGE_FOLLOW_UP_KEY : '')}
       >
         <Show when={props.replyTo}>
-          <Reply repliedTo={props.replyTo!} />
+          <MessageReply repliedTo={props.replyTo!} />
         </Show>
         <Flex alignItems="center" gap={15}>
           <Avatar class="avatar" />
@@ -60,30 +60,9 @@ namespace UserMessage {
   }
 
   function MessageContent(props: IUserMessageProps) {
-    const formatedDate = new Intl.DateTimeFormat("default", {
-      hour: "numeric",
-      minute: "numeric",
-      dayPeriod: "short"
-    }).format(props.sendTime)
-
-    const formatedDateButShorter = new Intl.DateTimeFormat("default", {
-      hour: "numeric",
-      minute: "numeric",
-    }).format(props.sendTime)
-    
     return (
       <div class="message-content">
-        <Box class="date" color="$neutral11">
-          {formatedDateButShorter}
-        </Box>
-        <Flex fontSize="$xs" gap={15} alignItems="center" marginBottom={5} class="username">
-          <Heading size="sm">
-            {props.user.name}
-          </Heading>
-          <Tag size="sm">
-            {formatedDate}
-          </Tag>
-        </Flex>
+        <MessageDate {...props} />
         <Box 
           backgroundColor="$neutral4" 
           px="8px" 
@@ -94,11 +73,43 @@ namespace UserMessage {
     )
   }
 
+  function MessageDate(props: IUserMessageProps) {
+    const formatedDate = new Intl.DateTimeFormat("default", {
+      hour: "numeric",
+      minute: "numeric",
+      dayPeriod: "short"
+    }).format(props.sendTime)
+
+    const formatedDateButShorter = new Intl.DateTimeFormat("default", {
+      hour: "numeric",
+      minute: "numeric",
+    }).format(props.sendTime)
+
+    const [hours] = formatedDateButShorter.split(":").map(it => parseInt(it))
+
+    return (
+      <>
+        <Box class="date" color="$neutral11" marginRight={hours >= 12 ? 8 : 13}>
+          {formatedDateButShorter}
+        </Box>
+        <Flex fontSize="$xs" gap={15} alignItems="center" marginBottom={5} class="username">
+          <Heading size="sm">
+            {props.user.name}
+          </Heading>
+          <Tag as={Flex} size="sm" alignItems="center" color="$neutral11" gap={15}>
+            {formatedDate}
+            <Box class="date-time date-moon" boxSize={12} />
+          </Tag>
+        </Flex>
+      </>
+    )
+  }
+
   interface IMessageReplyProps {
     repliedTo: IUserMessageProps
   }
 
-  function Reply(props: IMessageReplyProps) {
+  function MessageReply(props: IMessageReplyProps) {
     return (
       <div class="message-reply">
         <Flex 

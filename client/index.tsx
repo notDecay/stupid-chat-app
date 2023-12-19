@@ -5,6 +5,7 @@ import { Route, Router, Routes } from '@solidjs/router'
 import { lazy } from 'solid-js'
 
 import "./global.scss"
+import { chatPageData } from './page/chat/data'
 
 const root = document.getElementById("duck")
 
@@ -17,7 +18,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 function App() {
   return (
     <Router>
-      <div class="transition-screen"></div>
+      <div class="transition-screen" />
       <div class="app">
         <AppRoutes />
       </div>
@@ -25,7 +26,9 @@ function App() {
   )
 }
 
+// chat sidebar
 const ChatPage = lazy(() => import("./page/chat/ChatPage"))
+// chat main content
 const ChatGettingStarted = lazy(() => import("./components/chat/main-content/ChatGettingStarted"))
 const ChatMessageList = lazy(() => import("./components/chat/main-content/ChatMessageList"))
 
@@ -35,7 +38,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" component={ChatPage}>
-        <Route path="/" component={ChatGettingStarted} />
+        <Route path="/" component={ChatGettingStarted} data={chatPageData} />
         <Route path="/channel">
           <Route path="/" component={ChatGettingStarted} />
           <Route path="/:id" component={ChatMessageList} />

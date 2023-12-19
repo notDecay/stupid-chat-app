@@ -1,11 +1,7 @@
-.chat-getting-started {
-  .icon {
-    background: center center no-repeat url("../../../assets/images/duck_typing.gif");
-    background-size: contain;
-  }
+.welcome .icon {
+  background-image: url("../../../assets/images/duck_typing.gif") !important;
+}
 
-  .text {
-    text-align: center;
-    line-height: normal;
-  }
+.no-channel .icon {
+  background-image: url("../../../assets/images/duck_wait_for_message.png") !important;
 }
