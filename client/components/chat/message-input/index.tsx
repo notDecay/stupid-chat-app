@@ -9,7 +9,7 @@ import {
   textareaStyles 
 } from "@hope-ui/solid"
 import TextareaAutosize from "solid-textarea-autosize"
-import type { ParentProps } from "solid-js"
+import { onMount, type ParentProps } from "solid-js"
 import { BsPlus } from "solid-icons/bs"
 import type { Message } from "../../../api/message/message"
 
@@ -30,7 +30,7 @@ namespace ChatMessageInput {
   }
 
   const MESSAGE_ROW_LIMIT = 25
-  const TEXTAREA_PLACEHOLDER = "Type something..."
+  const INPUT_PLACEHOLDER = "Type something..."
 
   /**Creates the message input
    * @param props see this interface {@link IChatMessageInputProps} for its props :)
@@ -48,9 +48,9 @@ namespace ChatMessageInput {
           <TextareaAutosize 
             class={textareaStyles()} 
             maxRows={MESSAGE_ROW_LIMIT} 
-            placeholder={TEXTAREA_PLACEHOLDER}
-            onKeyDown={e => keyboardHandler(e, () => {
-              props.onSendingMessage(e.currentTarget.value)
+            placeholder={INPUT_PLACEHOLDER}
+            onKeyDown={e => keyboardHandler(e, (rawMessageContent) => {
+              props.onSendingMessage(rawMessageContent)
             })}
           />
         </Center>
@@ -71,17 +71,18 @@ namespace ChatMessageInput {
    */
   function keyboardHandler(
     keyboardEvent: KeyboardEvent, 
-    canBeAbleToSend: () => void
+    canBeAbleToSend: (rawMessageContent: string) => void
   ) {
     const thisInput = keyboardEvent.currentTarget as HTMLTextAreaElement
+    const messageContent = thisInput.value.trim()
     const canBeSend = (
       keyboardEvent.key === "Enter" &&
       !keyboardEvent.shiftKey &&
-      thisInput.value.trim() != ''
+      messageContent != ''
     )
     if (!canBeSend) return 
     keyboardEvent.preventDefault()
-    canBeAbleToSend()
+    canBeAbleToSend(messageContent)
     thisInput.value = ''
     thisInput.style.height = '34px' // <= I guess this value out :)
   }

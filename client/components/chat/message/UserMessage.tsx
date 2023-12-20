@@ -89,7 +89,7 @@ namespace UserMessage {
 
     return (
       <>
-        <Box class="date" color="$neutral11" marginRight={hours >= 12 ? 8 : 13}>
+        <Box class="date" color="$neutral11" marginRight={hours >= 10 ? 8 : 13}>
           {formatedDateButShorter}
         </Box>
         <Flex fontSize="$xs" gap={15} alignItems="center" marginBottom={5} class="username">

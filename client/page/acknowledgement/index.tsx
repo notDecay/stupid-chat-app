@@ -5,7 +5,8 @@ import {
 } from "solid-js"
 import { 
   AcknowledgementLibaryInfo, 
-  AcknowledgementLoadingScreen 
+  AcknowledgementLoadingScreen, 
+  AppWrapper
 } from "../../components"
 
 export interface IPackageData {
@@ -38,10 +39,12 @@ export default function AcknowledgementPage() {
   const [resources] = createResource(fetchPackages)
 
   return (
-    <Suspense fallback={<AcknowledgementLoadingScreen />}>
-      <For each={resources()}>
-        {it => <AcknowledgementLibaryInfo {...it} />}
-      </For>
-    </Suspense>
+    <AppWrapper>
+      <Suspense fallback={<AcknowledgementLoadingScreen />}>
+        <For each={resources()}>
+          {it => <AcknowledgementLibaryInfo {...it} />}
+        </For>
+      </Suspense>
+    </AppWrapper>
   )
 }
