@@ -1,0 +1,28 @@
+.setting-content {
+  min-width: 75vw;
+  max-height: 80vh;
+  min-height: 80vh;
+}
+
+// override hope-ui's default <Tabs /> styles
+.setting-tabs {
+  display: grid !important;
+  grid-template-columns: 32% 1fr;
+  [role=tablist] {
+    border-inline-end-width: 0px;
+    button[role=tab] {
+      width: 100%;
+      box-shadow: none;
+      border-color: transparent;
+      justify-content: start;
+      &[aria-selected=true] {
+        background-color: var(--hope-colors-blackAlpha8);
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .content {
+    // 
+  }
+}

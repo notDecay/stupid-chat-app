@@ -5,20 +5,24 @@ import {
   ModalBody, 
   ModalCloseButton, 
   ModalContent, 
+  type ModalContentProps, 
   ModalFooter, 
   ModalHeader, 
-  ModalOverlay 
+  ModalOverlay, 
+  type ModalProps,
+  ModalBodyProps
 } from "@hope-ui/solid"
 import type { JSX, ParentProps } from "solid-js"
 
 import style from "./Modal.module.scss"
+import { mergeClassNames } from "../../utils"
 
 interface IModal {
   isOpen: () => boolean
   onClose: () => void
 }
 
-interface IModalContentProps extends IModal {
+interface IModalContentProps extends IModal, Omit<ModalProps, "opened" | "onClose" | "centered"> {
   // ...
 }
 
@@ -31,15 +35,21 @@ interface IModalLabelProps {
 }
 
 const _Modal = {
-  Content(props: ParentProps<IModalContentProps>) {
+  Modal(props: ParentProps<IModalContentProps>) {
     return (
-      <Modal centered scrollBehavior="inside" opened={props.isOpen()} onClose={props.onClose}>
+      <Modal {...props} centered scrollBehavior="inside" opened={props.isOpen()} onClose={props.onClose}>
         <ModalOverlay />
-        <ModalContent class={style["modal-dialog"]}>
-          <ModalCloseButton class={style["modal-close-button"]} backgroundColor="$neutral6" boxSize="40px" />
-          {props.children}
-        </ModalContent>
+        {props.children}
       </Modal>
+    )
+  },
+
+  Content(props: ModalContentProps) {
+    return (
+      <ModalContent {...props} class={mergeClassNames(style["modal-dialog"], props.class)}>
+        <ModalCloseButton class={style["modal-close-button"]} backgroundColor="$neutral6" boxSize="40px" />
+        {props.children}
+      </ModalContent>
     )
   },
 
@@ -51,9 +61,9 @@ const _Modal = {
     )
   },
 
-  Body(props: ParentProps) {
+  Body(props: ModalBodyProps) {
     return (
-      <ModalBody>
+      <ModalBody {...props}>
         {props.children}
       </ModalBody>
     )

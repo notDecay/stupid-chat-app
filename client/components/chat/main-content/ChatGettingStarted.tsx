@@ -1,7 +1,7 @@
 import { Anchor, Box } from "@hope-ui/solid"
 import ChatSidebar from "../sidebar"
 import Welcome from "../../layout/Welcome"
-import { Show } from "solid-js"
+import { Show, Suspense } from "solid-js"
 
 import style from "./ChatGettingStarted.module.scss"
 import { useRouteData } from "@solidjs/router"

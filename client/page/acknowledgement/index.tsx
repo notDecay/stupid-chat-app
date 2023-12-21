@@ -6,8 +6,12 @@ import {
 import { 
   AcknowledgementLibaryInfo, 
   AcknowledgementLoadingScreen, 
-  AppWrapper
+  AppWrapper,
+  ScrollBar
 } from "../../components"
+import { Box, Flex, Grid, Heading } from "@hope-ui/solid"
+
+import style from "./index.module.scss"
 
 export interface IPackageData {
   name: string
@@ -39,12 +43,19 @@ export default function AcknowledgementPage() {
   const [resources] = createResource(fetchPackages)
 
   return (
-    <AppWrapper>
-      <Suspense fallback={<AcknowledgementLoadingScreen />}>
-        <For each={resources()}>
-          {it => <AcknowledgementLibaryInfo {...it} />}
-        </For>
-      </Suspense>
-    </AppWrapper>
+    <Flex as={AppWrapper} justifyContent="center">
+      <Box width="70%" overflowY="auto">
+        <Heading size="2xl">
+          These are open source libary that used to make this app :)
+        </Heading>
+        <Grid templateColumns="1fr 1fr" as={ScrollBar}>
+          <Suspense fallback={<AcknowledgementLoadingScreen />}>
+            <For each={resources()}>
+              {it => <AcknowledgementLibaryInfo {...it} />}
+            </For>
+          </Suspense>
+        </Grid>
+      </Box>
+    </Flex>
   )
 }

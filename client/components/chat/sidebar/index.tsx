@@ -1,4 +1,4 @@
-import { Divider, Grid, Spacer } from "@hope-ui/solid"
+import { Button, Divider, Grid, Spacer } from "@hope-ui/solid"
 import SearchBox from "./SearchBox"
 import Channel from "./Channel"
 import MoreOptionsButton from "./MoreOptionsButton"
@@ -6,6 +6,7 @@ import { FullView } from "../.."
 import { event } from "../../../utils"
 
 import style from "./index.module.scss"
+import { BsHouseExclamation } from "solid-icons/bs"
 
 namespace ChatSidebar {
   const enum SidebarEvents {

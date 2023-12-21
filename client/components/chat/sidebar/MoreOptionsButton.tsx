@@ -1,11 +1,13 @@
-import { type Component, lazy } from "solid-js"
+import { type Component, lazy, createSignal, Switch, Match, Setter } from "solid-js"
 import { MoreOptions } from "../.."
 import { BsGearFill, BsInfoCircle } from "solid-icons/bs"
 import { createDisclosure } from "@hope-ui/solid"
-import { Dynamic } from "solid-js/web"
 
 export default function MoreOptionsButton() {
-  const appInfoModal = createModal(lazy(() => import("../../modals/app-info")))
+  // it's just lazy-loaded the modal
+  const [option, setOption] = createSignal(0)
+  const appInfoModal = createModal(lazy(() => import("../../modals/app-info")), 1, setOption)
+  const settingsModal = createModal(lazy(() => import("../../modals/settings")), 2, setOption)
 
   return (
     <>
@@ -14,7 +16,7 @@ export default function MoreOptionsButton() {
           <MoreOptions.Item 
             name="Some settings" 
             icon={<BsGearFill />}
-            onSelect={() => void 0}
+            onSelect={settingsModal.onOpen}
           />
           <MoreOptions.Item 
             name="User related" 
@@ -30,24 +32,37 @@ export default function MoreOptionsButton() {
           />
         </MoreOptions.Group>
       </MoreOptions.Menu>
-      <appInfoModal.Modal />
+      <Switch>
+        <Match when={option() == 1}>
+          <appInfoModal.Modal />
+        </Match>
+        <Match when={option() == 2}>
+          <settingsModal.Modal />
+        </Match>
+      </Switch>
     </>
   )
 }
 
-function createModal(modalComponent: Component) {
+const createModal = (ModalComponent: Component, option: number, setOption: Setter<number>) => {
   const modal = createDisclosure()
-
   return {
-    onOpen: modal.onOpen,
+    onOpen() {
+      modal.onOpen()
+      setOption(option)
+    },
     Modal() {
       return (
-        <Dynamic 
-          component={modalComponent} 
+        <ModalComponent
           // @ts-ignore
           isOpen={modal.isOpen} 
           // @ts-ignore
-          onClose={modal.onClose}
+          onClose={() => {
+            modal.onClose()
+            setTimeout(() => {
+              setOption(0)
+            }, 750)
+          }}
         />
       )
     }
