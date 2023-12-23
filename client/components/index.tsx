@@ -1,9 +1,6 @@
 // ...
-export { default as AppWrapper } from "./layout/AppWrapper"
-export { default as ScrollBar } from "./layout/ScrollBar"
 export { default as NameAndDescription } from "./layout/NameAndDescription"
-export { default as MoreOptionsButton } from "./layout/MoreOptionsButton"
-export { default as FullView } from "./layout/FullView"
+export { default as MoreOptionsButton } from "./layout/ThreeDotButton"
 // ...
 export { default as MoreOptions } from "./menu/MoreOptionsMenu"
 // ...ww
@@ -19,7 +16,6 @@ export { default as AcknowledgementLibaryInfo } from "./acknowledgement/LibaryIn
 // ...
 export * from "./provider/ChatMessagesProvider"
 // ...
-export { default as SplashScreen } from "./splash"
 
 export { default as ChatMessageInput } from "./chat/message-input"
 export * from "./chat/message"

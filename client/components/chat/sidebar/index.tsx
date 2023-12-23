@@ -1,12 +1,45 @@
-import { Button, Divider, Grid, Spacer } from "@hope-ui/solid"
+import { Divider, Grid, Spacer } from "@hope-ui/solid"
 import SearchBox from "./SearchBox"
 import Channel from "./Channel"
 import MoreOptionsButton from "./MoreOptionsButton"
-import { FullView } from "../.."
 import { event } from "../../../utils"
 
-import style from "./index.module.scss"
-import { BsHouseExclamation } from "solid-icons/bs"
+import { stylex } from "@stylexjs/stylex"
+import { createSignal } from "solid-js"
+
+const highlightAnimation = stylex.keyframes({
+  from: {
+    borderColor: "rgba(255, 145, 0, 0.671)"
+  },
+
+  to: {
+    borderColor: "transparent"
+  }
+})
+
+const chatSidebarStyle = stylex.create({
+  sidebar: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    "::before": {
+      content: '',
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      border: "5px dotted transparent",
+    },
+    
+  },
+  sidebarHighlighted: {
+    "::before": {
+      animation: `${highlightAnimation} 0.75s ease-out`
+    }
+  },
+  content: {
+    padding: "10px 15px"
+  }
+})
 
 namespace ChatSidebar {
   const enum SidebarEvents {
@@ -24,6 +57,7 @@ namespace ChatSidebar {
    * @returns JSX element
    */
   export function Sidebar() {
+    const [highlightSidebar, setHighlightSidebar] = createSignal(false)
     let sidebar: HTMLDivElement
     const channelList = [ // todo: get this somewhere
       {
@@ -33,10 +67,10 @@ namespace ChatSidebar {
     ]
 
     sidebarEvent.on(SidebarEvents.highlightShown, () => {
-      sidebar.classList.toggle(style["highlight-shown"])
+      setHighlightSidebar(true)
       // remove it so it can be flashed again :)
       setTimeout(() => {
-        sidebar.classList.toggle(style["highlight-shown"])
+        setHighlightSidebar(false)
       }, 0.75 * 1000)
       // ^^^^^^^^^^^ todo: somehow can sync it from the style -> here
       //             this delay in milisecond is the same as the animation delay
@@ -45,8 +79,14 @@ namespace ChatSidebar {
     })
   
     return (
-      <FullView class={style["chat-sidebar"]} ref={sidebar!}>
-        <div class={style["content"]}>
+      <div 
+        ref={sidebar!}
+        {...stylex.props(
+          chatSidebarStyle.sidebar,
+          highlightSidebar() ? chatSidebarStyle.sidebarHighlighted : null
+        )}
+      >
+        <div {...stylex.props(chatSidebarStyle.content)}>
           <Grid templateColumns="auto auto auto" gap={10}>
             <SearchBox />
             <Spacer />
@@ -57,7 +97,7 @@ namespace ChatSidebar {
             {channel => <Channel.Channel {...channel} />}
           </Channel.List>
         </div>
-      </FullView>
+      </div>
     )
   }
 

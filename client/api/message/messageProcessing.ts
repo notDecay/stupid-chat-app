@@ -12,6 +12,9 @@ export type ProcessMessageOptions = {
    * ```
    * MessageCache.getLastMessage("store-name-aka-channel-id")
    * ```
+   * 
+   * This being used to calculate if it's a follow up message
+   * of not 
    * @see {@link MessageCache}
    */
   lastMessageInCache: ChatMessage | undefined

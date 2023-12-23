@@ -9,7 +9,7 @@ import {
   textareaStyles 
 } from "@hope-ui/solid"
 import TextareaAutosize from "solid-textarea-autosize"
-import { onMount, type ParentProps } from "solid-js"
+import { type ParentProps } from "solid-js"
 import { BsPlus } from "solid-icons/bs"
 import type { Message } from "../../../api/message/message"
 

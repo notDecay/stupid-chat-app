@@ -29,8 +29,8 @@ function App() {
 // chat sidebar
 const ChatPage = lazy(() => import("./page/chat/ChatPage"))
 // chat main content
-const ChatGettingStarted = lazy(() => import("./components/chat/main-content/ChatGettingStarted"))
-const ChatMessageList = lazy(() => import("./components/chat/main-content/ChatMessageList"))
+const ChatGettingStarted = lazy(() => import("./page/chat/ChatGettingStarted"))
+const ChatMessageList = lazy(() => import("./page/chat/ChatMessageList"))
 
 const AcknowledgementPage = lazy(() => import("./page/acknowledgement"))
 

@@ -1,8 +1,13 @@
 import { defineConfig } from 'vite'
 import { optimizeCssModules } from 'vite-plugin-optimize-css-modules'
 import solidPlugin from 'vite-plugin-solid'
+import stylexPlugin from '@stylexjs/rollup-plugin'
 
 const HASH_NAME = "[hash:20]"
+
+const _stylexPlugin = stylexPlugin({
+  // fileName: "./build/assets/style.css",
+})
 
 export default defineConfig({
   plugins: [
@@ -27,6 +32,7 @@ export default defineConfig({
         chunkFileNames: `${HASH_NAME}.js`,
         entryFileNames: `${HASH_NAME}.js`,
       },
+      plugins: [_stylexPlugin]
     },
   },
 })

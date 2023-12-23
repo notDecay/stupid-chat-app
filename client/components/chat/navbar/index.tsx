@@ -1,23 +1,26 @@
-import { Avatar, Flex, Spacer } from "@hope-ui/solid"
+import { Avatar, Spacer } from "@hope-ui/solid"
 import { NameAndDescription, MoreOptionsButton } from "../.."
 
-import style from "./index.module.scss"
+import { stylex } from "@stylexjs/stylex"
+
+const navbarStyle = stylex.create({
+  nav: {
+    display: "flex",
+    alignItems: "center", 
+    padding: "7px 15px",
+    backgroundColor: "var(--hope-colors-neutral2)",
+    borderBottom: "1px solid var(--hope-colors-neutral8)",
+    gap: "15px"
+  }
+})
 
 export default function ChatNavBar() {
   return (
-    <Flex 
-      as="nav" 
-      px={15} 
-      py={7} 
-      gap={15} 
-      backgroundColor="$neutral2" 
-      alignItems="center" 
-      class={style["chat-nav-bar"]}
-    >
+    <nav {...stylex.props(navbarStyle.nav)}>
       <Avatar />
       <NameAndDescription name="something" />
       <Spacer />
       <MoreOptionsButton />
-    </Flex>
+    </nav>
   )
 }

@@ -1,5 +1,6 @@
-export { default as event } from "./duck/event"
-export { default as logdown } from "./duck/logdown"
+export { default as event } from "./event"
+export { default as logdown } from "./logdown"
+export { default as Styles } from "./styles"
 export * as marked from "../lib/marked"
 
 /**Merging one or more class name together

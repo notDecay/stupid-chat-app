@@ -3,12 +3,22 @@ import { MessageCache } from "../../../api/message/cache"
 import { ChatMessageEvents, useChatMessages } from "../../provider/ChatMessagesProvider"
 import { Message } from "../../../api/message/message"
 import { MessageOptions } from "../message/MessageOptions"
-import { MESSAGE_FOLLOW_UP_KEY, UserMessage } from "../message"
+import { UserMessage } from "../message"
 import { processMessage } from "../../../api/message/messageProcessing"
 import { logdown, scrollDown } from "../../../utils"
-import FullView from "../../layout/FullView"
-import ScrollBar from "../../layout/ScrollBar"
 import ChatMessageInput from "../message-input"
+import { stylex } from "@stylexjs/stylex"
+import { removeAndUpdateMessage } from "../../../api/message/messageUpdate"
+
+const chatMessageListStyle = stylex.create({
+  messageList: {
+    maxHeight: "80vh",
+    paddingBottom: "2rem",
+    width: "100%",
+    height: "100%",
+    overflowY: "scroll"
+  }
+})
 
 const messageCacheStore = MessageCache.createIfItsNotExist("root")
 
@@ -27,6 +37,7 @@ export default function ChatMessageContent() {
   }
 
   const sendingMessagehandler = async (messageContent: string) => {
+    // step 1. do some message processing stuff
     const {
       isFollowUpMessage,
       messageToSendData,
@@ -35,15 +46,17 @@ export default function ChatMessageContent() {
       messageContent,
       lastMessageInCache: MessageCache.getLastMessage("root")
     })
-
+    // step 2. update it to the ui
     setMessageList([...messageList(), {
       ...messageToSendData,
       isFollowUp: isFollowUpMessage,
       replyTo: replyToMessage()
     }])
-
+    // if you reply to someone, hide replying to pop up
+    // on the message input
     hideReplyTo()
     scrollDown(chatMessageList)
+    // save it to a cache for future needs
     messageCacheStore.set(messageId, messageToSendData)
   }
 
@@ -58,14 +71,15 @@ export default function ChatMessageContent() {
         if (replyToMessage()?.id === messageId) {
           hideReplyTo()
         }
-        removeAndUpdateMessage(messageId)
+
+        removeAndUpdateMessage(messageCacheStore, messageId)
       } break
 
       case "reply": {
         const message = await Message.fetch({
           channelId: "root",
           messageId
-        })!
+        })
 
         if (!message) {
           logdown.err("failed to fetch message")
@@ -80,16 +94,14 @@ export default function ChatMessageContent() {
 
   return (
     <>
-      <FullView 
-        as={ScrollBar} 
-        maxHeight="80vh" 
-        paddingBottom="2rem"
+      <div 
+        {...stylex.props(chatMessageListStyle.messageList)}
         ref={chatMessageList!}
       >
         <For each={messageList()}>
           {handleMessage}
         </For>
-      </FullView>
+      </div>
       <ChatMessageInput.Input onSendingMessage={sendingMessagehandler}>
         <Switch>
           <Match when={action() == "reply"}>
@@ -99,29 +111,4 @@ export default function ChatMessageContent() {
       </ChatMessageInput.Input>
     </>
   )
-}
-
-/**Remove the message that has the id `messageId` (if exist),
- * then update it.
- * @param messageId the message id it will be removed
- * @returns         *nothing*
- */
-function removeAndUpdateMessage(messageId: string) {
-  // convert all of the message id from messageCacheStore to an array
-  const keys = Array.from(messageCacheStore.keys())
-  // grap the message that it will be removed 
-  const messageToDelete = document.getElementById(messageId)
-  // grap the message bellow the message that it will be removed
-  const messageToDeleteIndex = keys.indexOf(messageId)
-  const messageOnBottom = document.getElementById(keys[messageToDeleteIndex + 1])
-  // update the message of the bottom to a normal message (if needed)
-  if (
-    !messageToDelete?.classList.contains(MESSAGE_FOLLOW_UP_KEY) &&
-    messageOnBottom?.classList.contains(MESSAGE_FOLLOW_UP_KEY)
-  ) {
-    messageOnBottom.classList.remove(MESSAGE_FOLLOW_UP_KEY)
-  }
-  // delete it
-  messageToDelete?.remove()
-  messageCacheStore.delete(messageId)
 }

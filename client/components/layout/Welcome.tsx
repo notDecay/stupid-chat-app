@@ -1,30 +1,60 @@
-import { Box, Center, type CenterProps } from "@hope-ui/solid"
-import FullView from "./FullView"
+import { type CenterProps } from "@hope-ui/solid"
 
 import style from "./Welcome.module.scss"
 import { ParentProps } from "solid-js"
-import { mergeClassNames } from "../../utils"
+import { Styles } from "../../utils"
+import stylex from "@stylexjs/stylex"
+
+const welcomeStyles = stylex.create({
+  screen: {
+    flexDirection: "column"
+  },
+  text: {
+    textAlign: "center",
+    lineHeight: "normal"
+  },
+  icon: {
+    background: "center center no-repeat",
+    backgroundSize: "contain",
+    width: "19rem",
+    height: "15rem"
+  }
+})
 
 namespace Welcome {
   export function Screen(props: CenterProps) {
     return (
-      <Center as={FullView} flexDirection="column" class={mergeClassNames(style["welcome"], props.class)}>
+      <div {...stylex.props(
+        Styles.flexCenter, 
+        Styles.fullView, 
+        welcomeStyles.screen
+      )}>
         {props.children}
-      </Center>
+      </div>
     )
   }
 
-  export function Icon(props: ParentProps) {
+  interface IWelcomeIconProps {
+    iconUrl?: string
+  }
+
+  export function Icon(props: IWelcomeIconProps) {
+    const icon = stylex.create({
+      icon: {
+        backgroundImage: `url("${props.iconUrl}") !important`
+      }
+    }).icon
+
     return (
-      <div class={style.icon}>
-        {props.children}
+      <div>
+        <div {...stylex.props(welcomeStyles.icon, icon)} />
       </div>
     )
   }
 
   export function Text(props: ParentProps) {
     return (
-      <span class={style.text}>
+      <span {...stylex.props(welcomeStyles.text)}>
         {props.children}
       </span>
     )

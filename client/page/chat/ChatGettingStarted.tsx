@@ -1,11 +1,13 @@
-import { Anchor, Box } from "@hope-ui/solid"
-import ChatSidebar from "../sidebar"
-import Welcome from "../../layout/Welcome"
-import { Show, Suspense } from "solid-js"
+import { Anchor } from "@hope-ui/solid"
+import ChatSidebar from "../../components/chat/sidebar"
+import Welcome from "../../components/layout/Welcome"
+import { Show } from "solid-js"
 
-import style from "./ChatGettingStarted.module.scss"
 import { useRouteData } from "@solidjs/router"
-import type { ChatPageData } from "../../../page/chat/data"
+import type { ChatPageData } from "./data"
+
+import duck_typing from "../../assets/images/duck_typing.gif"
+import duck_wait_for_message from "../../assets/images/duck_wait_for_message.png"
 
 export default function GettingStarted() {
   const chatPageData = useRouteData<ChatPageData>()
@@ -19,10 +21,8 @@ export default function GettingStarted() {
 
 function ChatWelcome() {
   return (
-    <Welcome.Screen class={style.welcome}>
-      <Welcome.Icon>
-        <Box width="19rem" height="15rem" class={style.icon} />
-      </Welcome.Icon>
+    <Welcome.Screen>
+      <Welcome.Icon iconUrl={duck_typing} />
       <Welcome.Text>
         <div>Select a channel</div>
         <div>
@@ -35,10 +35,8 @@ function ChatWelcome() {
 
 function NoChannel() {
   return (
-    <Welcome.Screen class={style["no-channel"]}>
-      <Welcome.Icon>
-        <Box width="19rem" height="15rem" class={style.icon} />
-      </Welcome.Icon>
+    <Welcome.Screen>
+      <Welcome.Icon iconUrl={duck_wait_for_message} />
       <Welcome.Text>
         <div>Hmm... no channel.</div>
         <div>

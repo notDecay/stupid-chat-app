@@ -16,7 +16,7 @@ import {
 } from "solid-js"
 
 import style from "./MoreOptionsMenu.module.scss"
-import MoreOptionsButton from "../layout/MoreOptionsButton"
+import ThreeDotButton from "../layout/ThreeDotButton"
 
 interface IMoreOptionsGroupProps {
   name: string
@@ -33,7 +33,7 @@ const MoreOptions = {
     return (
       <Menu>
         <Tooltip withArrow label="Open more options menu" placement="right-end">
-          <MenuTrigger as={MoreOptionsButton} />
+          <MenuTrigger as={ThreeDotButton} />
         </Tooltip>
         <MenuContent>
           <div>
