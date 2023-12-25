@@ -1,7 +1,7 @@
 import { Avatar, Spacer } from "@hope-ui/solid"
 import { NameAndDescription, MoreOptionsButton } from "../.."
 
-import { stylex } from "@stylexjs/stylex"
+import stylex from "@stylexjs/stylex"
 
 const navbarStyle = stylex.create({
   nav: {

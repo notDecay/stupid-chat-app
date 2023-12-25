@@ -4,7 +4,7 @@ import { Link } from "@solidjs/router"
 import { NameAndDescription } from "../.."
 
 import { For, JSX, Show } from "solid-js"
-import { stylex } from "@stylexjs/stylex"
+import stylex from "@stylexjs/stylex"
 import "./Channel.scss"
 
 const channelStyle = stylex.create({

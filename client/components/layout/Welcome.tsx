@@ -1,13 +1,16 @@
-import { type CenterProps } from "@hope-ui/solid"
+import { Box, type CenterProps } from "@hope-ui/solid"
 
-import style from "./Welcome.module.scss"
 import { ParentProps } from "solid-js"
-import { Styles } from "../../utils"
 import stylex from "@stylexjs/stylex"
 
 const welcomeStyles = stylex.create({
   screen: {
-    flexDirection: "column"
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    width: "100%",
+    height: "100%"
   },
   text: {
     textAlign: "center",
@@ -24,11 +27,7 @@ const welcomeStyles = stylex.create({
 namespace Welcome {
   export function Screen(props: CenterProps) {
     return (
-      <div {...stylex.props(
-        Styles.flexCenter, 
-        Styles.fullView, 
-        welcomeStyles.screen
-      )}>
+      <div {...stylex.props(welcomeStyles.screen)}>
         {props.children}
       </div>
     )
@@ -39,15 +38,10 @@ namespace Welcome {
   }
 
   export function Icon(props: IWelcomeIconProps) {
-    const icon = stylex.create({
-      icon: {
-        backgroundImage: `url("${props.iconUrl}") !important`
-      }
-    }).icon
-
     return (
       <div>
-        <div {...stylex.props(welcomeStyles.icon, icon)} />
+        {/* @ts-ignore */}
+        <Box {...stylex.props(welcomeStyles.icon)} backgroundImage={`url("${props.iconUrl}") !important`} />
       </div>
     )
   }

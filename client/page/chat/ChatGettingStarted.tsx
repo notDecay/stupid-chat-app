@@ -1,13 +1,13 @@
-import { Anchor } from "@hope-ui/solid"
-import ChatSidebar from "../../components/chat/sidebar"
-import Welcome from "../../components/layout/Welcome"
-import { Show } from "solid-js"
+import { Anchor } from '@hope-ui/solid'
+import ChatSidebar from '../../components/chat/sidebar'
+import Welcome from '../../components/layout/Welcome'
+import { Show } from 'solid-js'
 
-import { useRouteData } from "@solidjs/router"
-import type { ChatPageData } from "./data"
+import { useRouteData } from '@solidjs/router'
+import type { ChatPageData } from './data'
 
-import duck_typing from "../../assets/images/duck_typing.gif"
-import duck_wait_for_message from "../../assets/images/duck_wait_for_message.png"
+import duck_typing from '../../assets/images/duck_typing.gif'
+import duck_wait_for_message from '../../assets/images/duck_wait_for_message.png'
 
 export default function GettingStarted() {
   const chatPageData = useRouteData<ChatPageData>()

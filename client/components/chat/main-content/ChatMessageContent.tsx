@@ -7,7 +7,7 @@ import { UserMessage } from "../message"
 import { processMessage } from "../../../api/message/messageProcessing"
 import { logdown, scrollDown } from "../../../utils"
 import ChatMessageInput from "../message-input"
-import { stylex } from "@stylexjs/stylex"
+import stylex from "@stylexjs/stylex"
 import { removeAndUpdateMessage } from "../../../api/message/messageUpdate"
 
 const chatMessageListStyle = stylex.create({

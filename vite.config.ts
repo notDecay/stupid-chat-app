@@ -1,23 +1,23 @@
 import { defineConfig } from 'vite'
 import { optimizeCssModules } from 'vite-plugin-optimize-css-modules'
 import solidPlugin from 'vite-plugin-solid'
-import stylexPlugin from '@stylexjs/rollup-plugin'
+import { stylexPlugin } from "vite-plugin-stylex-dev"
+// import stylexPlugin from '@stylexjs/rollup-plugin'
+// import babelStyleXPlugin from '@stylexjs/babel-plugin'
+
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const HASH_NAME = "[hash:20]"
 
-const _stylexPlugin = stylexPlugin({
-  // fileName: "./build/assets/style.css",
-})
-
 export default defineConfig({
   plugins: [
-    /* 
-    Uncomment the following line to enable solid-devtools.
-    For more info see https://github.com/thetarnav/solid-devtools/tree/main/packages/extension#readme
-    */
-    // devtools(),
     solidPlugin(),
-    optimizeCssModules()
+    optimizeCssModules(),
+    stylexPlugin()
   ],
   server: {
     port: 3000,
@@ -26,13 +26,13 @@ export default defineConfig({
   build: {
     target: 'esnext',
     outDir: './build/dist/client',
+    sourcemap: true,
     rollupOptions: {
       output: {
         assetFileNames: `${HASH_NAME}.[ext]`,
         chunkFileNames: `${HASH_NAME}.js`,
         entryFileNames: `${HASH_NAME}.js`,
       },
-      plugins: [_stylexPlugin]
     },
   },
 })

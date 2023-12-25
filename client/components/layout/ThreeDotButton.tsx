@@ -1,8 +1,7 @@
 import { Button, type ButtonProps } from "@hope-ui/solid"
 import { BsThreeDots } from "solid-icons/bs"
-import { mergeClassNames } from "../../utils"
 
-import { stylex } from "@stylexjs/stylex"
+import stylex from "@stylexjs/stylex"
 
 const buttonStyle = stylex.create({
   threeDotButton: {
@@ -15,14 +14,13 @@ const buttonStyle = stylex.create({
 })
 
 export default function ThreeDotButton(props: ButtonProps) {
-  const itsClass = mergeClassNames(stylex.props(buttonStyle.threeDotButton).className!, props.class)
-
   return (
     <Button 
       {...props}
       variant="subtle"
       colorScheme="neutral"
-      class={itsClass}
+      class={props.class}
+      {...stylex.props(buttonStyle.threeDotButton)}
     >
       <BsThreeDots />
     </Button>

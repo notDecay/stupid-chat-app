@@ -1,10 +1,10 @@
-import { Divider, Grid, Spacer } from "@hope-ui/solid"
+import { Divider, Spacer } from "@hope-ui/solid"
 import SearchBox from "./SearchBox"
 import Channel from "./Channel"
 import MoreOptionsButton from "./MoreOptionsButton"
 import { event } from "../../../utils"
 
-import { stylex } from "@stylexjs/stylex"
+import stylex from "@stylexjs/stylex"
 import { createSignal } from "solid-js"
 
 const highlightAnimation = stylex.keyframes({
@@ -29,7 +29,10 @@ const chatSidebarStyle = stylex.create({
       height: "100%",
       border: "5px dotted transparent",
     },
-    
+  },
+  searchBox: {
+    display: "grid",
+    gridTemplateColumns: "auto auto auto"
   },
   sidebarHighlighted: {
     "::before": {
@@ -87,11 +90,11 @@ namespace ChatSidebar {
         )}
       >
         <div {...stylex.props(chatSidebarStyle.content)}>
-          <Grid templateColumns="auto auto auto" gap={10}>
+          <div {...stylex.props(chatSidebarStyle.searchBox)}>
             <SearchBox />
             <Spacer />
             <MoreOptionsButton />
-          </Grid>
+          </div>
           <Divider my={15} />
           <Channel.List list={channelList}>
             {channel => <Channel.Channel {...channel} />}
