@@ -1,5 +1,6 @@
 import { Anchor, Tag } from "@hope-ui/solid"
 import { Modal, AppInfo } from "../.."
+import { AppRoutes } from "../../../../config/app_config"
 
 export default function AppInfoModal(props: Pick<IModalProps, "isOpen" | "onClose">) {
   return (
@@ -18,7 +19,7 @@ export default function AppInfoModal(props: Pick<IModalProps, "isOpen" | "onClos
             </AppInfo.Content>
           </Modal.Label>
           <Modal.Label name="Acknowledgement">
-            Visit <Anchor href="/acknowledgement" target="_blank" marginRight="4px">this</Anchor> 
+            Visit <Anchor href={AppRoutes.acknowledgement} target="_blank" marginRight="4px">this</Anchor> 
             if you want to see all of the libaries used to make this app :)
           </Modal.Label>
         </Modal.Body>

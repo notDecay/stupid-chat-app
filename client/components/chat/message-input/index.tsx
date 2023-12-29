@@ -1,19 +1,16 @@
 import { 
-  Avatar, 
-  Button, 
   Center, 
-  CloseButton, 
-  Divider, 
   Flex, 
-  Spacer, 
   textareaStyles 
 } from "@hope-ui/solid"
 import TextareaAutosize from "solid-textarea-autosize"
 import { type ParentProps } from "solid-js"
-import { BsPlus } from "solid-icons/bs"
-import type { Message } from "../../../api/message/message"
 
 import style from "./index.module.scss"
+
+import MoreOptions from "./MoreOptions"
+import _ReplyTo from "./ReplyTo"
+
 namespace ChatMessageInput {
   interface IChatMessageInputProps {
     /**Fired whenever a user send a message, if 3 of these condition are met
@@ -28,10 +25,10 @@ namespace ChatMessageInput {
      */
     onSendingMessage: (messageContent: string) => any
   }
-
+  
   const MESSAGE_ROW_LIMIT = 25
   const INPUT_PLACEHOLDER = "Type something..."
-
+  
   /**Creates the message input
    * @param props see this interface {@link IChatMessageInputProps} for its props :)
    * - `props.children`: used to display stuff on top of the input itself
@@ -52,12 +49,13 @@ namespace ChatMessageInput {
             onKeyDown={e => keyboardHandler(e, (rawMessageContent) => {
               props.onSendingMessage(rawMessageContent)
             })}
+            id="message-input"
           />
         </Center>
       </Flex>
     )
   }
-
+  
   /**Handle message input
    * @param keyboardEvent     the keyboard event itself
    * @param canBeAbleToSend   a callback function that fired whenever it can be send or not.
@@ -87,73 +85,8 @@ namespace ChatMessageInput {
     thisInput.style.height = '34px' // <= I guess this value out :)
   }
 
-  /**Creates the message input more options button
-   * @returns JSX element
-   * @component
-   */
-  function MoreOptions() {
-    return (
-      <div class={style["more-options-wrapper"]}>
-        <Button
-          class={style["more-options"]} 
-          boxSize={35} 
-          background="$neutral4"
-          as={Center}
-          colorScheme="neutral"
-        >
-          <BsPlus size={25} />
-        </Button>
-      </div>
-    )
-  }
-
-  interface IChatMessageReplyToProps
-    extends Message.IUserMessage {
-    onClose?: () => void
-  }
-
-  /**Uhhh, idk how to explain this component, see the example :)
-   * @example
-   * ```
-   * import { createSignal } from "solid-js"
-   * 
-   * function Component() {
-   *   const [replyToMessage, setReplyToMessage] = createSignal()
-   *   const sendMessageHandler = (messageContent: string) => {
-   *     // do something with the messageContent
-   *     // ...
-   *     // then whenever a user hit the reply button...
-   *     // get that message reply somewhere
-   *     // set to here
-   *     setReplyToMessage(message)
-   *   }
-   * 
-   *   return (
-   *     <ChatMessageInput.Input onSendingMessage={sendMessageHandler}>
-   *       <ChatMessageInput.ReplyTo {...replyToMessage()} />
-   *     </ChatMessageInput.Input>
-   *   )
-   * }
-   * ```
-   * @param props see {@link Message.IUserMessage} for its props
-   * @returns     JSX element
-   * @see {@link Input} component
-   * @component
-   */
-  export function ReplyTo(props: IChatMessageReplyToProps) {
-    return (
-      <Flex px={9} py={5} background="$neutral3" gap={15} fontSize={16} alignItems="center">
-        <Avatar boxSize={25} />
-        <div>{props.user.name}</div>
-        <div>
-          <Divider orientation="vertical" thickness="3px" />
-        </div>
-        <span innerHTML={props.content} />
-        <Spacer />
-        <CloseButton onClick={props.onClose} />
-      </Flex>
-    )
-  }
+  // components that used (show on the top of the message input)
+  export const ReplyTo = _ReplyTo
 }
 
 export default ChatMessageInput

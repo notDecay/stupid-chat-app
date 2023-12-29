@@ -7,8 +7,10 @@
     "start": "vite",
     "dev": "vite --open",
     "build": "vite build",
-    "build_server": "esbuild --bundle --external:express --minify --outdir=\"./build/dist/\" ./server/index.ts --analyze --platform=node",
-    "serve": "vite preview"
+    "build:server": "node ./build config=server_build",
+    "build:script": "node ./build config=script_build",
+    "opt:client_build": "node ./build/optimizeClassName.js",
+    "serve": "vite preview --open"
   },
   "license": "MIT",
   "devDependencies": {

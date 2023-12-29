@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import { optimizeCssModules } from 'vite-plugin-optimize-css-modules'
 import solidPlugin from 'vite-plugin-solid'
-import { stylexPlugin } from "vite-plugin-stylex-dev"
+// import { stylexPlugin } from "vite-plugin-stylex-dev"
 // import stylexPlugin from '@stylexjs/rollup-plugin'
 // import babelStyleXPlugin from '@stylexjs/babel-plugin'
 
@@ -17,12 +17,12 @@ export default defineConfig({
   plugins: [
     solidPlugin(),
     optimizeCssModules(),
-    stylexPlugin()
+    // stylexPlugin()
   ],
   server: {
     port: 3000,
   },
-  cacheDir: './build/cache',
+  cacheDir: './build/dist/cache',
   build: {
     target: 'esnext',
     outDir: './build/dist/client',

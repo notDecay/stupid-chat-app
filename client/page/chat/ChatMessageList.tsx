@@ -3,7 +3,7 @@ import ChatNavBar from '../../components/chat/navbar'
 import ChatMessageContent from '../../components/chat/main-content/ChatMessageContent'
 import stylex from "@stylexjs/stylex"
 
-const chatMessageStyle = stylex.create({
+const style = stylex.create({
   messageListWrapper: {
     width: '100%',
     height: '100%',
@@ -20,9 +20,9 @@ const chatMessageStyle = stylex.create({
 export default function MessageList() {
   return (
     <ChatMessagesProvider>
-      <div {...stylex.props(chatMessageStyle.messageListWrapper)}>
+      <div {...stylex.props(style.messageListWrapper)}>
         <ChatNavBar />
-        <div {...stylex.props(chatMessageStyle.messageList)}>
+        <div {...stylex.props(style.messageList)}>
           <ChatMessageContent />
         </div>
       </div>

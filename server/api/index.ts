@@ -1,5 +1,5 @@
 import { server } from ".."
-import { __ENV__ } from "../../app_config"
+import { __ENV__ } from "../../config/app_config"
 
 function apiRoute(version: string, stuff?: string) {
   return `${__ENV__.api}/${version}/${stuff ?? ''}` as const
