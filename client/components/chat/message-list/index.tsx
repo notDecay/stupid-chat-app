@@ -11,6 +11,9 @@ import { Message } from "./message"
 import { processMessage } from "./messageProcessing"
 import { removeAndUpdateMessage } from "./messageUpdate"
 
+import { SocketRoutes } from "../../../../config/app_config"
+import { socket } from "../../../page/chat/ChatPage"
+
 const chatMessageListStyle = stylex.create({
   messageList: {
     maxHeight: "80vh",
@@ -37,29 +40,43 @@ export default function ChatMessageList() {
     return <UserMessage.Message {...message} />
   }
 
-  const sendingMessagehandler = async (messageContent: string) => {
-    // step 1. do some message processing stuff
-    const {
-      isFollowUpMessage,
-      messageToSendData,
-      messageId
-    } = await processMessage({
-      messageContent,
-      lastMessageInCache: MessageCache.getLastMessage("root")
-    })
-    // step 2. update it to the ui
+  const renderMessage = (
+    messageToSendData: Message.IUserMessage,
+    isFollowUp: boolean
+  ) => {
     setMessageList([...messageList(), {
       ...messageToSendData,
-      isFollowUp: isFollowUpMessage,
+      isFollowUp,
       replyTo: replyToMessage()
     }])
+
     // if you reply to someone, hide replying to pop up
     // on the message input
     hideReplyTo()
     scrollDown(chatMessageList)
     // save it to a cache for future needs
-    messageCacheStore.set(messageId, messageToSendData)
+    messageCacheStore.set(messageToSendData.id, messageToSendData)
   }
+
+  const sendingMessagehandler = async (messageContent: string) => {
+    // step 1. do some message processing stuff
+    const {
+      isFollowUpMessage,
+      messageToSendData
+    } = await processMessage({
+      messageContent,
+      lastMessageInCache: MessageCache.getLastMessage("root")
+    })
+    // step 2. update it to the ui
+    console.log('sending message')
+    
+    socket.emit(SocketRoutes.messageCreate, messageToSendData, isFollowUpMessage)
+  }
+
+  socket.on(SocketRoutes.messageCreate, (messageToSendData, isFollowUp) => {
+    console.log('Data got:', messageToSendData, isFollowUp)
+    renderMessage(messageToSendData, isFollowUp)
+  })
 
   const hideReplyTo = () => {
     setAction(undefined)

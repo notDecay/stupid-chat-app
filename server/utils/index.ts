@@ -1,6 +1,6 @@
 import type express from "express"
 import type { QuickDB } from "quick.db"
-import type { socketio } from "../index"
+import type { io } from "../index"
 
 interface IApiFunctionArguments {
   server: ReturnType<typeof express>
@@ -8,7 +8,7 @@ interface IApiFunctionArguments {
 }
 
 interface ISocketFunctionArguments {
-  socketio: typeof socketio
+  io: typeof io
 }
 
 export type ApiFunction = (args: IApiFunctionArguments) => any

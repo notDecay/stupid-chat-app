@@ -1,37 +1,34 @@
 import express from "express"
 // import { QuickDB, MySQLDriver } from "quick.db"
-import { baseApi, socketApi, userApi } from "./api"
+import { baseApi, messageApi, socketApi, userApi } from "./api"
 import { Server } from "socket.io"
-import { createServer } from "node:http"
+import { AppRoutes } from "../config/app_config"
 
-export const server = express()
+export const app = express()
 const PORT = 3000
 
-// init socket.io
-const __server = createServer(server)
-export const socketio = new Server(__server)
-
-server.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log("server is listened at port", PORT, ":)")
 })
 
+export const io = new Server(server)
+
+app.use(express.static(__dirname + '/client'))
+
+app.get([
+  AppRoutes.home, 
+  AppRoutes.login, 
+  AppRoutes.register, 
+  AppRoutes.acknowledgement
+], (request, response) => {
+  response.sendFile(__dirname + '/client/index.html')
+})
+
 async function main() {
-  // TODO: find a better, simple database to use
-  // const mysqlDriver = new MySQLDriver({
-  //   port: PORT,
-  //   connectTimeout: 10 ** 6,
-  //   debug: true
-  // })
-
-  // await mysqlDriver.connect()
-
-  // const database = new QuickDB({
-  //   driver: mysqlDriver,
-  // })
-
-  baseApi({ server })
-  userApi({ server })
-  socketApi({ socketio })
+  baseApi({ server: app })
+  userApi({ server: app })
+  socketApi({ io })
+  messageApi({ io })
 }
 
 main()

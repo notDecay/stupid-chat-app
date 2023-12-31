@@ -1,6 +1,6 @@
 import { Anchor, Tag } from "@hope-ui/solid"
 import { Modal, AppInfo } from "../.."
-import { AppRoutes } from "../../../../config/app_config"
+import { AppRoutes, __ENV__ } from "../../../../config/app_config"
 
 export default function AppInfoModal(props: Pick<IModalProps, "isOpen" | "onClose">) {
   return (
@@ -13,7 +13,7 @@ export default function AppInfoModal(props: Pick<IModalProps, "isOpen" | "onClos
           <Modal.Label name="This app">
             <AppInfo.Content>
               <AppInfo.Version labelName="App version" version={<>
-                v1.0.0 <Tag colorScheme="warning">dev-build 6</Tag>
+                {__ENV__.version} <Tag colorScheme="warning">{__ENV__.releaseChannel}</Tag>
               </>} />
               <AppInfo.Version labelName="Api version" version="v1" />
             </AppInfo.Content>

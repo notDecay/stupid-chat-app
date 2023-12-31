@@ -1,5 +1,8 @@
 export const enum __ENV__ {
-  api = "/duck"
+  api = "/duck",
+  // ...
+  version = 'v1.0.0',
+  releaseChannel = 'alpha-1'
 }
 
 export const enum AppRoutes {
@@ -11,5 +14,5 @@ export const enum AppRoutes {
 }
 
 export const enum SocketRoutes {
-  message = '/message'
+  messageCreate = 'message-create'
 }

@@ -7,7 +7,7 @@
     "start": "vite",
     "serve": "vite preview --open",
     "dev": "vite --open",
-    "server": "node ./build/dist/index.js",
+    "server": "node ./build/dist/index.cjs",
     "build": "vite build",
     "build:server": "node ./build config=server_build",
     "build:script": "node ./build config=script_build",

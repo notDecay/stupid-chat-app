@@ -2,6 +2,7 @@ import { Outlet } from '@solidjs/router'
 
 import ChatSidebar from '../../components/chat/sidebar'
 import stylex from '@stylexjs/stylex'
+import io from 'socket.io-client'
 
 const chatPageStyle = stylex.create({
   app: {
@@ -18,6 +19,8 @@ const chatPageStyle = stylex.create({
     borderRightColor: 'var(--hope-colors-neutral8)'
   }
 })
+
+export const socket = io()
 
 export default function ChatPage() {
   return (

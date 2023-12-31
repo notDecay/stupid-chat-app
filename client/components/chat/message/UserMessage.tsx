@@ -78,12 +78,12 @@ namespace UserMessage {
       hour: "numeric",
       minute: "numeric",
       dayPeriod: "short"
-    }).format(props.sendTime)
+    }).format(new Date(props.sendTime))
 
     const formatedDateButShorter = new Intl.DateTimeFormat("default", {
       hour: "numeric",
       minute: "numeric",
-    }).format(props.sendTime)
+    }).format(new Date(props.sendTime))
 
     const [hours] = formatedDateButShorter.split(":").map(it => parseInt(it))
 
