@@ -9,3 +9,7 @@ export const enum AppRoutes {
   channel = '/channel',
   acknowledgement = '/ack'
 }
+
+export const enum SocketRoutes {
+  message = '/message'
+}

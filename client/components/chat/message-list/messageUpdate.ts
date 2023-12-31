@@ -1,5 +1,5 @@
 import type { MessageCacheStore } from "./cache"
-import { MESSAGE_FOLLOW_UP_KEY } from "../../components/chat/message"
+import { MESSAGE_FOLLOW_UP_KEY } from "../message"
 
 /**Remove the message that has the id `messageId` (if exist),
  * then update it.

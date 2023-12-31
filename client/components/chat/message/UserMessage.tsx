@@ -16,7 +16,7 @@ import {
   useChatMessages 
 } from "../../provider/ChatMessagesProvider"
 import { MESSAGE_FOLLOW_UP_KEY } from "."
-import { Message } from "../../../api/message/message"
+import { Message } from "../message-list/message"
 
 import "./UserMessage.scss"
 

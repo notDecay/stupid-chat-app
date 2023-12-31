@@ -1,6 +1,6 @@
 import { ChatMessagesProvider } from '../../components/provider/ChatMessagesProvider'
 import ChatNavBar from '../../components/chat/navbar'
-import ChatMessageContent from '../../components/chat/main-content/ChatMessageContent'
+import ChatMessageList from '../../components/chat/message-list'
 import stylex from "@stylexjs/stylex"
 
 const style = stylex.create({
@@ -23,7 +23,7 @@ export default function MessageList() {
       <div {...stylex.props(style.messageListWrapper)}>
         <ChatNavBar />
         <div {...stylex.props(style.messageList)}>
-          <ChatMessageContent />
+          <ChatMessageList />
         </div>
       </div>
     </ChatMessagesProvider>

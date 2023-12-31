@@ -2,7 +2,7 @@ import {
   escapeHtml, 
   makeUUIDv4, 
   marked 
-} from "../../utils"
+} from "../../../utils"
 import { ChatMessage, Message } from "./message"
 
 export type ProcessMessageOptions = {

@@ -1,14 +1,15 @@
 import { For, Match, Switch, createSignal } from "solid-js"
-import { MessageCache } from "../../../api/message/cache"
 import { ChatMessageEvents, useChatMessages } from "../../provider/ChatMessagesProvider"
-import { Message } from "../../../api/message/message"
 import { MessageOptions } from "../message/MessageOptions"
 import { UserMessage } from "../message"
-import { processMessage } from "../../../api/message/messageProcessing"
 import { logdown, scrollDown } from "../../../utils"
 import ChatMessageInput from "../message-input"
 import stylex from "@stylexjs/stylex"
-import { removeAndUpdateMessage } from "../../../api/message/messageUpdate"
+
+import { MessageCache } from "./cache"
+import { Message } from "./message"
+import { processMessage } from "./messageProcessing"
+import { removeAndUpdateMessage } from "./messageUpdate"
 
 const chatMessageListStyle = stylex.create({
   messageList: {
@@ -22,7 +23,7 @@ const chatMessageListStyle = stylex.create({
 
 const messageCacheStore = MessageCache.createIfItsNotExist("root")
 
-export default function ChatMessageContent() {
+export default function ChatMessageList() {
   const { event } = useChatMessages()
   // handle update incoming messages
   const [messageList, setMessageList] = createSignal<Message.IUserMessage[]>([])
