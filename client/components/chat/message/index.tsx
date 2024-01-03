@@ -1,4 +1,4 @@
-import UserMessage from "./UserMessage"
+import UserMessage from "../message-user"
 
 /**This is a key to control whenever the message 
  * is a message follow up or not. Eg. show the mesage follow up

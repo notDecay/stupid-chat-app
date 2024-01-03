@@ -1,13 +1,12 @@
 import { Center, Flex } from "@hope-ui/solid"
-import type { JSX, ParentProps } from "solid-js"
+import { For, type JSX, type ParentProps } from "solid-js"
 
 import style from "./MessageOptions.module.scss"
 import { 
   BsReplyFill, 
   BsTrashFill 
 } from "solid-icons/bs"
-
-export type MessageOptions = "reply" | "delete"
+import { MessageActions } from "../message/actions"
 
 namespace MessageOption {
   export function Option(props: ParentProps<{
@@ -23,7 +22,7 @@ namespace MessageOption {
   }
 
   interface IMessageItemProps {
-    action: MessageOptions
+    action: MessageActions
   }
 
   export function Item(props: ParentProps<IMessageItemProps>) {
@@ -33,6 +32,11 @@ namespace MessageOption {
       </Center>
     )
   }
+
+  export const ItemMap = {
+    [MessageActions.Reply]: () => <BsReplyFill />,
+    [MessageActions.Delete]: () => <BsTrashFill />
+  }
 }
 
 interface IMessageOptionProps {
@@ -40,24 +44,34 @@ interface IMessageOptionProps {
    * @param action Currently these option are `"reply"`, `"delete"`  
    * @returns      *nothing*
    */
-  onOptionClicked: (action: MessageOptions) => any
+  onOptionClicked: (action: MessageActions) => any
+  actions: MessageActions[]
 }
 
 export default function MessageOptions(props: IMessageOptionProps) {
-  return (
-    <MessageOption.Option onClick={(e) => {
-      const target = e.target
-      const action = target.getAttribute("data-action")
-      if (!action) return
+  type OnClickHandler = JSX.EventHandler<HTMLDivElement, MouseEvent>
+  const onClickHandler: OnClickHandler = (mouseEvent) => {
+    const target = mouseEvent.target
+    let action: string | MessageActions | null = target.getAttribute("data-action")
+    if (!action) return
 
-      props.onOptionClicked.call(this, action)
-    }}>
-      <MessageOption.Item action="reply">
-        <BsReplyFill />
-      </MessageOption.Item>
-      <MessageOption.Item action="delete">
-        <BsTrashFill />
-      </MessageOption.Item>
+    action = parseInt(action)
+
+    props.onOptionClicked.call(this, action)
+  }
+
+  return (
+    <MessageOption.Option onClick={onClickHandler}>
+      <For each={props.actions}>
+        {it => {
+          const Icon = MessageOption.ItemMap[it]
+          return (
+            <MessageOption.Item action={it}>
+              <Icon />
+            </MessageOption.Item>
+          )
+        }}
+      </For>
     </MessageOption.Option>
   )
 }

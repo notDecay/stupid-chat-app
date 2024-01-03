@@ -7,19 +7,19 @@ import {
   event 
 } from "../../utils"
 import type { 
-  MessageOptions 
-} from "../chat/message/MessageOptions"
+  MessageActions 
+} from "../chat/message/actions"
 
 export const enum ChatMessageEvents {
   /**Whenever the message option has been clicked
    * 
-   * @see {@link MessageOptions} for all of the message options
+   * @see {@link MessageActions} for all of the message options
    */
   messageOptionClicked,
 }
 
 type ChatMessageEvent = event<{
-  [ChatMessageEvents.messageOptionClicked]: [type: MessageOptions, messageId: string]
+  [ChatMessageEvents.messageOptionClicked]: [type: MessageActions, messageId: string]
 }>
 
 interface IChatMessagesContext {

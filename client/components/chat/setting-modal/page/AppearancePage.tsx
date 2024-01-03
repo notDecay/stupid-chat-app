@@ -48,6 +48,7 @@ namespace Theme {
         width="100%" 
         backgroundColor="$neutral3" 
         onClick={onClickHandler}
+        borderRadius={8}
       >
         <Center aria-theme-name="dark" borderRadius="50%" boxSize={50} background="#1a1d1e">
           <BsCheck />

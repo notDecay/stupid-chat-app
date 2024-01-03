@@ -3,14 +3,30 @@ import { MessageCache } from "./cache"
 
 const fetchMessage = fetch
 
-export type ChatMessage = Message.IUserMessage
+export type ChatMessage = IUserMessage
+
+interface IMessageFetchOptions {
+  channelId: string
+  messageId: string
+}
+
+export interface IMessageReference {
+  id: string
+}
+
+export interface IUserMessage {
+  user: {
+    avatarUrl?: string
+    name: string
+    id: string
+  }
+  content: string
+  replyTo?: IMessageReference
+  id: string
+  sendTime: Date
+}
 
 export namespace Message {
-  interface IMessageFetchOptions {
-    channelId: string
-    messageId: string
-  }
-
   /**Fetch the message by its id.
    * 
    * It first fetch the message from cache first. If it not found,
@@ -46,21 +62,5 @@ export namespace Message {
       logdown.err(e)
       return null
     }
-  }
-
-  export interface IMessageReference {
-    id: string
-  }
-
-  export interface IUserMessage {
-    user: {
-      avatarUrl?: string
-      name: string
-      id: string
-    }
-    content: string
-    replyTo?: IMessageReference
-    id: string
-    sendTime: Date
   }
 }

@@ -49,6 +49,10 @@ $avatar-bound: 35px;
   }
 }
 
+.user-message.reply {
+  padding-top: 15px;
+}
+
 [data-label=message]:hover .date {
   visibility: visible;
 }

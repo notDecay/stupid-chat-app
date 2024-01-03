@@ -8,7 +8,7 @@ import { type ParentProps } from "solid-js"
 
 import style from "./index.module.scss"
 
-import MoreOptions from "./MoreOptions"
+import InputMoreOptions from "./InputMoreOptions"
 import _ReplyTo from "./ReplyTo"
 
 namespace ChatMessageInput {
@@ -39,9 +39,11 @@ namespace ChatMessageInput {
   export function Input(props: ParentProps<IChatMessageInputProps>) {
     return (
       <Flex class={style["chat-msg-input-wrapper"]} flexDirection="column">
-        <div class={style["stuff-on-top"]}>{props.children}</div>
+        <div class={style["stuff-on-top"]}>
+          {props.children}
+        </div>
         <Center class={style["msg-input-wrapper"]} background="$neutral2" gap={15}>
-          <MoreOptions />
+          <InputMoreOptions />
           <TextareaAutosize 
             class={textareaStyles()} 
             maxRows={MESSAGE_ROW_LIMIT} 

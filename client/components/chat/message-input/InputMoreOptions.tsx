@@ -6,7 +6,7 @@ import { BsPlus } from "solid-icons/bs"
  * @returns JSX element
  * @component
  */
-export default function MoreOptions() {
+export default function InputMoreOptions() {
   return (
     <div class={style["more-options-wrapper"]}>
       <Button

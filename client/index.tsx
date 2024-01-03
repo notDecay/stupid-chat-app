@@ -9,7 +9,8 @@ import {
   LoginRoutes 
 } from './page'
 import inject from '@stylexjs/dev-runtime'
-import { AppRoutes } from '../config/app_config'
+import { AppRoutes, __ENV__ } from '../config/app_config'
+import { logdown } from './utils'
 
 // @ts-ignore
 inject({
@@ -19,6 +20,18 @@ inject({
 })
 
 const root = document.getElementById("duck")
+
+logdown.start(`[Duck engine] Starting this app... (${__ENV__.version} ${__ENV__.releaseChannel})
+  .        ／＞　 フ
+          | 　_　_| 
+        ／\` ミ__^ノ 
+       /　　　　 |
+      /　 ヽ　　 ﾉ              ╱|、
+     /　　 |　|　|            (˚ˎ 。7  
+    ／￣|　　 |　|　|          |、˜〵          
+    (￣ヽ＿_  ヽ_)__)         じしˍ,)ノ
+    ＼二)
+`)
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   throw new Error(

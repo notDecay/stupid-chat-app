@@ -5,7 +5,7 @@ import { MESSAGE_FOLLOW_UP_KEY } from "../message"
  * then update it.
  * @param messageCacheStore
  * @param messageId         the message id it will be removed
- * @returns         *nothing*
+ * @returns                 *nothing*
  */
 export function removeAndUpdateMessage(
   messageCacheStore: MessageCacheStore, 

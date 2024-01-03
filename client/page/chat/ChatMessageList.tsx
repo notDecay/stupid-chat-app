@@ -9,11 +9,6 @@ const style = stylex.create({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-  },
-  messageList: {
-    display: 'flex',
-    width: '100%',
-    height: '100%',
   }
 })
 
@@ -22,9 +17,7 @@ export default function MessageList() {
     <ChatMessagesProvider>
       <div {...stylex.props(style.messageListWrapper)}>
         <ChatNavBar />
-        <div {...stylex.props(style.messageList)}>
-          <ChatMessageList />
-        </div>
+        <ChatMessageList />
       </div>
     </ChatMessagesProvider>
   )

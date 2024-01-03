@@ -1,26 +1,44 @@
-import { For, Match, Switch, createSignal } from "solid-js"
-import { ChatMessageEvents, useChatMessages } from "../../provider/ChatMessagesProvider"
-import { MessageOptions } from "../message/MessageOptions"
+import { 
+  For, 
+  Match, 
+  Switch, 
+  createSignal 
+} from "solid-js"
+import { 
+  ChatMessageEvents, 
+  useChatMessages 
+} from "../../provider/ChatMessagesProvider"
+import { MessageActions } from "../message/actions"
 import { UserMessage } from "../message"
 import { logdown, scrollDown } from "../../../utils"
 import ChatMessageInput from "../message-input"
 import stylex from "@stylexjs/stylex"
 
 import { MessageCache } from "./cache"
-import { Message } from "./message"
+import { 
+  type ChatMessage, 
+  type IUserMessage, 
+  Message 
+} from "./message"
 import { processMessage } from "./messageProcessing"
 import { removeAndUpdateMessage } from "./messageUpdate"
 
 import { SocketRoutes } from "../../../../config/app_config"
 import { socket } from "../../../page/chat/ChatPage"
+import type { IUserMessageProps } from "../message-user"
 
-const chatMessageListStyle = stylex.create({
+const style = stylex.create({
   messageList: {
     maxHeight: "80vh",
     paddingBottom: "2rem",
     width: "100%",
     height: "100%",
     overflowY: "scroll"
+  },
+  messagePage: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
   }
 })
 
@@ -29,19 +47,24 @@ const messageCacheStore = MessageCache.createIfItsNotExist("root")
 export default function ChatMessageList() {
   const { event } = useChatMessages()
   // handle update incoming messages
-  const [messageList, setMessageList] = createSignal<Message.IUserMessage[]>([])
+  const [messageList, setMessageList] = createSignal<ChatMessage[]>([])
   // handle message options (eg. reply, delete, ...)
-  const [action, setAction] = createSignal<MessageOptions>()
+  const [action, setAction] = createSignal<MessageActions>()
   // show the reply to, on top of the message input
-  const [replyToMessage, setReplyToMessage] = createSignal<Message.IUserMessage>()
+  const [replyToMessage, setReplyToMessage] = createSignal<IUserMessage>()
 
   let chatMessageList: HTMLDivElement
-  const handleMessage = (message: UserMessage.IUserMessageProps) => {
-    return <UserMessage.Message {...message} />
+  const handleMessage = (message: IUserMessageProps) => {
+    return <UserMessage {...message} />
+  }
+
+  const hideReplyTo = () => {
+    setAction(undefined)
+    setReplyToMessage(undefined)
   }
 
   const renderMessage = (
-    messageToSendData: Message.IUserMessage,
+    messageToSendData: IUserMessage,
     isFollowUp: boolean
   ) => {
     setMessageList([...messageList(), {
@@ -70,6 +93,10 @@ export default function ChatMessageList() {
     // step 2. update it to the ui
     console.log('sending message')
     
+    if (import.meta.env.DEV) {
+      return renderMessage(messageToSendData, isFollowUpMessage)
+    }
+    
     socket.emit(SocketRoutes.messageCreate, messageToSendData, isFollowUpMessage)
   }
 
@@ -78,14 +105,9 @@ export default function ChatMessageList() {
     renderMessage(messageToSendData, isFollowUp)
   })
 
-  const hideReplyTo = () => {
-    setAction(undefined)
-    setReplyToMessage(undefined)
-  }
-
   event.on(ChatMessageEvents.messageOptionClicked, async (type, messageId) => {
     switch (type) {
-      case "delete": {
+      case MessageActions.Delete: {
         if (replyToMessage()?.id === messageId) {
           hideReplyTo()
         }
@@ -93,7 +115,7 @@ export default function ChatMessageList() {
         removeAndUpdateMessage(messageCacheStore, messageId)
       } break
 
-      case "reply": {
+      case MessageActions.Reply: {
         const message = await Message.fetch({
           channelId: "root",
           messageId
@@ -105,15 +127,19 @@ export default function ChatMessageList() {
         }
 
         setReplyToMessage(message)
-        setAction("reply")
+        setAction(MessageActions.Reply)
+      } break
+
+      default: {
+        logdown.warn("action type", type, "hasn't been added yet :(")
       } break
     }
   })
 
   return (
-    <>
+    <div {...stylex.props(style.messagePage)}>
       <div 
-        {...stylex.props(chatMessageListStyle.messageList)}
+        {...stylex.props(style.messageList)}
         ref={chatMessageList!}
       >
         <For each={messageList()}>
@@ -122,11 +148,11 @@ export default function ChatMessageList() {
       </div>
       <ChatMessageInput.Input onSendingMessage={sendingMessagehandler}>
         <Switch>
-          <Match when={action() == "reply"}>
+          <Match when={action() == MessageActions.Reply}>
             <ChatMessageInput.ReplyTo {...replyToMessage()!} onClose={() => setAction(undefined)} />
           </Match>
         </Switch>
       </ChatMessageInput.Input>
-    </>
+    </div>
   )
 }

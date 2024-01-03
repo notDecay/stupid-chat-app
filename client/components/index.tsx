@@ -4,8 +4,8 @@ export { default as MoreOptionsButton } from "./layout/ThreeDotButton"
 // ...
 export { default as MoreOptions } from "./menu/MoreOptionsMenu"
 // ...ww
-export { default as AppInfoModal } from "./modals/app-info"
-export { default as AppInfo } from "./modals/app-info/AppInfo"
+export { default as AppInfoModal } from "./chat/app-info-modal"
+export { default as AppInfo } from "./chat/app-info-modal/AppInfo"
 export { default as Modal } from "./modals/Modal"
 // ...
 export { default as SearchBox } from "./chat/sidebar/SearchBox"

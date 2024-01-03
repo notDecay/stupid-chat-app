@@ -1,6 +1,10 @@
 import { Center } from "@hope-ui/solid"
 
-export default function LoadingScreen() {
+interface ILoadingScreenProps {
+  show?: boolean
+}
+
+export default function LoadingScreen(props: ILoadingScreenProps) {
   return (
     <Center>
       Fetching data...

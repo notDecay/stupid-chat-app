@@ -1,6 +1,24 @@
 import { Box, Flex, Heading, Switch } from "@hope-ui/solid"
 import type { JSX, ParentProps } from "solid-js"
 import NameAndDescription from "../../layout/NameAndDescription"
+import stylex from "@stylexjs/stylex"
+
+const style = stylex.create({
+  section: {
+    marginBottom: 20
+  },
+  sectionName: {
+    marginBottom: 5,
+    fontWeight: 'bold'
+  },
+  switchSetting: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 15,
+    fontSize: 15,
+    marginBottom: 10
+  }
+})
 
 namespace Settings {
   interface ISettingSectionProps {
@@ -9,8 +27,8 @@ namespace Settings {
 
   export function Section(props: ParentProps<ISettingSectionProps>) {
     return (
-      <section>
-        <Box marginBottom={5}>{props.name}</Box>
+      <section {...stylex.props(style.section)}>
+        <div {...stylex.props(style.sectionName)}>{props.name}</div>
         {props.children}
       </section>
     )
@@ -29,10 +47,10 @@ namespace Settings {
 
   export function SwitchSetting(props: ISettingSwitchProps) {
     return (
-      <Flex gap={15} alignItems="center" fontSize={15} marginBottom={10}>
+      <div {...stylex.props(style.switchSetting)}>
         <Switch />
         <NameAndDescription name={props.name} description={props.description} />
-      </Flex>
+      </div>
     )
   }
 
