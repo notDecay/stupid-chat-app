@@ -1,5 +1,5 @@
 import { Box, Heading, Tab, TabList, TabPanel, Tabs } from "@hope-ui/solid"
-import { Modal } from "../.."
+import { Modal } from "../../components"
 
 import style from "./index.module.scss"
 import Settings from "./Settings"

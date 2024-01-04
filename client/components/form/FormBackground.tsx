@@ -2,7 +2,7 @@ import stylex from "@stylexjs/stylex"
 import { type ParentProps } from "solid-js"
 
 import doggie_corgi_bg_1 from "../../../assets/images/doggie_corgi_bg_1.jpg"
-import { getRandomElementFromArray } from "../../../utils"
+import { getRandomElementFromArray } from "../../utils"
 
 const listOfBackgrounds = [
   doggie_corgi_bg_1

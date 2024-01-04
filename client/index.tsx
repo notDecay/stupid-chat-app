@@ -1,16 +1,11 @@
 /* @refresh reload */
-import { HopeProvider, NotificationsProvider } from '@hope-ui/solid'
+import { HopeProvider } from '@hope-ui/solid'
 import { render } from 'solid-js/web'
-import { Route, Router, Routes } from '@solidjs/router'
-import { lazy } from 'solid-js'
 import "./global.scss"
-import { 
-  ChatRoutes, 
-  LoginRoutes 
-} from './page'
 import inject from '@stylexjs/dev-runtime'
-import { AppRoutes, __ENV__ } from '../config/app_config'
+import { __ENV__ } from '../config/app_config'
 import { logdown } from './utils'
+import App from './App'
 
 // @ts-ignore
 inject({
@@ -39,26 +34,10 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   )
 }
 
-const AcknowledgementPage = lazy(() => import("./page/acknowledgement"))
-
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <ChatRoutes />
-        <LoginRoutes />
-        <Route path={AppRoutes.acknowledgement} component={AcknowledgementPage} />
-      </Routes>
-    </Router>
-  )
-}
-
 render(() => (
-  <NotificationsProvider>
-    <HopeProvider config={{
-      initialColorMode: "dark"
-    }}>
-      <App />
-    </HopeProvider>
-  </NotificationsProvider>
+  <HopeProvider config={{
+    initialColorMode: "dark"
+  }}>
+    <App />
+  </HopeProvider>
 ), root!)

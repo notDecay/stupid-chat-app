@@ -1,5 +1,5 @@
-import { ChatMessagesProvider } from '../../components/provider/ChatMessagesProvider'
-import ChatNavBar from '../../components/chat/navbar'
+import { ChatMessagesProvider } from '../../provider/ChatMessagesProvider'
+import ChatNavBar from '../../layout/chat/ChatNavbar'
 import ChatMessageList from '../../components/chat/message-list'
 import stylex from "@stylexjs/stylex"
 

@@ -1,5 +1,5 @@
 import { Avatar, CloseButton, Divider, Flex, Spacer } from "@hope-ui/solid"
-import type { Message } from "../message-list/message"
+import type { Message } from "../../../api/message/message"
 
 interface IChatMessageReplyToProps
   extends Message.IUserMessage {

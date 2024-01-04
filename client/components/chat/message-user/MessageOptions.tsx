@@ -1,5 +1,5 @@
 import { Center, Flex } from "@hope-ui/solid"
-import { For, type JSX, type ParentProps } from "solid-js"
+import { For, type JSX } from "solid-js"
 
 import style from "./MessageOptions.module.scss"
 import { 
@@ -8,40 +8,14 @@ import {
 } from "solid-icons/bs"
 import { MessageActions } from "../message/actions"
 
-namespace MessageOption {
-  export function Option(props: ParentProps<{
-    onClick: JSX.EventHandler<HTMLDivElement, MouseEvent>
-  }>) {
-    return (
-      <div class={style["message-options"]} onClick={props.onClick}>
-        <Flex class={style.wrapper} background="$neutral5">
-          {props.children}
-        </Flex>
-      </div>
-    )
-  }
-
-  interface IMessageItemProps {
-    action: MessageActions
-  }
-
-  export function Item(props: ParentProps<IMessageItemProps>) {
-    return (
-      <Center class={style["item"]} boxSize={30} data-action={props.action}>
-        {props.children}
-      </Center>
-    )
-  }
-
-  export const ItemMap = {
-    [MessageActions.Reply]: () => <BsReplyFill />,
-    [MessageActions.Delete]: () => <BsTrashFill />
-  }
+const iconMap = {
+  [MessageActions.Reply]: () => <BsReplyFill />,
+  [MessageActions.Delete]: () => <BsTrashFill />
 }
 
 interface IMessageOptionProps {
   /**Fired whenever a option has been clicked. 
-   * @param action Currently these option are `"reply"`, `"delete"`  
+   * @param action see {@link MessageActions}
    * @returns      *nothing*
    */
   onOptionClicked: (action: MessageActions) => any
@@ -61,17 +35,25 @@ export default function MessageOptions(props: IMessageOptionProps) {
   }
 
   return (
-    <MessageOption.Option onClick={onClickHandler}>
-      <For each={props.actions}>
-        {it => {
-          const Icon = MessageOption.ItemMap[it]
-          return (
-            <MessageOption.Item action={it}>
-              <Icon />
-            </MessageOption.Item>
-          )
-        }}
-      </For>
-    </MessageOption.Option>
+    <div class={style["message-options"]} onClick={onClickHandler}>
+      <Flex class={style.wrapper} background="$neutral5">
+        <For each={props.actions}>
+          {it => <OptionIcon action={it} />}
+        </For>
+      </Flex>
+    </div>
+  )
+}
+
+interface IOptionIconProps {
+  action: MessageActions
+}
+
+function OptionIcon(props: IOptionIconProps) {
+  const Icon = iconMap[props.action]
+  return (
+    <Center class={style["item"]} boxSize={30} data-action={props.action}>
+      <Icon />
+    </Center>
   )
 }

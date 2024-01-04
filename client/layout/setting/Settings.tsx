@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, Switch } from "@hope-ui/solid"
 import type { JSX, ParentProps } from "solid-js"
-import NameAndDescription from "../../layout/NameAndDescription"
+import NameAndDescription from "../../components/ui/NameAndDescription"
 import stylex from "@stylexjs/stylex"
 
 const style = stylex.create({

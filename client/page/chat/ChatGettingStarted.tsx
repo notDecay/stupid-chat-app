@@ -1,6 +1,6 @@
 import { Anchor } from '@hope-ui/solid'
-import ChatSidebar from '../../components/chat/sidebar'
-import Welcome from '../../components/layout/Welcome'
+import ChatSidebar from '../../layout/chat/ChatSidebar'
+import Welcome from '../../components/ui/Welcome'
 import { Show } from 'solid-js'
 
 import duck_typing from '../../assets/images/duck_typing.gif'

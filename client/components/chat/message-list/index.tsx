@@ -7,25 +7,24 @@ import {
 import { 
   ChatMessageEvents, 
   useChatMessages 
-} from "../../provider/ChatMessagesProvider"
+} from "../../../provider/ChatMessagesProvider"
 import { MessageActions } from "../message/actions"
-import { UserMessage } from "../message"
 import { logdown, scrollDown } from "../../../utils"
 import ChatMessageInput from "../message-input"
 import stylex from "@stylexjs/stylex"
 
-import { MessageCache } from "./cache"
+import { MessageCache } from "../../../api/message"
 import { 
   type ChatMessage, 
   type IUserMessage, 
-  Message 
-} from "./message"
-import { processMessage } from "./messageProcessing"
+  Message,
+  processMessage
+} from "../../../api/message/"
 import { removeAndUpdateMessage } from "./messageUpdate"
 
 import { SocketRoutes } from "../../../../config/app_config"
-import { socket } from "../../../page/chat/ChatPage"
-import type { IUserMessageProps } from "../message-user"
+import __Message from "./renderMessage"
+import { useChatPage } from "../../../provider"
 
 const style = stylex.create({
   messageList: {
@@ -46,6 +45,7 @@ const messageCacheStore = MessageCache.createIfItsNotExist("root")
 
 export default function ChatMessageList() {
   const { event } = useChatMessages()
+  const { socket } = useChatPage()
   // handle update incoming messages
   const [messageList, setMessageList] = createSignal<ChatMessage[]>([])
   // handle message options (eg. reply, delete, ...)
@@ -54,10 +54,6 @@ export default function ChatMessageList() {
   const [replyToMessage, setReplyToMessage] = createSignal<IUserMessage>()
 
   let chatMessageList: HTMLDivElement
-  const handleMessage = (message: IUserMessageProps) => {
-    return <UserMessage {...message} />
-  }
-
   const hideReplyTo = () => {
     setAction(undefined)
     setReplyToMessage(undefined)
@@ -101,7 +97,6 @@ export default function ChatMessageList() {
   }
 
   socket.on(SocketRoutes.messageCreate, (messageToSendData, isFollowUp) => {
-    console.log('Data got:', messageToSendData, isFollowUp)
     renderMessage(messageToSendData, isFollowUp)
   })
 
@@ -143,7 +138,7 @@ export default function ChatMessageList() {
         ref={chatMessageList!}
       >
         <For each={messageList()}>
-          {handleMessage}
+          {__Message}
         </For>
       </div>
       <ChatMessageInput.Input onSendingMessage={sendingMessagehandler}>

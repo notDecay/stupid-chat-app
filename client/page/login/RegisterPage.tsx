@@ -5,7 +5,7 @@ import {
   required,
   FormError
 } from "@modular-forms/solid"
-import FormBackground from "../../components/form/background"
+import FormBackground from "../../components/form/FormBackground"
 import {
   SignupForm
 } from "../../api/login"
@@ -15,7 +15,7 @@ import {
   FormInput, 
   FormOptions, 
   FormSubmitButton 
-} from "../../components/form/form"
+} from "../../components/form"
 
 export default function LoginPage() {
   const [, Login] = createForm<SignupForm>()

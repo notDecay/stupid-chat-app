@@ -1,13 +1,13 @@
 import { type Component, lazy, createSignal, Switch, Match, Setter } from "solid-js"
-import { MoreOptions } from "../.."
+import { MoreOptions } from "../../components"
 import { BsGearFill, BsInfoCircle } from "solid-icons/bs"
 import { createDisclosure } from "@hope-ui/solid"
 
 export default function MoreOptionsButton() {
   // it's just lazy-loaded the modal
   const [option, setOption] = createSignal(0)
-  const appInfoModal = createModal(lazy(() => import("../app-info-modal")), 1, setOption)
-  const settingsModal = createModal(lazy(() => import("../setting-modal")), 2, setOption)
+  const appInfoModal = createModal(lazy(() => import("../../components/chat/app-info-modal")), 1, setOption)
+  const settingsModal = createModal(lazy(() => import("../setting")), 2, setOption)
 
   return (
     <>

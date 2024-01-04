@@ -1,4 +1,4 @@
-import type { MessageCacheStore } from "./cache"
+import type { MessageCacheStore } from "../../../api/message"
 import { MESSAGE_FOLLOW_UP_KEY } from "../message"
 
 /**Remove the message that has the id `messageId` (if exist),

@@ -1,8 +1,8 @@
 import { Divider, Spacer } from "@hope-ui/solid"
 import SearchBox from "./SearchBox"
-import Channel from "./Channel"
+import Channel from "../../components/chat/channel"
 import MoreOptionsButton from "./MoreOptionsButton"
-import { event } from "../../../utils"
+import { event } from "../../utils"
 
 import stylex from "@stylexjs/stylex"
 import { createSignal } from "solid-js"
@@ -40,7 +40,8 @@ const chatSidebarStyle = stylex.create({
     }
   },
   content: {
-    padding: "10px 15px"
+    padding: "10px 15px",
+    height: '100%'
   }
 })
 

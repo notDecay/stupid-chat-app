@@ -1,5 +1,6 @@
-import logdown from "../../../utils/logdown"
+import logdown from "../../utils/logdown"
 import { MessageCache } from "./cache"
+import { IUserMessage } from "./messageType"
 
 const fetchMessage = fetch
 
@@ -8,22 +9,6 @@ export type ChatMessage = IUserMessage
 interface IMessageFetchOptions {
   channelId: string
   messageId: string
-}
-
-export interface IMessageReference {
-  id: string
-}
-
-export interface IUserMessage {
-  user: {
-    avatarUrl?: string
-    name: string
-    id: string
-  }
-  content: string
-  replyTo?: IMessageReference
-  id: string
-  sendTime: Date
 }
 
 export namespace Message {

@@ -55,7 +55,7 @@ const style = stylex.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
-    zIndex: 'var(--hope-zIndices-notification)',
+    zIndex: 2000,
     backgroundColor: 'var(--hope-colors-background)'
   }
 })

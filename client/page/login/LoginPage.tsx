@@ -6,7 +6,7 @@ import {
   minLength, 
   FormError
 } from "@modular-forms/solid"
-import FormBackground from "../../components/form/background"
+import FormBackground from "../../components/form/FormBackground"
 import {
   LoginForm
 } from "../../api/login"
@@ -16,7 +16,7 @@ import {
   FormInput, 
   FormOptions, 
   FormSubmitButton 
-} from "../../components/form/form"
+} from "../../components/form"
 import { AppRoutes } from "../../../config/app_config"
 
 export default function LoginPage() {

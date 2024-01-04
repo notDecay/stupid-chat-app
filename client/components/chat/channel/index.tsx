@@ -5,13 +5,14 @@ import { NameAndDescription } from "../.."
 
 import { For, JSX, Show } from "solid-js"
 import stylex from "@stylexjs/stylex"
-import "./Channel.scss"
+import "./index.scss"
 
 const channelStyle = stylex.create({
   channel: {
     display: "flex",
     alignItems: "center",
     padding: "5px 0",
+    marginRight: 10,
     gap: "15px",
     position: "relative",
     "::before": {
@@ -37,7 +38,12 @@ const channelStyle = stylex.create({
     height: "calc(100% - 70px)",
     //                   ^^^^ I hard-coded this value,
     //                        too lazy to figure it out :)
-    overflowY: "scroll"
+    overflowY: "scroll",
+    '::-webkit-scrollbar': {
+      backgroundColor: "var(--hope-colors-neutral3)",
+      width: 11,
+      borderRadius: 5
+    }
   }
 })
 

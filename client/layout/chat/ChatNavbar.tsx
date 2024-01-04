@@ -1,5 +1,5 @@
 import { Avatar, Spacer } from "@hope-ui/solid"
-import { NameAndDescription, MoreOptionsButton } from "../.."
+import { NameAndDescription, MoreOptionsButton } from "../../components"
 
 import stylex from "@stylexjs/stylex"
 

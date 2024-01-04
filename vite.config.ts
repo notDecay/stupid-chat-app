@@ -34,5 +34,5 @@ export default defineConfig({
         entryFileNames: `${HASH_NAME}.js`,
       },
     },
-  },
+  }
 })

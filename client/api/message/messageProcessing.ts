@@ -2,8 +2,12 @@ import {
   escapeHtml, 
   makeUUIDv4, 
   marked 
-} from "../../../utils"
-import { ChatMessage, Message } from "./message"
+} from "../../utils"
+import { 
+  ChatMessage, 
+  type IUserMessage, 
+  MessageType 
+} from "."
 
 export type ProcessMessageOptions = {
   /**The message content to be processed */
@@ -22,7 +26,7 @@ export type ProcessMessageOptions = {
 
 export type ProcessedMessageData = {
   /**The processed message data, this will be used to display the message in the chat */
-  messageToSendData: Message.IUserMessage
+  messageToSendData: IUserMessage
   /**Whenever this message is a follow up message or not */
   isFollowUpMessage: boolean
   /**This message id */
@@ -44,14 +48,15 @@ export async function processMessage({
   })
 
   const messageId = `message-${makeUUIDv4()}`
-  const messageToSendData: Message.IUserMessage = {
+  const messageToSendData: IUserMessage = {
     content: markdownMessage,
     id: messageId,
     sendTime: new Date(),
     user: {
       id: "10000000000",
       name: "test"
-    }
+    },
+    type: MessageType.UserMessage
   }
 
   let isFollowUpMessage: boolean

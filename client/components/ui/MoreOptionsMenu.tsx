@@ -16,7 +16,7 @@ import {
 } from "solid-js"
 
 import style from "./MoreOptionsMenu.module.scss"
-import ThreeDotButton from "../layout/ThreeDotButton"
+import ThreeDotButton from "./ThreeDotButton"
 
 interface IMoreOptionsGroupProps {
   name: string
