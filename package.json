@@ -8,10 +8,9 @@
     "serve": "vite preview --open",
     "dev": "vite --open",
     "server": "node ./build/dist/index.cjs",
-    "build": "vite build",
+    "build": "vite build && node ./build/optimizeClassName.js",
     "build:server": "node ./build config=server_build",
-    "build:script": "node ./build config=script_build",
-    "opt:client_build": "node ./build/optimizeClassName.js"
+    "build:script": "node ./build config=script_build"
   },
   "license": "MIT",
   "devDependencies": {

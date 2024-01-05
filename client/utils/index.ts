@@ -1,6 +1,6 @@
 export { default as event } from "./event"
 export { default as logdown } from "./logdown"
-export * as marked from "../lib/marked"
+export * as marked from "@client/lib/marked"
 
 /**Merging one or more class name together
  * @param first            the first class name

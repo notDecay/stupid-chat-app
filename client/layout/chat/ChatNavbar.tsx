@@ -1,5 +1,8 @@
 import { Avatar, Spacer } from "@hope-ui/solid"
-import { NameAndDescription, MoreOptionsButton } from "../../components"
+import { 
+  NameAndDescription,
+  MoreOptionsButton 
+} from "@components"
 
 import stylex from "@stylexjs/stylex"
 
@@ -14,13 +17,25 @@ const navbarStyle = stylex.create({
   }
 })
 
-export default function ChatNavBar() {
+export const enum ChatNavBarAction {
+  MoreOption
+}
+
+interface IChatNavBarProps {
+  onActionClicked: (action: ChatNavBarAction) => any
+}
+
+export default function ChatNavBar(props: IChatNavBarProps) {
+  const setAction = (action: ChatNavBarAction) => {
+    props.onActionClicked.call(this, action)
+  }
+
   return (
     <nav {...stylex.props(navbarStyle.nav)}>
       <Avatar />
       <NameAndDescription name="something" />
       <Spacer />
-      <MoreOptionsButton />
+      <MoreOptionsButton onClick={() => setAction(ChatNavBarAction.MoreOption)} />
     </nav>
   )
 }

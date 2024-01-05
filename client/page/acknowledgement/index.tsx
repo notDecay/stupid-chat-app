@@ -6,7 +6,7 @@ import {
 import { 
   AcknowledgementLibaryInfo, 
   AcknowledgementLoadingScreen, 
-} from '../../components'
+} from '@components'
 import { Box, Heading } from '@hope-ui/solid'
 import stylex from "@stylexjs/stylex"
 

@@ -3,8 +3,8 @@ import { HopeProvider } from '@hope-ui/solid'
 import { render } from 'solid-js/web'
 import "./global.scss"
 import inject from '@stylexjs/dev-runtime'
-import { __ENV__ } from '../config/app_config'
-import { logdown } from './utils'
+import { __ENV__ } from '@config/app_config'
+import { logdown } from '@client/utils'
 import App from './App'
 
 // @ts-ignore

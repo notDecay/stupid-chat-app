@@ -1,6 +1,6 @@
 import { Route } from "@solidjs/router"
 import { lazy } from "solid-js"
-import { AppRoutes } from "../../../config/app_config"
+import { AppRoutes } from "@config/app_config"
 
 const ChatPage = lazy(() => import("./ChatPage"))
 const ChatGettingStarted = lazy(() => import('./ChatGettingStarted'))

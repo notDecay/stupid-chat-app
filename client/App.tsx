@@ -3,10 +3,10 @@ import {
   ChatRoutes, 
   LoginRoutes 
 } from './page'
-import { AppRoutes } from '../config/app_config'
+import { AppRoutes } from '@config/app_config'
 import { lazy } from 'solid-js'
 
-const AcknowledgementPage = lazy(() => import("./page/acknowledgement"))
+const AcknowledgementPage = lazy(() => import("@page/acknowledgement"))
 
 export default function App() {
   return (

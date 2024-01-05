@@ -1,11 +1,12 @@
 import { Divider, Spacer } from "@hope-ui/solid"
 import SearchBox from "./SearchBox"
-import Channel from "../../components/chat/channel"
+import { Channel } from "@components"
 import MoreOptionsButton from "./MoreOptionsButton"
-import { event } from "../../utils"
+import { event } from "@client/utils"
 
 import stylex from "@stylexjs/stylex"
 import { createSignal } from "solid-js"
+export const MIN_WIDTH_IN_PIXEL = 850
 
 const highlightAnimation = stylex.keyframes({
   from: {
@@ -17,7 +18,7 @@ const highlightAnimation = stylex.keyframes({
   }
 })
 
-const chatSidebarStyle = stylex.create({
+const style = stylex.create({
   sidebar: {
     position: "relative",
     width: "100%",
@@ -42,10 +43,10 @@ const chatSidebarStyle = stylex.create({
   content: {
     padding: "10px 15px",
     height: '100%'
-  }
+  },
 })
 
-namespace ChatSidebar {
+export namespace ChatSidebar {
   const enum SidebarEvents {
     /**Fired whenever the sidebar is being flashed, via calling `flashSidebar()` function
      * @see {@link flashSidebar}
@@ -86,12 +87,13 @@ namespace ChatSidebar {
       <div 
         ref={sidebar!}
         {...stylex.props(
-          chatSidebarStyle.sidebar,
-          highlightSidebar() ? chatSidebarStyle.sidebarHighlighted : null
+          style.sidebar,
+          highlightSidebar() ? style.sidebarHighlighted : null
         )}
       >
-        <div {...stylex.props(chatSidebarStyle.content)}>
-          <div {...stylex.props(chatSidebarStyle.searchBox)}>
+        {/* <CloseButton {...stylex.props(style.closeSidebarButton)} size="lg" /> */}
+        <div {...stylex.props(style.content)}>
+          <div {...stylex.props(style.searchBox)}>
             <SearchBox />
             <Spacer />
             <MoreOptionsButton />
@@ -112,5 +114,3 @@ namespace ChatSidebar {
     sidebarEvent.emit(SidebarEvents.highlightShown)
   }
 }
-
-export default ChatSidebar

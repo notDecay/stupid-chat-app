@@ -5,10 +5,10 @@ import {
 } from "solid-js"
 import { 
   event 
-} from "../utils"
+} from "@client/utils"
 import type { 
   MessageActions 
-} from "../components/chat/message/actions"
+} from "@components"
 
 export const enum ChatMessageEvents {
   /**Whenever the message option has been clicked

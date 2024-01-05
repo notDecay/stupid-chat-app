@@ -9,3 +9,4 @@ import UserMessage from "../message-user"
 export const MESSAGE_FOLLOW_UP_KEY = "follow-up"
 // all kind of message will below here
 export { UserMessage }
+export  * from "./actions"

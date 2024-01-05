@@ -4,27 +4,27 @@ import {
   Switch, 
   createSignal 
 } from "solid-js"
-import { 
-  ChatMessageEvents, 
-  useChatMessages 
-} from "../../../provider/ChatMessagesProvider"
 import { MessageActions } from "../message/actions"
-import { logdown, scrollDown } from "../../../utils"
-import ChatMessageInput from "../message-input"
+import { logdown, scrollDown } from "@client/utils"
+import ChatMessageInput from "./MessageInput"
 import stylex from "@stylexjs/stylex"
 
-import { MessageCache } from "../../../api/message"
 import { 
   type ChatMessage, 
   type IUserMessage, 
   Message,
-  processMessage
-} from "../../../api/message/"
+  processMessage,
+  MessageCache
+} from "@client/api/message"
 import { removeAndUpdateMessage } from "./messageUpdate"
 
-import { SocketRoutes } from "../../../../config/app_config"
+import { SocketRoutes } from "@config/app_config"
 import __Message from "./renderMessage"
-import { useChatPage } from "../../../provider"
+import { 
+  useChatPage,
+  ChatMessageEvents, 
+  useChatMessages 
+} from "@provider"
 
 const style = stylex.create({
   messageList: {
@@ -38,6 +38,7 @@ const style = stylex.create({
     display: 'flex',
     width: '100%',
     height: '100%',
+    position: 'relative'
   }
 })
 

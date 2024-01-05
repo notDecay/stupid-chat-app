@@ -14,8 +14,8 @@ import {
 } from "@hope-ui/solid"
 import type { JSX, ParentProps } from "solid-js"
 
-import style from "./Modal.module.scss"
 import { mergeClassNames } from "../../utils"
+import stylex from "@stylexjs/stylex"
 
 interface IModal {
   isOpen: () => boolean
@@ -34,11 +34,39 @@ interface IModalLabelProps {
   name: JSX.Element
 }
 
+const style = stylex.create({
+  modalOverlay: {
+    backdropFilter: 'blur(2.5px)',
+  },
+  modalContent: {
+    position: 'static'
+  },
+  modalLabel: {
+    marginBottom: 25,
+    ':last-child': {
+      marginBottom: 0
+    }
+  },
+  modalCloseButton: {
+    position: 'absolute',
+    borderRadius: '50%',
+    border: '2px solid var(--hope-colors-neutral8)',
+    width: 40,
+    height: 40
+  }
+})
+
 const _Modal = {
   Modal(props: ParentProps<IModalContentProps>) {
     return (
-      <Modal {...props} centered scrollBehavior="inside" opened={props.isOpen()} onClose={props.onClose}>
-        <ModalOverlay />
+      <Modal 
+        {...props} 
+        centered 
+        scrollBehavior="inside" 
+        opened={props.isOpen()} 
+        onClose={props.onClose}
+      >
+        <ModalOverlay {...stylex.props(style.modalOverlay)} />
         {props.children}
       </Modal>
     )
@@ -46,8 +74,11 @@ const _Modal = {
 
   Content(props: ModalContentProps) {
     return (
-      <ModalContent {...props} class={mergeClassNames(style["modal-dialog"], props.class)}>
-        <ModalCloseButton class={style["modal-close-button"]} backgroundColor="$neutral6" boxSize="40px" />
+      <ModalContent {...props} class={mergeClassNames(
+        stylex.props(style.modalContent).className ?? '', 
+        props.class
+      )}>
+        <ModalCloseButton {...stylex.props(style.modalCloseButton)} />
         {props.children}
       </ModalContent>
     )
@@ -71,7 +102,7 @@ const _Modal = {
 
   Label(props: ParentProps<IModalLabelProps>) {
     return (
-      <div class={style["modal-label"]}>
+      <div {...stylex.props(style.modalLabel)}>
         <Box fontSize="$xs" marginBottom={15}>{props.name}</Box>
         {props.children}
       </div>

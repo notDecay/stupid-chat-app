@@ -1,6 +1,6 @@
 import type { JSX } from "solid-js"
 import stylex from "@stylexjs/stylex"
-import { mergeClassNames } from "../../../utils"
+import { mergeClassNames } from "@client/utils"
 
 interface IMessageWrapUpProps extends JSX.HTMLAttributes<HTMLDivElement> {
   // ...

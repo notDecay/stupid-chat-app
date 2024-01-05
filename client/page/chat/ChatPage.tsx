@@ -1,18 +1,20 @@
 import { Outlet } from '@solidjs/router'
 
-import ChatSidebar from '../../layout/chat/ChatSidebar'
+import { ChatSidebar, MIN_WIDTH_IN_PIXEL } from '@layout/chat/ChatSidebar'
 import stylex from '@stylexjs/stylex'
-import io from 'socket.io-client'
-import { ChatPageProvider } from '../../provider/ChatPageProvider'
+import { ChatPageProvider } from '@provider'
 import { createEffect, createResource, createSignal } from 'solid-js'
-import ChatSplash from '../../components/chat/splash-screen'
-import { logdown } from '../../utils'
+import { ChatSplash } from '@components'
+import { logdown } from '@client/utils'
 import { NotificationsProvider } from '@hope-ui/solid'
 
-const chatPageStyle = stylex.create({
+const style = stylex.create({
   app: {
     display: 'grid',
-    gridTemplateColumns: '350px 1fr',
+    gridTemplateColumns: {
+      default: '350px 1fr',
+      [`@media (max-width: ${MIN_WIDTH_IN_PIXEL}px)`]: '0 1fr'
+    },
     position: 'relative',
     width: '100%',
     height: '100%',
@@ -21,8 +23,22 @@ const chatPageStyle = stylex.create({
     backgroundColor: 'var(--hope-colors-neutral2)',
     borderRightWidth: 1,
     borderRightStyle: 'solid',
-    borderRightColor: 'var(--hope-colors-neutral8)'
-  }
+    borderRightColor: 'var(--hope-colors-neutral8)',
+    [`@media (max-width: ${MIN_WIDTH_IN_PIXEL}px)`]: {
+      position: 'absolute',
+      left: '100%',
+      width: '350px',
+      height: '100%',
+      zIndex: 3,
+    },
+  },
+  main: {
+    width: '100%',
+    height: '100%',
+    [`@media (max-width: ${MIN_WIDTH_IN_PIXEL}px)`]: {
+      position: 'absolute',
+    },
+  },
 })
 
 async function fetcher() {
@@ -45,11 +61,11 @@ export default function ChatPage() {
     <NotificationsProvider>
       <ChatSplash.Screen show={isShowing() && shouldOnlyShowOnProductionMode} />
       <ChatPageProvider>
-        <div {...stylex.props(chatPageStyle.app)}>
-          <aside {...stylex.props(chatPageStyle.sidebar)}>
+        <div {...stylex.props(style.app)}>
+          <aside {...stylex.props(style.sidebar)}>
             <ChatSidebar.Sidebar />
           </aside>
-          <main>
+          <main {...stylex.props(style.main)}>
             <Outlet />
           </main>
         </div>

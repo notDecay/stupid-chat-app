@@ -1,7 +1,7 @@
-import { type Component, lazy, createSignal, Switch, Match, Setter } from "solid-js"
-import { MoreOptions } from "../../components"
+import { lazy, createSignal, Switch, Match } from "solid-js"
+import { MoreOptions } from "@components"
 import { BsGearFill, BsInfoCircle } from "solid-icons/bs"
-import { createDisclosure } from "@hope-ui/solid"
+import { createModal } from "./createModal"
 
 export default function MoreOptionsButton() {
   // it's just lazy-loaded the modal
@@ -42,29 +42,4 @@ export default function MoreOptionsButton() {
       </Switch>
     </>
   )
-}
-
-const createModal = (ModalComponent: Component, option: number, setOption: Setter<number>) => {
-  const modal = createDisclosure()
-  return {
-    onOpen() {
-      modal.onOpen()
-      setOption(option)
-    },
-    Modal() {
-      return (
-        <ModalComponent
-          // @ts-ignore
-          isOpen={modal.isOpen} 
-          // @ts-ignore
-          onClose={() => {
-            modal.onClose()
-            setTimeout(() => {
-              setOption(0)
-            }, 750)
-          }}
-        />
-      )
-    }
-  }
 }

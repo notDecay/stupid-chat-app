@@ -1,7 +1,11 @@
-import { defineConfig } from 'vite'
+import {  
+  type Alias,
+  defineConfig, 
+} from 'vite'
 import { optimizeCssModules } from 'vite-plugin-optimize-css-modules'
 import solidPlugin from 'vite-plugin-solid'
-// import { stylexPlugin } from "vite-plugin-stylex-dev"
+import tsconfig from "./tsconfig.json"
+import { stylexPlugin } from "vite-plugin-stylex-dev"
 // import stylexPlugin from '@stylexjs/rollup-plugin'
 // import babelStyleXPlugin from '@stylexjs/babel-plugin'
 
@@ -34,5 +38,30 @@ export default defineConfig({
         entryFileNames: `${HASH_NAME}.js`,
       },
     },
+  },
+  resolve: {
+    alias: resolvePath()
   }
 })
+
+function resolvePath() {
+  const paths = tsconfig.compilerOptions.paths
+  const pathList = Object.entries(paths)
+  const resolvedPathList: Alias[] = []
+  for (const thisThing of pathList) {
+    const [alias, [pathToResolve]] = thisThing
+    resolvedPathList.push(replacePath(
+      alias.replace('/*', ''), 
+      pathToResolve.replace('/*', '')
+    ))
+  }
+
+  return resolvedPathList
+}
+
+function replacePath(alias: string, replacementPath: string): Alias {
+  return {
+    find: alias, 
+    replacement: fileURLToPath(new URL(replacementPath, import.meta.url))
+  }
+}

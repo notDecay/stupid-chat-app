@@ -6,7 +6,7 @@ import {
 import TextareaAutosize from "solid-textarea-autosize"
 import { type ParentProps } from "solid-js"
 
-import style from "./index.module.scss"
+import style from "./MessageInput.module.scss"
 
 import InputMoreOptions from "./InputMoreOptions"
 import _ReplyTo from "./ReplyTo"

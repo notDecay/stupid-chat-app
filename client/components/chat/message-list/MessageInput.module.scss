@@ -7,8 +7,7 @@ $chat-messages-padding: 10px;
   padding: $chat-messages-padding;
   padding-top: 0;
   &, .msg-input-wrapper, .stuff-on-top {
-    width: calc(100% - $chat-messages-padding - 158px);
-    // I guess this value out :)                ^^^^^
+    width: 100%
   }
 
   .msg-input-wrapper, .stuff-on-top > * {
@@ -25,15 +24,5 @@ $chat-messages-padding: 10px;
       resize: none;
       padding: 7px 12px;
     }
-  }
-}
-
-.more-options-wrapper {
-  height: 100%;
-  .more-options {
-    border-radius: 9px;
-    // overriding hope-ui's button styles to show the icon
-    padding-inline-start: 0;
-    padding-inline-end: 0;
   }
 }

@@ -12,5 +12,17 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "strictNullChecks": true,
+    "paths": {
+      "@config/*": ["./config/*"],
+
+      "@components": ["./client/components/index.tsx"],
+      "@layout/*": ["./client/layout/*"],
+      "@page/*": ["./client/page/*"],
+      "@assets/*": ["./client/assets/*"],
+      "@provider": ["./client/provider/index.tsx"],
+      "@client/utils": ["./client/utils/index.ts"],
+      "@client/lib/*": ["./client/lib/*"],
+      "@client/api/*": ["./client/api/*"]
+    }
   }
 }

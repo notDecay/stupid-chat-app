@@ -1,6 +1,20 @@
 import { Button, Center } from "@hope-ui/solid"
-import style from "./index.module.scss"
 import { BsPlus } from "solid-icons/bs"
+import stylex from "@stylexjs/stylex"
+
+const style = stylex.create({
+  moreOptionsWrapper: {
+    height: '100%'
+  },
+  button: {
+    width: 35,
+    height: 35,
+    borderRadius: '9px',
+    // overriding hope-ui's button styles to show the icon
+    paddingInlineStart: 0,
+    paddingInlineEnd: 0,
+  }
+})
 
 /**Creates the message input more options button
  * @returns JSX element
@@ -8,10 +22,9 @@ import { BsPlus } from "solid-icons/bs"
  */
 export default function InputMoreOptions() {
   return (
-    <div class={style["more-options-wrapper"]}>
+    <div {...stylex.props(style.moreOptionsWrapper)}>
       <Button
-        class={style["more-options"]} 
-        boxSize={35} 
+        {...stylex.props(style.button)}
         background="$neutral4"
         as={Center}
         colorScheme="neutral"

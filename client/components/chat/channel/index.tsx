@@ -1,5 +1,5 @@
 import { Avatar, Center } from "@hope-ui/solid"
-import type { IChannel } from "../../../api/channel"
+import type { IChannel } from "@client/api/channel"
 import { Link } from "@solidjs/router"
 import { NameAndDescription } from "../.."
 
