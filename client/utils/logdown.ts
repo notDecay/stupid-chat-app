@@ -13,7 +13,7 @@ const WARN_COLOR = '#a1912a'
  * Based on this utility: [`logdown`](https://www.npmjs.com/package/logdown)
  * but far more simplified.
  */
-export default class logdown {
+export class logdown {
   static print(type: LogType, labelColor: string, label: string, ...stuff: any[]) {
     console[type](`%c ${label} %c`, labelStyle(labelColor), '', ...stuff)
   }

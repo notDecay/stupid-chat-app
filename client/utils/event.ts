@@ -3,13 +3,13 @@
  * 
  * This is a smaller version of nodejs's [`EventEmitter`](https://nodejs.org/api/events.html)
  */
-export default class event<TEvent extends { [eventName: string]: any[] }> {
+export class EventEmitter<TEvent extends { [eventName: string]: any[] }> {
   #listeners = {} as TEvent
 
   /**Adds a listener to the specified event. 
    * @example
    * ```js
-   * const event = new event()
+   * const event = new EventEmitter()
    * 
    * event.on('some_event', () => {
    *   console.log("'some_event' called")
@@ -29,7 +29,7 @@ export default class event<TEvent extends { [eventName: string]: any[] }> {
    * The next time eventName is triggered, this listener is removed and then invoked.
    * @example
    * ```js
-   * const event = new event()
+   * const event = new EventEmitter()
    * 
    * event.once('some_event', () => {
    *   console.log("'some_event' called")
@@ -52,7 +52,7 @@ export default class event<TEvent extends { [eventName: string]: any[] }> {
   /**Removes the specified listener from the listener array for the event named `eventName`.
    * @example
    * ```js
-   * const event = new event()
+   * const event = new EventEmitter()
    * const callback = () => {
    *   console.log('something happen!');
    * }
@@ -80,7 +80,7 @@ export default class event<TEvent extends { [eventName: string]: any[] }> {
    * in the order they were registered, passing the supplied arguments to each.
    * @example
    * ```js
-   * const event = new event();
+   * const event = new EventEmitter();
    *
    * // First listener
    * event.on('some_event', firstListener() => {

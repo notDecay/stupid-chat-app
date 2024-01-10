@@ -1,116 +1,61 @@
-import { Divider, Spacer } from "@hope-ui/solid"
-import SearchBox from "./SearchBox"
-import { Channel } from "@components"
-import MoreOptionsButton from "./MoreOptionsButton"
-import { event } from "@client/utils"
-
 import stylex from "@stylexjs/stylex"
-import { createSignal } from "solid-js"
-export const MIN_WIDTH_IN_PIXEL = 850
+import { CircleCloseButton } from "../../components"
+import { styleToken } from "../../utils"
+import { token } from "./token.stylex"
+import type { ParentProps } from "solid-js"
 
-const highlightAnimation = stylex.keyframes({
-  from: {
-    borderColor: "rgba(255, 145, 0, 0.671)"
-  },
-
-  to: {
-    borderColor: "transparent"
-  }
-})
+const minWidth = '@media (max-width: 950px)'
 
 const style = stylex.create({
   sidebar: {
-    position: "relative",
-    width: "100%",
-    height: "100%",
-    "::before": {
-      content: '',
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      border: "5px dotted transparent",
+    backgroundColor: 'var(--hope-colors-neutral2)',
+    width: token.sidebarWidth,
+    [minWidth]: {
+      position: 'absolute',
+      height: '100%',
+      zIndex: 3
     },
-  },
-  searchBox: {
-    display: "grid",
-    gridTemplateColumns: "auto auto auto"
-  },
-  sidebarHighlighted: {
-    "::before": {
-      animation: `${highlightAnimation} 0.75s ease-out`
+    '::before': {
+      content: ''
     }
   },
-  content: {
-    padding: "10px 15px",
-    height: '100%'
+  sidebarPadding: {
+    paddingTop: token.sidebarPaddingTopAndBottom,
+    paddingBottom: token.sidebarPaddingTopAndBottom,
+    paddingLeft: token.sidebarPaddingLeftAndRight,
+    paddingRight: token.sidebarPaddingLeftAndRight,
   },
+  openOrCloseSidebar: {
+    position: 'relative',
+    display: 'none',
+    [minWidth]: {
+      display: 'block'
+    }
+  },
+  closeSidebarButton: {
+    position: 'absolute',
+    left: "100%",
+    marginTop: 15,
+    marginLeft: 15,
+    zIndex: 15
+  }
 })
 
-export namespace ChatSidebar {
-  const enum SidebarEvents {
-    /**Fired whenever the sidebar is being flashed, via calling `flashSidebar()` function
-     * @see {@link flashSidebar}
-     */
-    highlightShown
-  } 
-
-  const sidebarEvent = new event<{
-    [SidebarEvents.highlightShown]: []
-  }>()
-
-  /**Creates the chat sidebar hold the search box and the channel list
-   * @returns JSX element
-   */
-  export function Sidebar() {
-    const [highlightSidebar, setHighlightSidebar] = createSignal(false)
-    let sidebar: HTMLDivElement
-    const channelList = [ // todo: get this somewhere
-      {
-        id: "100000000",
-        name: "Test"
-      }
-    ]
-
-    sidebarEvent.on(SidebarEvents.highlightShown, () => {
-      setHighlightSidebar(true)
-      // remove it so it can be flashed again :)
-      setTimeout(() => {
-        setHighlightSidebar(false)
-      }, 0.75 * 1000)
-      // ^^^^^^^^^^^ todo: somehow can sync it from the style -> here
-      //             this delay in milisecond is the same as the animation delay
-      //             idk what's the best way lol
-      //             (other than just hard-coded it :>)
-    })
-  
-    return (
-      <div 
-        ref={sidebar!}
-        {...stylex.props(
-          style.sidebar,
-          highlightSidebar() ? style.sidebarHighlighted : null
-        )}
-      >
-        {/* <CloseButton {...stylex.props(style.closeSidebarButton)} size="lg" /> */}
-        <div {...stylex.props(style.content)}>
-          <div {...stylex.props(style.searchBox)}>
-            <SearchBox />
-            <Spacer />
-            <MoreOptionsButton />
-          </div>
-          <Divider my={15} />
-          <Channel.List list={channelList}>
-            {channel => <Channel.Channel {...channel} />}
-          </Channel.List>
-        </div>
+export default function ChatSidebar(props: ParentProps) {
+  return (
+    <aside {...stylex.props(
+      style.sidebar,
+      styleToken.fullScreen_before
+    )}>
+      <div {...stylex.props(style.openOrCloseSidebar)}>
+        <CircleCloseButton {...stylex.props(style.closeSidebarButton)} />
       </div>
-    )
-  }
-
-  /**It's just highlight the sidebar by flashing the orange border
-   * @returns *nothing*
-   */
-  export function flashSidebar() {
-    sidebarEvent.emit(SidebarEvents.highlightShown)
-  }
+      <div {...stylex.props(
+        styleToken.fullScreen,
+        style.sidebarPadding
+      )}>
+        {props.children}
+      </div>
+    </aside>
+  )
 }

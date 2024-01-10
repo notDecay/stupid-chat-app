@@ -1,34 +1,53 @@
 import express from "express"
-// import { QuickDB, MySQLDriver } from "quick.db"
-import { baseApi, messageApi, socketApi, userApi } from "./api"
+import cors from "cors"
+import * as apiList from "./api"
 import { Server } from "socket.io"
-import { AppRoutes } from "../config/app_config"
+import { AppRoutes, ChatSocketEventMap } from "../global"
+import { type AnyApiFunctionType, isApiFunction } from "./utils"
 
 export const app = express()
-const PORT = 3000
+
+const corsOptions: cors.CorsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200
+}
+
+// ...
+app.use(express.static(__dirname + '/client'))
+app.use(cors(corsOptions))
+// ...
+const PORT = 4000
 
 const server = app.listen(PORT, () => {
   console.log("server is listened at port", PORT, ":)")
 })
 
-export const io = new Server(server)
-
-app.use(express.static(__dirname + '/client'))
+export const io = new Server<
+  ChatSocketEventMap.ClientToServer,
+  ChatSocketEventMap.ServerToClient
+>(server, {
+  cors: corsOptions
+})
 
 app.get([
-  AppRoutes.home, 
-  AppRoutes.login, 
-  AppRoutes.register, 
-  AppRoutes.acknowledgement
+  AppRoutes.Home,
+  AppRoutes.Channel,
 ], (request, response) => {
   response.sendFile(__dirname + '/client/index.html')
 })
 
 async function main() {
-  baseApi({ server: app })
-  userApi({ server: app })
-  socketApi({ io })
-  messageApi({ io })
+  console.log(apiList);
+  
+  const apiFunctionList = Object.entries<AnyApiFunctionType>(apiList)
+  for (const [_doNothing, apiFunction] of apiFunctionList) {
+    if (isApiFunction(apiFunction)) {
+      apiFunction({ server: app })
+    }
+    else {
+      apiFunction({ io: io })
+    }
+  }
 }
 
 main()

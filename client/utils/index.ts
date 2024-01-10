@@ -1,50 +1,23 @@
-export { default as event } from "./event"
-export { default as logdown } from "./logdown"
-export * as marked from "@client/lib/marked"
+import { ApiRoutes } from "../../global/apiRoutes"
 
-/**Merging one or more class name together
- * @param first            the first class name
- * @param moreClassNames   optional, another class name or more class names
- * @returns 
+export * from "./styleToken"
+export * from "./event"
+export * from "./logdown"
+
+export function mergeClassNames(listOfClassnames: (string | null | undefined)[]) {
+  return listOfClassnames.filter(it => it).join(' ')
+}
+
+/**Return the origin of the api.
+ * 
+ * If the app is on dev mode, then this will fallback to `http://localhost:4000`
+ * @returns the api origin
  */
-export function mergeClassNames(first: string): string
-export function mergeClassNames(first: string, ...moreClassNames: (string | undefined)[]): string
-export function mergeClassNames(first: string, ...moreClassNames: (string | undefined)[]): string {
-  if (moreClassNames) {
-    return `${first} ${moreClassNames.join(' ')}`.trim()
-  }
-
-  return first
+export function getOrigin() {
+  return import.meta.env.DEV ? ApiRoutes.BASE_API_HREF : location.origin
 }
 
-/**It just escaping some unsafe html string, just that simple :)
- * @param unsafeHtmlString a html string you want to parse
- * @returns parsed html string
- */
-export function escapeHtml(unsafeHtmlString: string) {
-  return unsafeHtmlString
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;')
-}
-
-export function scrollDown(element: Element) {
-  element.scrollBy(0, element.scrollHeight)
-}
-
-export function makeUUIDv4() {
-  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-    // @ts-ignore
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  )
-}
-
-export function getRandomNum(bound: number = 5) {
-  return Math.floor(Math.random() * bound)
-}
-
-export function getRandomElementFromArray<T extends any>(anyArray: T[]): T {
-  return anyArray[getRandomNum(anyArray.length)]
+export function apiRoute(route?: string) {
+  const apiRoute = ApiRoutes.BASE_ROUTE
+  return `${getOrigin()}${apiRoute}${route ?? ''}` as const
 }

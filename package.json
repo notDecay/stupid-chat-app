@@ -8,9 +8,8 @@
     "serve": "vite preview --open",
     "dev": "vite --open",
     "server": "node ./build/dist/index.cjs",
-    "build": "vite build && node ./build/optimizeClassName.js",
-    "build:server": "node ./build config=server_build",
-    "build:script": "node ./build config=script_build"
+    "build": "vite build",
+    "build:server": "node ./build/build_it config=server_build"
   },
   "license": "MIT",
   "devDependencies": {
@@ -28,7 +27,7 @@
     "@solidjs/router": "^0.9.1",
     "@stylexjs/dev-runtime": "^0.3.0",
     "@stylexjs/rollup-plugin": "^0.3.0",
-    "@stylexjs/stylex": "^0.3.0",
+    "@stylexjs/stylex": "^0.4.1",
     "@types/express": "^4.17.21",
     "express": "^4.18.2",
     "mysql2": "^3.6.5",

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strict": true,
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
@@ -9,20 +10,7 @@
     "jsxImportSource": "solid-js",
     "types": ["vite/client"],
     "noEmit": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true,
-    "strictNullChecks": true,
-    "paths": {
-      "@config/*": ["./config/*"],
-
-      "@components": ["./client/components/index.tsx"],
-      "@layout/*": ["./client/layout/*"],
-      "@page/*": ["./client/page/*"],
-      "@assets/*": ["./client/assets/*"],
-      "@provider": ["./client/provider/index.tsx"],
-      "@client/utils": ["./client/utils/index.ts"],
-      "@client/lib/*": ["./client/lib/*"],
-      "@client/api/*": ["./client/api/*"]
-    }
+    "isolatedModules": true, 
+    "resolveJsonModule": true
   }
 }

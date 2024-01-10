@@ -1,21 +1,18 @@
-import { Route, Router, Routes } from '@solidjs/router'
-import { 
-  ChatRoutes, 
-  LoginRoutes 
-} from './page'
-import { AppRoutes } from '@config/app_config'
-import { lazy } from 'solid-js'
-
-const AcknowledgementPage = lazy(() => import("@page/acknowledgement"))
+import { HopeProvider } from '@hope-ui/solid'
+import { Router, Routes } from '@solidjs/router'
+// routes
+import ChatRoutes from './routes/ChatRoutes'
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <ChatRoutes />
-        <LoginRoutes />
-        <Route path={AppRoutes.acknowledgement} component={AcknowledgementPage} />
-      </Routes>
-    </Router>
+    <HopeProvider config={{ 
+      initialColorMode: 'dark'
+    }}>
+      <Router>
+        <Routes>
+          <ChatRoutes />
+        </Routes>
+      </Router>
+    </HopeProvider>
   )
 }

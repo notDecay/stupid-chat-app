@@ -1,41 +1,32 @@
-import { Avatar, Spacer } from "@hope-ui/solid"
-import { 
-  NameAndDescription,
-  MoreOptionsButton 
-} from "@components"
-
 import stylex from "@stylexjs/stylex"
+import { Avatar, Spacer } from "@hope-ui/solid"
+import { NameAndDescription, ThreeDotButton } from "../../components"
+import type { IChannel } from "../../api/channel"
 
-const navbarStyle = stylex.create({
-  nav: {
-    display: "flex",
-    alignItems: "center", 
-    padding: "7px 15px",
-    backgroundColor: "var(--hope-colors-neutral2)",
-    borderBottom: "1px solid var(--hope-colors-neutral8)",
-    gap: "15px"
+const style = stylex.create({
+  navbar: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 15,
+    backgroundColor: 'var(--hope-colors-neutral2)',
+    paddingTop: 7,
+    paddingBottom: 7,
+    paddingLeft: 18,
+    paddingRight: 18,
   }
 })
 
-export const enum ChatNavBarAction {
-  MoreOption
-}
-
 interface IChatNavBarProps {
-  onActionClicked: (action: ChatNavBarAction) => any
+  channel: IChannel | null
 }
 
 export default function ChatNavBar(props: IChatNavBarProps) {
-  const setAction = (action: ChatNavBarAction) => {
-    props.onActionClicked.call(this, action)
-  }
-
   return (
-    <nav {...stylex.props(navbarStyle.nav)}>
+    <nav {...stylex.props(style.navbar)}>
       <Avatar />
-      <NameAndDescription name="something" />
+      <NameAndDescription name={props.channel?.name ?? ''} />
       <Spacer />
-      <MoreOptionsButton onClick={() => setAction(ChatNavBarAction.MoreOption)} />
+      <ThreeDotButton />
     </nav>
   )
 }

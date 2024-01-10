@@ -1,51 +1,8 @@
-import logdown from "../../utils/logdown"
-import { MessageCache } from "./cache"
-import { IUserMessage } from "./messageType"
-
-const fetchMessage = fetch
+import type { ICachedUserMessage, IUserMessage } from "./user"
 
 export type ChatMessage = IUserMessage
+export type CachedChatMessage = ICachedUserMessage
 
-interface IMessageFetchOptions {
-  channelId: string
-  messageId: string
-}
-
-export namespace Message {
-  /**Fetch the message by its id.
-   * 
-   * It first fetch the message from cache first. If it not found,
-   * it attempts to fetch from the database.
-   * @param channelId the channel id
-   * @param messageId the message id
-   * @returns the message from that channel or `null` if it does not found
-   * the message
-   */
-  export async function fetch({ 
-    channelId, 
-    messageId 
-  }: IMessageFetchOptions) {
-    logdown.start(`fetching message ${messageId} in channel ${channelId} from cache...`)
-    const cache = MessageCache.getMessageCacheStore(channelId)
-    const messageInCache = cache?.get(messageId)
-    if (messageInCache) {
-      logdown.success("|  okey :)")
-      return messageInCache
-    }
-
-    logdown.info("|  does not exist, fetching from database...")
-
-    try {
-      let message = await fetchMessage(`/api/channel/${channelId}/${messageId}`, {
-        method: "GET"
-      })
-
-      message = await message.json()
-      logdown.success("|  okey :)")
-      return message as unknown as ChatMessage
-    } catch (e) {
-      logdown.err(e)
-      return null
-    }
-  }
+export const enum MessageType {
+  user
 }
