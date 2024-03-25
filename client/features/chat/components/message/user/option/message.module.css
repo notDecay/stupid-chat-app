@@ -1,0 +1,7 @@
+[data-message-type=user] .message-option {
+  opacity: 0;
+}
+
+[data-message-type=user]:hover .message-option {
+  opacity: 1;
+}

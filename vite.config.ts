@@ -1,34 +1,38 @@
-import {  
-  defineConfig, 
-} from 'vite'
-import { optimizeCssModules } from 'vite-plugin-optimize-css-modules'
+import { defineConfig } from 'vite'
+import { fileURLToPath } from 'node:url'
+// ...
 import solidPlugin from 'vite-plugin-solid'
-import {
-  stylexPlugin
-} from "vite-plugin-stylex-dev"
-
-const HASH_NAME = "[hash:20]"
+import devtools from 'solid-devtools/vite'
+import { stylexPlugin } from 'vite-plugin-stylex-dev'
+import { optimizeCssModules } from 'vite-plugin-optimize-css-modules'
 
 export default defineConfig({
   plugins: [
+    /* 
+    Uncomment the following line to enable solid-devtools.
+    For more info see https://github.com/thetarnav/solid-devtools/tree/main/packages/extension#readme
+    */
+    devtools(),
     solidPlugin(),
-    optimizeCssModules(),
-    stylexPlugin()
+    stylexPlugin(),
+    optimizeCssModules()
   ],
   server: {
     port: 3000,
   },
-  cacheDir: './build/dist/cache',
   build: {
     target: 'esnext',
-    outDir: './build/dist/client',
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        assetFileNames: `${HASH_NAME}.[ext]`,
-        chunkFileNames: `${HASH_NAME}.js`,
-        entryFileNames: `${HASH_NAME}.js`,
-      },
-    },
   },
+  resolve: {
+    alias: [
+      {
+        find: '~',
+        replacement: fileURLToPath(new URL('./client', import.meta.url))
+      },
+      {
+        find: 'public',
+        replacement: fileURLToPath(new URL('./public', import.meta.url))
+      }
+    ]
+  }
 })

@@ -1,17 +1,17 @@
-import { HopeProvider } from '@hope-ui/solid'
-import { Router, Routes } from '@solidjs/router'
-// routes
-import ChatRoutes from './routes/ChatRoutes'
+import { HopeProvider } from "@hope-ui/solid"
+import { Router } from "@solidjs/router"
+import * as routes from './routes'
+import { For } from "solid-js"
 
 export default function App() {
   return (
-    <HopeProvider config={{ 
+    <HopeProvider config={{
       initialColorMode: 'dark'
     }}>
       <Router>
-        <Routes>
-          <ChatRoutes />
-        </Routes>
+        <For each={Object.values(routes)}>
+          {Route => <Route />}
+        </For>
       </Router>
     </HopeProvider>
   )

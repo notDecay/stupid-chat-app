@@ -5,16 +5,16 @@ import {
 import {
   BsThreeDots
 } from "solid-icons/bs"
-import { CircleCloseButton } from "./CircleCloseButton"
+import { CircleButton } from "./CircleButton"
 
-interface ICircleCloseButtonProps extends CloseButtonProps {
+interface ICircleButtonProps extends CloseButtonProps {
   // ...
 }
 
-export function ThreeDotButton(props: ICircleCloseButtonProps) {
+export function ThreeDotButton(props: ICircleButtonProps) {
   return (
-    <CircleCloseButton {...props}>
+    <CircleButton {...props}>
       <BsThreeDots size={17} />
-    </CircleCloseButton>
+    </CircleButton>
   )
 }

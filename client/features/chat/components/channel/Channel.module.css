@@ -1,0 +1,7 @@
+.channel::before {
+  opacity: 0.45;
+}
+
+.channel:hover::before, .channel.active::before {
+  opacity: 0.85;
+}

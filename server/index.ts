@@ -15,6 +15,10 @@ const corsOptions: cors.CorsOptions = {
 // ...
 app.use(express.static(__dirname + '/client'))
 app.use(cors(corsOptions))
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded({
+  extended: true
+})); // to support URL-encoded bodies
 // ...
 const PORT = 4000
 

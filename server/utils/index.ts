@@ -16,8 +16,8 @@ export type ApiFunction = (args: IApiFunctionArguments) => any
 export type SocketFunction = (args: ISocketFunctionArguments) => any
 export type AnyApiFunctionType = ApiFunction | SocketFunction
 
-export function apiRoute(route?: string) {
-  return `${ApiRoutes.BASE_ROUTE}${route ?? ''}` as const
+export function apiRoute<const T extends string>(route: T) {
+  return `${ApiRoutes.BASE_ROUTE}${route}` as const
 }
 
 export function isApiFunction(

@@ -1,7 +1,17 @@
 /* @refresh reload */
+import 'solid-devtools/setup'
+
 import { render } from 'solid-js/web'
 
-import './assets/global.css'
 import App from './App'
+import "./assets/style.css"
 
-render(() => <App />, document.getElementById('duck')!)
+const root = document.getElementById('duck')
+
+if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
+  throw new Error(
+    'Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got misspelled?',
+  )
+}
+
+render(() => <App />, root!)

@@ -1,9 +1,15 @@
 import stylex from "@stylexjs/stylex"
-import { styleToken } from "../utils"
 import { Box } from "@hope-ui/solid"
 import type { JSX } from "solid-js"
 
 const style = stylex.create({
+  screen: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   icon: {
     width: "19rem",
     height: "15rem",
@@ -15,7 +21,10 @@ const style = stylex.create({
     marginTop: 25,
     fontSize: 19,
     flexDirection: 'column',
-    lineHeight: 'normal'
+    lineHeight: 'normal',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
@@ -26,16 +35,10 @@ interface IWelcomeScreenProps {
 
 export function WelcomeScreen(props: IWelcomeScreenProps) {
   return (
-    <div {...stylex.props(
-      styleToken.fullScreen,
-      styleToken.flexCenter
-    )}>
+    <div {...stylex.props(style.screen)}>
       <div>
         <Box {...stylex.props(style.icon)} background={`url('${props.iconUrl}')`} />
-        <div {...stylex.props(
-          style.text,
-          styleToken.flexCenter
-        )}>
+        <div {...stylex.props(style.text)}>
           {props.text}
         </div>
       </div>
