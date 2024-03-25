@@ -2,7 +2,7 @@ import { Context, useContext as _useContext } from "solid-js"
 import { createStore as _createStore } from "solid-js/store"
 
 /**A wrapper of solidjs's [`useContext()`](https://docs.solidjs.com/references/api-reference/component-apis/useContext)
- * hook with checking.
+ * hook with some error checking.
  * @param anyContext 
  * @param errorMessage throw this error message if `useContext()` returns `undefined`
  */

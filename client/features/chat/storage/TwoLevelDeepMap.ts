@@ -22,10 +22,8 @@ export class TwoLevelDeepMap<
   Key extends string,
   Value extends { id: string }
 > {
-  /**Internal storage for the two-level map. 
-   * Uses a `Map<Key, Map<string, Value>>` to store inner maps for each key.
-   */
-  protected readonly cache: Map<string, Map<string, Value>> = new Map()
+  protected readonly storage: Map<string, Map<string, Value>> = new Map()
+  /**A cache to store the last item accessed for each key. */
   protected readonly lastItemCache: Record<string, Value> = {}
 
   /**Constructs a new `TwoLevelDeepMap` instance.
@@ -41,21 +39,24 @@ export class TwoLevelDeepMap<
    * @param key The key to retrieve the inner map for.
    */
   get(key: Key): Map<string, Value> | undefined {
-    return this.cache.get(key)
+    return this.storage.get(key)
   }
 
   /**Sets a value in the inner map associated with the provided key.
+   * 
    * Logs messages for retrieving the key and creating a new inner map (if necessary).
+   * And then store it to the last item cache.
    * 
    * @param key The key for the inner map.
    * @param value The value to store in the inner map. The value must have an 'id' property of type string.
+   * @returns *nothing*
    */
   set(key: Key, value: Value) {
-    let thatStorage = this.cache.get(key)
+    let thatStorage = this.storage.get(key)
     this.log(`get "${key}"`)
     if (!thatStorage) {
       thatStorage = new Map()
-      this.cache.set(key, thatStorage)
+      this.storage.set(key, thatStorage)
       this.log(`|  creating new map...`)
     }
     thatStorage.set(value.id, value)
@@ -71,7 +72,7 @@ export class TwoLevelDeepMap<
    * @returns An array of values from the inner map or an empty array.
    */
   toArray(key: Key): Value[] {
-    const dataFromCache = this.cache.get(key)
+    const dataFromCache = this.storage.get(key)
     if (!dataFromCache) {
       return []
     }
@@ -79,6 +80,11 @@ export class TwoLevelDeepMap<
     return toArray as Value[]
   }
 
+  /**Gets the last item from the inner map associated with the provided `key`.
+   *
+   * @param key The key for the inner map.
+   * @returns The last item or `undefined` if the inner map is empty.
+   */
   getLastItem(key: Key): Value | undefined {
     return this.lastItemCache[key]
   }
@@ -86,6 +92,7 @@ export class TwoLevelDeepMap<
   /**A helper function for logging messages. Prepends a `[storage]` prefix to the logged messages.
    * 
    * @param something Any arguments to be logged.
+   * @returns *nothing*
    */
   protected log(...something: any[]) {
     console.log(`[storage] `, ...something)

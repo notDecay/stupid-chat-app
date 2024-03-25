@@ -12,7 +12,7 @@
  * - **Access the raw listeners** for an event (for advanced usage) using the `getRawListeners` method.
  */
 export class EventEmitter<TEvent extends { [eventName: string]: AnyFunction }> {
-  #listeners = {} as Record<keyof TEvent, any[]>
+  protected readonly listeners = {} as Record<keyof TEvent, any[]>
 
   /**Adds a listener to the specified event. 
    * @example
@@ -28,8 +28,8 @@ export class EventEmitter<TEvent extends { [eventName: string]: AnyFunction }> {
    * ```
    */
   on<TEventName extends keyof TEvent>(eventName: TEventName, fn: TEvent[TEventName]) {
-    this.#listeners[eventName] = this.#listeners[eventName] || []
-    this.#listeners[eventName].push(fn)
+    this.listeners[eventName] = this.listeners[eventName] || []
+    this.listeners[eventName].push(fn)
     return this
   }
 
@@ -48,12 +48,12 @@ export class EventEmitter<TEvent extends { [eventName: string]: AnyFunction }> {
    * ```
    */
   once<TEventName extends keyof TEvent>(eventName: TEventName, fn: TEvent[TEventName]) {
-    this.#listeners[eventName] = this.#listeners[eventName] || []
+    this.listeners[eventName] = this.listeners[eventName] || []
     const onceWrapper = () => { 
       fn()
       this.off(eventName, onceWrapper as TEvent[TEventName])
     }
-    this.#listeners[eventName].push(onceWrapper)
+    this.listeners[eventName].push(onceWrapper)
     return this
   }
 
@@ -73,7 +73,7 @@ export class EventEmitter<TEvent extends { [eventName: string]: AnyFunction }> {
    * @param fn 
    */
   off<TEventName extends keyof TEvent>(eventName: TEventName, fn: TEvent[TEventName]) {
-    let listener = this.#listeners[eventName]
+    let listener = this.listeners[eventName]
     if (!listener) return this
     for(let i = listener.length; i > 0; i--) {
       if (listener[i] === fn) {
@@ -112,10 +112,10 @@ export class EventEmitter<TEvent extends { [eventName: string]: AnyFunction }> {
    * // event with parameters 1, 2, 3, 4, 5 in third listener
    * ```
    * @param eventName 
-   * @param {Event[EventName]} args
+   * @param args
    */
   emit<TEventName extends keyof TEvent>(eventName: TEventName, ...args: Parameters<TEvent[TEventName]>) {
-    let listeners = this.#listeners[eventName]
+    let listeners = this.listeners[eventName]
     if (!listeners) return false
     for (const listener of listeners) {
       listener(...args)
@@ -129,7 +129,7 @@ export class EventEmitter<TEvent extends { [eventName: string]: AnyFunction }> {
    * @param eventName 
    */
   getlistenerCount(eventName: keyof TEvent) {
-    let fns = this.#listeners[eventName] || []
+    let fns = this.listeners[eventName] || []
     return fns.length
   }
 
@@ -139,6 +139,6 @@ export class EventEmitter<TEvent extends { [eventName: string]: AnyFunction }> {
    * @param eventName 
    */
   getRawListeners(eventName: keyof TEvent) {
-    return this.#listeners[eventName]
+    return this.listeners[eventName]
   }
 }

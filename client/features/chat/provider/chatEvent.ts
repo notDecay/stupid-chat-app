@@ -4,7 +4,6 @@ import { IApiChannel } from "../api"
 export const enum ChatEvent {
   /**Emitted when the message page is doing the fetching job
    * from the server.
-   * 
    */
   messagePageFetching,
   messagePageUpdated,
