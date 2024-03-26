@@ -1,5 +1,5 @@
 import { AnyCachedMessage } from "../api"
-import { messageStore } from "../storage"
+import { store } from "../storage"
 
 /**Saves a message into the cache for a specific channel.
  *
@@ -10,5 +10,5 @@ import { messageStore } from "../storage"
  * @see {@link AnyCachedMessage}
  */
 export function saveMessageIntoCache(currentChannel: string, message: AnyCachedMessage) {
-  messageStore.set(currentChannel, message)
+  store.message.set(currentChannel, message)
 }

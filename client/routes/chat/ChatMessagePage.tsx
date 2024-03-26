@@ -14,8 +14,8 @@ import {
   AnyCachedMessage,
   createMessage,
   MessageType,
-  currentChannel,
-  saveMessageIntoCache
+  saveMessageIntoCache,
+  getCurrentChannel
 } from "~/features/chat"
 // ...
 import stylex from "@stylexjs/stylex"
@@ -60,14 +60,14 @@ export default function ChatMessagePage() {
   })
 
   // ...
-  const [thisCurrentChannel] = currentChannel
   const onSendingHandler: IMessageInputProps["onSending"] = async (data) => {
+    const currentChannel = getCurrentChannel()
     const messageFromServer = await createMessage(MessageType.user, data)
-    const processedMessage = apiMessageToCachedMessage(messageFromServer, thisCurrentChannel.channel.id)
+    const processedMessage = apiMessageToCachedMessage(messageFromServer, currentChannel.channel.id)
     console.log(processedMessage)
     
     setMessages([...messages(), processedMessage])
-    saveMessageIntoCache(thisCurrentChannel.channel.id, processedMessage)
+    saveMessageIntoCache(currentChannel.channel.id, processedMessage)
   }
 
   return (

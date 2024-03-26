@@ -3,18 +3,9 @@ import {
   ChatEvent, 
   type ChatEventMap, 
   type IApiChannel, 
-  type IChatMessageUpdateData 
 } from "~/features/chat"
-import { createStore } from "solid-js/store"
 import { AppRoutes } from "public"
-import { messageStore } from "../storage"
-
-/**Stores the current channel data. 
- * 
- * This will automatically being updated via `updateChatMessageIfNeed()` function
- * @see {@link updateChatMessageIfNeed()}
- */
-export const currentChannel = createStore({} as IChatMessageUpdateData)
+import { store } from "../storage"
 
 /**Interface for update chat message options. */
 interface IUpdateChatMessageOptions {
@@ -66,13 +57,13 @@ export async function updateChatMessageIfNeed(options: IUpdateChatMessageOptions
 
   console.log('current channel id:', channelId)
   
-  let messages: AnyCachedMessage[] = messageStore.toArray(channelId)
+  let messages: AnyCachedMessage[] = store.message.toArray(channelId)
   if (messages.length === 0) {
     chatEvent.emit(ChatEvent.messagePageFetching)
     await new Promise(resolve => setTimeout(resolve, 2000))
   }
 
-  const [, setCurrentChannel] = currentChannel
+  const [, setCurrentChannel] = store.currentChannel
   setCurrentChannel({
     channel,
     messages

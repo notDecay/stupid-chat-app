@@ -4,13 +4,13 @@ import {
   type AnyCachedMessage,
   type ICachedUserMessage, 
 } from "../../api"
-import { messageStore } from "../../storage"
+import { store } from "../../storage"
 
 export function apiMessageToCachedMessage<
   ApiMessage extends AnyApiMessage,
   CachedMessage extends AnyCachedMessage
 >(anyMessage: ApiMessage, currentChannel: string): CachedMessage {
-  const lastMessage = messageStore.getLastItem(currentChannel)
+  const lastMessage = store.message.getLastItem(currentChannel)
 
   console.log('last message is:', lastMessage)
 
