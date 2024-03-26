@@ -6,11 +6,27 @@ import {
 } from "~/features/chat"
 import { AppRoutes } from "public"
 import { store } from "../storage"
+import { Store } from "~/utils"
+import { produce } from "solid-js/store"
+
+/**Interface represent for list of channels stored by the chat via `createStore()`
+ * 
+ * @extends IApiChannel
+ * @see {@link IApiChannel}
+ */
+export interface IChannelsStoreData extends IApiChannel {
+  /**A special flag represent if the app should fetch that channel data. 
+   * After it done fetching, it set to `true` to avoid fetching it again.
+   * 
+   * @default false
+   */
+  isFetched: boolean
+}
 
 /**Interface for update chat message options. */
 interface IUpdateChatMessageOptions {
   /**A list of channels, provided by the `useChat()` hook */
-  channels: IApiChannel[]
+  channelsStore: Store<IChannelsStoreData[]>
   /**Pathname of the current location. Can get it via here:
    * ```
    * import { location } from "@solidjs/router"
@@ -29,7 +45,8 @@ interface IUpdateChatMessageOptions {
  * If it does, it extracts the channel ID from the pathname and finds the corresponding channel data.
  * 
  * If the channel data is not found or there are no messages, 
- * it emits `ChatEvent.messagePageFetching` event, meanwhile fetching for its data.
+ * it emits `ChatEvent.messagePageFetching` event, meanwhile fetching for its data
+ * then setting a special flag called `isFetched` to `true` to avoid fetching it again.
  * 
  * Finally, it updates the current channel data with the found channel and messages 
  * and emits `ChatEvent.messagePageUpdated`.
@@ -38,15 +55,17 @@ interface IUpdateChatMessageOptions {
  * @returns a `Promise` resolves *nothing*
  * 
  * @see {@link IUpdateChatMessageOptions}
+ * @see {@link IChannelsStoreData}
  * @see {@link ChatEvent}
  */
 export async function updateChatMessageIfNeed(options: IUpdateChatMessageOptions) {
-  const { channels, pathname, chatEvent } = options
+  const { channelsStore, pathname, chatEvent } = options
 
   if (!pathname.includes(AppRoutes.channel)) {
     return console.log('Update rejected')
   }
 
+  const [channels, setChannels] = channelsStore
   const channelId = pathname.replace(`${AppRoutes.channel}/`, '')
   console.log(channelId)
 
@@ -58,9 +77,15 @@ export async function updateChatMessageIfNeed(options: IUpdateChatMessageOptions
   console.log('current channel id:', channelId)
   
   let messages: AnyCachedMessage[] = store.message.toArray(channelId)
-  if (messages.length === 0) {
+  if (messages.length === 0 && !channel.isFetched) {
     chatEvent.emit(ChatEvent.messagePageFetching)
     await new Promise(resolve => setTimeout(resolve, 2000))
+    setChannels(
+      thisChannel => thisChannel.id === channelId,
+      produce(
+        it => (it.isFetched = true)
+      )
+    )
   }
 
   const [, setCurrentChannel] = store.currentChannel

@@ -1,19 +1,14 @@
 import { type ParentProps, createContext } from "solid-js"
-import { createStore } from "solid-js/store"
 // ...
-import { type IApiChannel } from "../api"
-import { type Store, useContext, EventEmitter } from "~/utils"
-import { IChatData } from "../methods"
+import { useContext, EventEmitter } from "~/utils"
+import { IChannelsStoreData, IChatData } from "../methods"
 // events
 import type { ChatEventMap } from "./chatEvent"
 import type { ChatMessageEventMap } from "./messageEvent"
+import { store } from "../storage"
+import { IApiChannel } from "../api"
 
 export interface IChatContext {
-  /**Stores associated with the chat context, providing access to data. */
-  stores: {
-    /**Store containing an array of channels accessible in the chat context. */
-    channels: Store<IApiChannel[]>
-  },
   /**Events related to the overall chat functionality.
    * @see {@link ChatEventMap}
    */
@@ -31,7 +26,7 @@ interface IChatProviderProps {
   data: IChatData | undefined
 }
 
-/**This component provides a context for managing chat data and events.
+/**This component provides a context for managing chat events.
  *
  * @param props The component's properties.
  * @returns `JSX.Element`
@@ -39,11 +34,27 @@ interface IChatProviderProps {
  * @see {@link IChatProviderProps}
  */
 export function ChatProvider(props: ParentProps<IChatProviderProps>) {
-  const getValue = (): IChatContext => {
+  const [, setChannels] = store.channels
+  const [, setUser] = store.user
+  const newChannel: IChannelsStoreData[] = []
+
+  const convertChannel = (channel: IApiChannel) => {
     return {
-      stores: {
-        channels: createStore(props.data?.channels || []),
-      },
+      ...channel,
+      isFetched: false
+    } as IChannelsStoreData
+  }
+
+  const getValue = (): IChatContext => {
+    for (const channel of (props.data?.channels ?? [])) {
+      newChannel.push(convertChannel(channel))
+    }
+
+    setChannels(newChannel)
+
+    setUser({})
+
+    return {
       chatEvent: new EventEmitter(),
       messageEvent: new EventEmitter(),
     }

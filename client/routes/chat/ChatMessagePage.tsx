@@ -20,6 +20,7 @@ import {
 // ...
 import stylex from "@stylexjs/stylex"
 import { apiMessageToCachedMessage } from "~/features/chat/utils"
+import { store } from "~/features/chat/storage"
 
 const style = stylex.create({
   mainContent: {
@@ -36,13 +37,12 @@ export default function ChatMessagePage() {
   const [chatPage, setChatPage] = createSignal<IChatMessageUpdateData | undefined>()
   const [isLoading, setIsLoading] = createSignal<boolean>(true)
   const [messages, setMessages] = createSignal<AnyCachedMessage[]>([])
-  const { chatEvent, stores } = useChat()
+  const { chatEvent } = useChat()
 
   const location = useLocation()
-  const [channels] = stores.channels
   createEffect(() => {
     updateChatMessageIfNeed({
-      channels,
+      channelsStore: store.channels,
       pathname: location.pathname,
       chatEvent
     })
