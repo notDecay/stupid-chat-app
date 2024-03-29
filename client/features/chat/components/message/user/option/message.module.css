@@ -1,7 +1,7 @@
-[data-message-type=user] .message-option {
+[data-message] .message-option {
   opacity: 0;
 }
 
-[data-message-type=user]:hover .message-option {
+[data-message]:hover .message-option {
   opacity: 1;
 }

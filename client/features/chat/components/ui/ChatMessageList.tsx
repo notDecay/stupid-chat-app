@@ -4,7 +4,11 @@ import { For, type JSX } from "solid-js"
 const style = stylex.create({
   messageList: {
     minHeight: 'var(--height)',
-    maxHeight: 'var(--height)'
+    maxHeight: 'var(--height)',
+    overflowY: 'scroll',
+    willChange: 'transform',
+    marginBlock: 5,
+    paddingBottom: '4.5rem'
   }
 })
 
@@ -18,7 +22,7 @@ export function ChatMessageList<T>(props: IChatMessageList<T>) {
     <div 
       {...stylex.props(style.messageList)}
       style={{
-        '--height': 'calc(100vh - 124px)'
+        '--height': 'calc(100vh - 125px)'
       }}
     >
       <For each={props.messages}>

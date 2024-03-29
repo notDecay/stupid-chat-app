@@ -30,7 +30,6 @@ const style = stylex.create({
 
 interface IMessageWrapperProps {
   isFollowUp?: boolean
-  type: string
   messageId: string
 }
 
@@ -47,8 +46,7 @@ export function MessageWrapper(props: ParentProps<IMessageWrapperProps>) {
     }}>
       <div 
         id={props.messageId} 
-        data-message-type={props.type}
-        tabIndex={1}
+        data-message
         {...stylex.props(
           style.message,
           !props.isFollowUp ? style.notFollowUpMessage : {},
@@ -64,7 +62,8 @@ export const useMessage = useContext(Context, `Make sure to wrap it inside <${Me
 
 /**Formats a provided date object according to a specific time format.
  * 
- * @param someDate a [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+ * @param someDate a 
+ * [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
  * object representing the date and time to be formatted.
  * @returns a formatted string representing the date according to the specified format.
  */

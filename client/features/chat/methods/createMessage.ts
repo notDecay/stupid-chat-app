@@ -1,10 +1,19 @@
-import { type IApiUserMessage, MessageType, IMessageInputData } from "~/features/chat"
+import { 
+  type IApiUserMessage, 
+  MessageType, 
+  type IMessageInputData, 
+  type AnyApiMessage, 
+  type AnyCachedMessage, 
+  type ICachedUserMessage 
+} from "~/features/chat"
+import { store } from "../storage"
 
 /**Interface defining the message creation options based on message type. */
 interface ICreateMessageMapping {
   [MessageType.user]: IMessageInputData
 }
 
+const [user] = store.user
 /**Asynchronously creates a message.
  * 
  * It tries to create a POST request from the server, the server will create a message
@@ -30,7 +39,7 @@ export async function createMessage<T extends MessageType>(
       id: crypto.randomUUID(),
       sentTime: new Date(),
       user: {
-        id: '10000'
+        id: user.id
       },
     } as IApiUserMessage
 
@@ -44,4 +53,24 @@ export async function createMessage<T extends MessageType>(
   }
 
   throw new Error('Failed to create message')
+}
+
+export function apiMessageToCachedMessage<
+  T extends AnyApiMessage,
+  CachedMessage extends AnyCachedMessage
+>(anyMessage: T, currentChannel: string): CachedMessage {
+  const lastMessage = store.message.getLastItem(currentChannel)
+
+  console.log('last message is:', lastMessage)
+
+  const newMessage = {
+    ...anyMessage,
+    type: MessageType.user,
+    isFollowUp: false,
+    user
+  } as ICachedUserMessage
+  
+  newMessage.isFollowUp = newMessage.user.id === lastMessage?.user.id
+
+  return newMessage
 }

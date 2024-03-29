@@ -1,5 +1,10 @@
 import { useLocation } from "@solidjs/router"
-import { createEffect, createSignal } from "solid-js"
+import { 
+  Match, 
+  Switch, 
+  createEffect, 
+  createSignal 
+} from "solid-js"
 import { 
   ChatEvent, 
   ChatNavbar, 
@@ -11,16 +16,18 @@ import {
   MessageInput,
   type IMessageInputProps,
   MessageComponentMapping,
-  AnyCachedMessage,
+  type AnyCachedMessage,
   createMessage,
   MessageType,
   saveMessageIntoCache,
-  getCurrentChannel
+  getCurrentChannel,
+  apiMessageToCachedMessage,
+  ChatMessageEvent,
+  type IMessageInputOption
 } from "~/features/chat"
+import { store } from "~/features/chat/storage"
 // ...
 import stylex from "@stylexjs/stylex"
-import { apiMessageToCachedMessage } from "~/features/chat/utils"
-import { store } from "~/features/chat/storage"
 
 const style = stylex.create({
   mainContent: {
@@ -37,7 +44,7 @@ export default function ChatMessagePage() {
   const [chatPage, setChatPage] = createSignal<IChatMessageUpdateData | undefined>()
   const [isLoading, setIsLoading] = createSignal<boolean>(true)
   const [messages, setMessages] = createSignal<AnyCachedMessage[]>([])
-  const { chatEvent } = useChat()
+  const { chatEvent, messageEvent } = useChat()
 
   const location = useLocation()
   createEffect(() => {
@@ -70,6 +77,20 @@ export default function ChatMessagePage() {
     saveMessageIntoCache(currentChannel.channel.id, processedMessage)
   }
 
+  // ...
+  const [inputOption, setInputOption] = createSignal<IMessageInputOption>({
+    option: -1,
+    data: undefined
+  })
+
+  messageEvent.on(ChatMessageEvent.replyMessage, (messageId) => {
+    const currentChannel = getCurrentChannel()
+    setInputOption({
+      option: 1,
+      data: store.message.get(currentChannel.channel.id)!.get(messageId)
+    })
+  })
+
   return (
     <main {...stylex.props(style.mainContent)}>
       <div {...stylex.props(style.messagePage)}>
@@ -82,7 +103,13 @@ export default function ChatMessagePage() {
             return <Message {...it} />
           }}
         </ChatMessageList>
-        <MessageInput.Input onSending={onSendingHandler} />
+        <MessageInput.Input onSending={onSendingHandler}>
+          <Switch>
+            <Match when={inputOption().option === 1}>
+              <MessageInput.ReplyTo repliedMessage={inputOption().data!} />
+            </Match>
+          </Switch>
+        </MessageInput.Input>
       </div>
     </main>
   )

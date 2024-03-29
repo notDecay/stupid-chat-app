@@ -36,12 +36,14 @@ export function CircleButton(props: ICircleButtonProps) {
     __style["close-button"]
   ].join(' ')
 
+  const getBoxSize = () => props.boxSize ?? 40
+
   return (
     <Button 
       {...props} 
       {...buttonVariant} 
       class={getClassnames()} 
-      boxSize={props.boxSize ?? 40} 
+      boxSize={getBoxSize()} 
       colorScheme="neutral" 
     >
       {props.children ? props.children : <BsXLg />}

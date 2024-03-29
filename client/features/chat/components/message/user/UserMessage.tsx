@@ -1,9 +1,16 @@
 import { MessageWrapper } from "../MessageWrapper"
 import { Show } from "solid-js"
+import { createStore } from "solid-js/store"
 // ...
-import { MessageEditingOption, MessageOptionList } from "./option"
-import { FollowUpMessage, NormalMessage } from "./variant"
-import type { ICachedUserMessage } from "~/features/chat"
+import { MessageOptionList } from "./option"
+import { 
+  FollowUpMessage, 
+  NormalMessage 
+} from "./variant"
+import { 
+  MessageEditingOption, 
+  type ICachedUserMessage 
+} from "~/features/chat"
 
 export interface IUserMessageProps extends ICachedUserMessage {
   isFollowUp: boolean
@@ -11,14 +18,19 @@ export interface IUserMessageProps extends ICachedUserMessage {
 }
 
 export default function UserMessage(props: IUserMessageProps) {
+  const [message, setMessage] = createStore(props)
+
   return (
-    <MessageWrapper type="user" messageId={props.id} isFollowUp={props.isFollowUp}>
-      <Show when={props.isFollowUp} fallback={
-        <NormalMessage {...props} />
+    <MessageWrapper 
+      messageId={message.id} 
+      isFollowUp={message.isFollowUp}
+    >
+      <Show when={message.isFollowUp} fallback={
+        <NormalMessage {...message} />
       }>
-        <FollowUpMessage {...props} />
+        <FollowUpMessage {...message} />
       </Show>
-      <Show when={!props.previewMode}>
+      <Show when={!message.previewMode}>
         <MessageOptionList options={[
           MessageEditingOption.edit,
           MessageEditingOption.delete,

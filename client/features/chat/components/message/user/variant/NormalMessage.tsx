@@ -1,6 +1,6 @@
 import type { IUserMessageProps } from "../UserMessage"
 import { MessageContent, MessageHeader, MessageReply } from "../content"
-import { Show, createSignal } from "solid-js"
+import { Show } from "solid-js"
 // ...
 import { Avatar } from "@hope-ui/solid"
 import { token } from "../token.stylex"
@@ -24,8 +24,6 @@ const style = stylex.create({
 })
 
 export function NormalMessage(props: IUserMessageProps) {
-  const [messageData, setMessageData] = createSignal(props)
-
   return (
     <div {...stylex.props(style.normalMessage)}>
       <Show when={props.replyTo}>

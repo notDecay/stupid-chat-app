@@ -52,7 +52,10 @@ export function ChatProvider(props: ParentProps<IChatProviderProps>) {
 
     setChannels(newChannel)
 
-    setUser({})
+    setUser({
+      id: '1000',
+      name: 'Some name'
+    })
 
     return {
       chatEvent: new EventEmitter(),

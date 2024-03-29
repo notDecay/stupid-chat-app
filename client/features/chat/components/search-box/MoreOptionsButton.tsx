@@ -8,7 +8,6 @@ import {
   MenuTrigger, 
 } from "@hope-ui/solid"
 import { ThreeDotButton } from "~/components"
-import { AppVersion } from "public"
 import stylex from "@stylexjs/stylex"
 
 const style = stylex.create({
@@ -27,12 +26,12 @@ export default function MoreOptionsButton() {
         <MenuGroup {...stylex.props(style.menuGroup)}>
           <div>
             App version: <Badge colorScheme="info">
-              {AppVersion.app} {AppVersion.appReleaseChannel}-{AppVersion.appBuildNumber}
+              {/*  */}
             </Badge>
           </div>
           <div>
             Api version: <Badge colorScheme="info">
-              {AppVersion.apiVersion}
+              {/*  */}
             </Badge>
           </div>
         </MenuGroup>

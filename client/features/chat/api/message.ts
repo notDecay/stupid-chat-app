@@ -1,5 +1,11 @@
 import { IApiUser } from "./user"
 
+export const enum MessageEditingOption {
+  edit,
+  reply,
+  delete
+}
+
 export const enum MessageType {
   user
 }

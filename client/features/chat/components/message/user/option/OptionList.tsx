@@ -1,7 +1,8 @@
 import { For } from "solid-js"
-import { token } from "../token.stylex"
+import type { MessageEditingOption } from "~/features/chat"
 // ...
-import { MessageEditingOption, OptionIcon } from "./OptionIcon"
+import { token } from "../token.stylex"
+import { OptionIcon } from "./OptionIcon"
 import stylex from "@stylexjs/stylex"
 import __style from "./message.module.css"
 
