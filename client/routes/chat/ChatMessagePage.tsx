@@ -23,7 +23,7 @@ import {
   getCurrentChannel,
   apiMessageToCachedMessage,
   ChatMessageEvent,
-  type IMessageInputOption
+  type IMessageInputAccessoryOptions
 } from "~/features/chat"
 import { store } from "~/features/chat/storage"
 // ...
@@ -78,7 +78,7 @@ export default function ChatMessagePage() {
   }
 
   // ...
-  const [inputOption, setInputOption] = createSignal<IMessageInputOption>({
+  const [inputOption, setInputOption] = createSignal<IMessageInputAccessoryOptions>({
     option: -1,
     data: undefined
   })

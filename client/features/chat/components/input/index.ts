@@ -8,10 +8,8 @@ export const MessageInput = {
 
 /**Interface represent for the options to show the component that on top
  * of this message input
- * 
- * @todo rename this to a better name
  */
-export interface IMessageInputOption {
+export interface IMessageInputAccessoryOptions {
   option: number
   data?: object
 }
