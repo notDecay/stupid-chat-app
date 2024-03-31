@@ -2,7 +2,8 @@ import {
   type AnyCachedMessage,
   ChatEvent, 
   type ChatEventMap, 
-  type IApiChannel, 
+  type IApiChannel,
+  type IChatMessageUpdateData, 
 } from "~/features/chat"
 import { AppRoutes } from "public"
 import { store } from "../storage"
@@ -89,13 +90,16 @@ export async function updateChatMessageIfNeed(options: IUpdateChatMessageOptions
   }
 
   const [, setCurrentChannel] = store.currentChannel
-  setCurrentChannel({
-    channel,
-    messages
-  })
 
-  chatEvent.emit(ChatEvent.messagePageUpdated, {
+  const updateData = {
     channel,
-    messages
-  })
+    messages,
+    input: {
+      text: '',
+      replyTo: undefined
+    }
+  } as IChatMessageUpdateData
+  
+  setCurrentChannel(updateData)
+  chatEvent.emit(ChatEvent.messagePageUpdated, updateData)
 }

@@ -1,5 +1,5 @@
 import { EventEmitter } from "~/utils"
-import { IApiChannel } from "../api"
+import type { IApiChannel, ICachedUserMessage } from "../api"
 
 export const enum ChatEvent {
   /**Emitted when the message page is doing the fetching job
@@ -13,6 +13,10 @@ export const enum ChatEvent {
 export interface IChatMessageUpdateData {
   channel: IApiChannel
   messages: any[]
+  input: {
+    text: string
+    replyTo?: ICachedUserMessage
+  }
 }
 
 export type ChatEventMap = EventEmitter<{

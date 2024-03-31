@@ -1,5 +1,4 @@
-import { ICachedUserMessage } from "../../api"
-import { Show } from "solid-js"
+import type { ICachedUserMessage } from "../../api"
 // 
 import stylex from "@stylexjs/stylex"
 import { Avatar, Spacer } from "@hope-ui/solid"
@@ -37,32 +36,31 @@ const style = stylex.create({
 
 interface IReplyToProps {
   onClose?: () => void
-  repliedMessage: ICachedUserMessage | null
+  data: ICachedUserMessage
 }
 
 export function ReplyTo(props: IReplyToProps) {
   return (
-    <Show when={props.repliedMessage}>
-      <div {...stylex.props(style.replyTo)}>
-        <div {...stylex.props(style.content)}>
-          Reply to
-          <div {...stylex.props(style.repliedUser)}>
-            <Avatar boxSize={20} src={props.repliedMessage?.user.iconUrl} />
-            <span>{props.repliedMessage?.user.name}</span>
-          </div>
-          <span>
-            {props.repliedMessage?.content}
-          </span>
-          <Spacer />
+    <div {...stylex.props(style.replyTo)}>
+      <div {...stylex.props(style.content)}>
+        Reply to
+        <div {...stylex.props(style.repliedUser)}>
+          <Avatar boxSize={20} src={props.data.user.iconUrl} />
+          <span>{props.data.user.name}</span>
         </div>
-        <div>
-          <CircleButton 
-            boxSize={15} 
-            buttonVariant="square"
-            {...stylex.props(style.closeButton)} 
-          />
-        </div>
+        <span>
+          {props.data.content}
+        </span>
+        <Spacer />
       </div>
-    </Show>
+      <div>
+        <CircleButton 
+          boxSize={15} 
+          buttonVariant="square"
+          {...stylex.props(style.closeButton)} 
+          onClick={props.onClose}
+        />
+      </div>
+    </div>
   )
 }

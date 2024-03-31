@@ -1,7 +1,5 @@
 import { useLocation } from "@solidjs/router"
 import { 
-  Match, 
-  Switch, 
   createEffect, 
   createSignal 
 } from "solid-js"
@@ -23,7 +21,8 @@ import {
   getCurrentChannel,
   apiMessageToCachedMessage,
   ChatMessageEvent,
-  type IMessageInputAccessoryOptions
+  DEFAULT_ACCESSORY_OPTION,
+  type MessageInputAccessoryOptions,
 } from "~/features/chat"
 import { store } from "~/features/chat/storage"
 // ...
@@ -70,25 +69,29 @@ export default function ChatMessagePage() {
   const onSendingHandler: IMessageInputProps["onSending"] = async (data) => {
     const currentChannel = getCurrentChannel()
     const messageFromServer = await createMessage(MessageType.user, data)
+    console.log('message from server', messageFromServer)
+    
     const processedMessage = apiMessageToCachedMessage(messageFromServer, currentChannel.channel.id)
-    console.log(processedMessage)
+    console.log('processed message', processedMessage)
+    
     
     setMessages([...messages(), processedMessage])
     saveMessageIntoCache(currentChannel.channel.id, processedMessage)
   }
 
   // ...
-  const [inputOption, setInputOption] = createSignal<IMessageInputAccessoryOptions>({
-    option: -1,
-    data: undefined
-  })
+  const [accessoryOption, setAccessoryOption] = createSignal<MessageInputAccessoryOptions>(
+    DEFAULT_ACCESSORY_OPTION,
+  )
 
   messageEvent.on(ChatMessageEvent.replyMessage, (messageId) => {
     const currentChannel = getCurrentChannel()
-    setInputOption({
-      option: 1,
-      data: store.message.get(currentChannel.channel.id)!.get(messageId)
-    })
+    const data = store.message.get(currentChannel.channel.id)!.get(messageId)
+    if (!data) {
+      return
+    }
+
+    setAccessoryOption({ type: 1, data })
   })
 
   return (
@@ -103,13 +106,7 @@ export default function ChatMessagePage() {
             return <Message {...it} />
           }}
         </ChatMessageList>
-        <MessageInput.Input onSending={onSendingHandler}>
-          <Switch>
-            <Match when={inputOption().option === 1}>
-              <MessageInput.ReplyTo repliedMessage={inputOption().data!} />
-            </Match>
-          </Switch>
-        </MessageInput.Input>
+        <MessageInput onSending={onSendingHandler} accessory={accessoryOption()} />
       </div>
     </main>
   )

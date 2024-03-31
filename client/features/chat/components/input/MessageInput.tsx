@@ -1,8 +1,18 @@
 import stylex from "@stylexjs/stylex"
-import { ParentProps, type JSX } from "solid-js"
+import { 
+  type JSX, 
+  type ParentProps 
+} from "solid-js"
+import { store } from "../../storage"
 // ...
 import Textarea from "./Textarea"
-import { IMessageReference } from "../../api"
+import type { 
+  IMessageReference 
+} from "../../api"
+import type { 
+  MessageInputAccessoryOptions 
+} from "./MessageInputAccessory"
+import { inputAccessoryState, MessageInputAccessory } from "./MessageInputAccessory"
 
 const style = stylex.create({
   inputWrapper: {
@@ -25,34 +35,43 @@ const style = stylex.create({
   }
 })
 
+/**Interface representing the data sent by the `<MessageInput />` component. */
 export interface IMessageInputData {
-  /**The raw user message which it will be processed and sent to the chat */
+  /**The raw user message content before processing and sending to the chat. */
   rawMessageContent: string
-  /**if the user replied to another message then this will
-   * returns the message data of that replied message, `null` otherwise
+  /**Reference to the replied message data if the user is replying to another message, 
+   * otherwise null.
    */
   repliedMessage?: IMessageReference
 }
 
+/**Interface representing the props accepted by the `<MessageInput />` component. */
 export interface IMessageInputProps {
   /**Fired when the user send a message
+   * @param data The message data to be sent.
    * @returns *nothing*
+   * 
+   * @see {@link IMessageInputData}
    */
   onSending?: (data: IMessageInputData) => any
+  /**The message input accessory to display, which it will show on top of the message input. 
+   * 
+   * @see {@link MessageInputAccessoryOptions}
+   * @see {@link AccessoryOptions}
+   */
+  accessory: MessageInputAccessoryOptions
 }
 
-/**Reset the input to original state
- * @param input the current message input
+/**Not so "complex" chat message input. Yep, trust me :)
+ * 
+ * @param props The properties configuring the message input component. See {@link IMessageInputProps}
+ * @returns The `JSX.Element` representing the message input component.
  */
-function resetInputHeight(input: HTMLTextAreaElement) {
-  input.value = ''
-  input.style.height = '33px'
-}
-
-type KeydownHandler = JSX.EventHandler<HTMLTextAreaElement, KeyboardEvent>
-
 export function MessageInput(props: ParentProps<IMessageInputProps>) {
-  const onKeyDownHandler: KeydownHandler = (keyboardEvent) => {
+  type KeyboardHandler = JSX.EventHandler<HTMLTextAreaElement, KeyboardEvent>
+
+  const [currentChannel] = store.currentChannel
+  const onKeyDownHandler: KeyboardHandler = (keyboardEvent) => {
     const currentTarget = keyboardEvent.currentTarget
     // check if a user tries to send a empty message
     const textInInput = currentTarget.value.trim()
@@ -67,18 +86,33 @@ export function MessageInput(props: ParentProps<IMessageInputProps>) {
     resetInputHeight(currentTarget)
     
     // call the onSending event itself
+    const [replyTo, setReplyTo] = inputAccessoryState.replyTo
+    console.log('replied message is', replyTo()[1])
+
     props.onSending?.call(
       // @ts-ignore 
       this, 
       {
         rawMessageContent: textInInput,
+        repliedMessage: replyTo()[1],
       }, 
     )
+
+    setReplyTo([false, undefined])
   }
 
+  const resetInputHeight = (input: HTMLTextAreaElement) => {
+    input.value = ''
+    input.style.height = '33px'
+  }
+
+  // ...
   return (
     <div {...stylex.props(style.inputWrapper)}>
-      {props.children}
+      <MessageInputAccessory 
+        accessory={props.accessory} 
+        currentChannelStore={store.currentChannel} 
+      />
       <div {...stylex.props(style.input)}>
         <Textarea onKeyDown={onKeyDownHandler} />
       </div>

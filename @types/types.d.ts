@@ -9,4 +9,6 @@ declare global {
    * However, it does not provide any information about the arguments or return type of the function.
    */
   type AnyFunction = (...args: any[]) => any
+
+  type CouldBe<Anything> = Anything | null
 }

@@ -48,7 +48,7 @@ export async function createMessage<T extends MessageType>(
         id: repliedMessage.id
       }
     }
-
+    
     return messageThatShouldFetchFromServer 
   }
 
@@ -60,17 +60,22 @@ export function apiMessageToCachedMessage<
   CachedMessage extends AnyCachedMessage
 >(anyMessage: T, currentChannel: string): CachedMessage {
   const lastMessage = store.message.getLastItem(currentChannel)
-
-  console.log('last message is:', lastMessage)
+  
+  const repliedMessage = store.message.get(currentChannel)?.get(anyMessage.replyTo?.id ?? '')
+  delete repliedMessage?.replyTo
 
   const newMessage = {
     ...anyMessage,
     type: MessageType.user,
     isFollowUp: false,
-    user
+    user,
+    replyTo: repliedMessage
   } as ICachedUserMessage
   
   newMessage.isFollowUp = newMessage.user.id === lastMessage?.user.id
+  if (newMessage.replyTo) {
+    newMessage.isFollowUp = false
+  }
 
   return newMessage
 }
